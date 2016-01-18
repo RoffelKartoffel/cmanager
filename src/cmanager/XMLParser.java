@@ -349,7 +349,7 @@ public class XMLParser
 		
 	private static class BufferAbstraction 
 	{
-		private final int LIMIT = 1024*512;
+		private final int LIMIT = 1024*1024*10;
 		private char[] cbuf = new char[LIMIT]; 
 		private BufferedReader br; 
 	

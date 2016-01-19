@@ -9,8 +9,10 @@ import java.net.URL;
 
 public class HTTP {
 
-	private final static String USER_AGENT = "cmanager";
-
+	public static String user_agent()
+	{
+		return "cmanager " + Main.VERSION;
+	}
 
 	public static String get(String url) throws Exception
 	{
@@ -39,7 +41,7 @@ public class HTTP {
 		con.setRequestMethod("GET");
 
 		//add request header
-		con.setRequestProperty("User-Agent", USER_AGENT);
+		con.setRequestProperty("User-Agent", user_agent());
 
 		Integer responseCode = con.getResponseCode();
 		if( responseCode != 200 )
@@ -68,7 +70,7 @@ public class HTTP {
 //
 //		//add reuqest header
 //		con.setRequestMethod("POST");
-//		con.setRequestProperty("User-Agent", USER_AGENT);
+//		con.setRequestProperty("User-Agent", user_agent());
 //		con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
 //
 //		String urlParameters = "sn=C02G8416DRJM&cn=&locale=&caller=&num=12345";

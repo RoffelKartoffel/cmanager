@@ -84,10 +84,14 @@ public class Geocache implements Serializable, Comparable<String>
 		CONTAINER.add("Not chosen", "not_chosen");
 	}
 	public String getContainerAsGC(){
+		if( container == null )
+			return null;
 		String s = CONTAINER.get(container, 0);
 		return s;
 	}
 	public void setContainer(String container) {
+		if( container == null )
+			return;
 		container = container.toLowerCase();
 		this.container = CONTAINER.getLC(container);
 	}
@@ -430,6 +434,8 @@ public class Geocache implements Serializable, Comparable<String>
 
 	public void setListing(String listing) {
 //		this.listing = listing;
+		if( listing == null)
+			return;
 		offloadingCache.put(hashCode() + getCode() + "listing", listing);
 	}
 	

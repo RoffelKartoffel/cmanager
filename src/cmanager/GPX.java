@@ -83,14 +83,15 @@ public class GPX
 				// multi threaded version
 				//	
 				
+				int listSize = gpx.getChildren().size();
 				int cores = Runtime.getRuntime().availableProcessors();
+				double perProcess = ((double)listSize) / cores;
+				
 				ThreadStore ts = new ThreadStore();
-				for(int c=0; c<=cores; c++)
+				for(int c=0; c<cores; c++)
 				{
-					int listSize = gpx.getChildren().size();
-					int perProcess = listSize / cores;
-					final int start = perProcess*c;
-					final int end = perProcess*(c+1) < listSize ? perProcess*(c+1) : listSize;
+					final int start = (int)(perProcess*c);
+					final int end = perProcess*(c+1) < listSize ? (int)(perProcess*(c+1)) : listSize;
 					
 					Thread t = new Thread(new Runnable() {
 						public void run() 

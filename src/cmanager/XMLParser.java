@@ -203,14 +203,21 @@ public class XMLParser
 		}
 		else
 		{
+			int listSize = e.getChildren().size();
 			int cores = Runtime.getRuntime().availableProcessors();
+			if( cores > listSize )
+				cores = listSize;
+			int perProcess = listSize / cores;
+			
 			ThreadStore ts = new ThreadStore();
-			for(int c=0; c<=cores; c++)
+			for(int c=0; c<cores; c++)
 			{
-				int listSize = e.getChildren().size();
-				int perProcess = listSize / cores;
 				final int start = perProcess*c;
-				final int end = perProcess*(c+1) < listSize ? perProcess*(c+1) : listSize;
+				
+				int tmp = perProcess*(c+1) < listSize ? perProcess*(c+1) : listSize;
+				if( c == cores -1 )
+					tmp = listSize;
+				final int end = tmp;
 				
 				Thread t = new Thread(new Runnable() {
 					public void run() 
@@ -270,14 +277,20 @@ public class XMLParser
 				//
 				// use multiple threads, if there are many children e.g. the children of "gpx"
 				//
+				int listSize = e.getChildren().size();
 				int cores = Runtime.getRuntime().availableProcessors();
+				if( cores > listSize )
+					cores = listSize;
+				int perProcess = listSize / cores;
 				ThreadStore ts = new ThreadStore();
-				for(int c=0; c<=cores; c++)
+				for(int c=0; c<cores; c++)
 				{
-					int listSize = e.getChildren().size();
-					int perProcess = listSize / cores;
 					final int start = perProcess*c;
-					final int end = perProcess*(c+1) < listSize ? perProcess*(c+1) : listSize;
+					
+					int tmp = perProcess*(c+1) < listSize ? perProcess*(c+1) : listSize;
+					if( c == cores -1 )
+						tmp = listSize;
+					final int end = tmp;
 					
 					Thread t = new Thread(new Runnable(){
 						public void run() 

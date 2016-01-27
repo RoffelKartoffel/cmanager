@@ -162,6 +162,13 @@ public class ExceptionPanel extends JPanel {
 	    String title = exceptionError.getClass().getName();
 	    
 	    showErrorDialog(errorMessage, title);
+	    
+	    if( exceptionError instanceof OutOfMemoryError )
+	    {
+		    String message = "You experienced the previous crash due to insufficient memory.\n" +
+		    		"You might want to change your memory settings under Menu->Settings->General.";
+		    JOptionPane.showMessageDialog(null, message, "Memory Settings", JOptionPane.INFORMATION_MESSAGE);
+	    }
 	}
 	
 	public static String toShortString(Throwable e)

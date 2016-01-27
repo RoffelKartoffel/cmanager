@@ -39,61 +39,29 @@ import org.ehcache.config.units.MemoryUnit;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 
+
 public class Main 
 {
 	public static final String APP_NAME = "cmanager";
-	public static final String VERSION = "0.2o.1";
+	public static final String VERSION = "0.2p";
+	
+	private static final String JAR_NAME = "cm.jar";
+	private static final String PARAM_HEAP_RESIZED = "resized";
+	
 
 	
 	
 	
-	public static void main(String[] args) throws Throwable 
-	{	
-			
-//		CacheListModel model = new CacheListModel();
-//		
-//		long start = System.currentTimeMillis();
-//		
-//		model.load("/tmp/test2.zip");
-//		
-////		try {
-////		Thread.sleep(2000);
-////		}catch(InterruptedException e){
-////			
-////		}
-//		
-//		
-//		
-////		model.store("/tmp/dummy.gpx", "dummy");
-//		
-//		long duration = System.currentTimeMillis() - start;
-//		System.out.println("Time: " + duration);
-//		
+	public static void main(String[] args) 
+	{			
+		try {
+			resizeHeap(args);
+		} catch (Throwable t) {
+			t.printStackTrace();
+		}
 		
-//		CacheManager cacheManager = null;
-//		Cache<String, String> listingCache = null;
-//		
-//		
-//		
-//		cacheManager = CacheManagerBuilder.newCacheManagerBuilder()
-//			    .with(new CacheManagerPersistenceConfiguration(new File("/tmp/", "myData"))) 
-//			    .withCache("listing cache", CacheConfigurationBuilder.newCacheConfigurationBuilder()
-//			        .withResourcePools(ResourcePoolsBuilder.newResourcePoolsBuilder()
-//			            .heap(10, EntryUnit.ENTRIES)
-//			            .disk(10L, MemoryUnit.MB, true)) 
-//			        .buildConfig(String.class, String.class))
-//			    .build(true);
-//		
-//		listingCache = cacheManager.getCache("listing cache", String.class, String.class);
-//		
-//		Geocache g = new Geocache("GC1", "einCachename", new Coordinate(0.0, 0.0), 1.0, 1.0, "Tradi");
-//		
-//		listingCache.put(g.getCode() + g.hashCode(), "hallo");
-//		
-//		String s = listingCache.get(g.getCode() + g.hashCode());
-//		
-		
-//		System.out.println((System.getProperty("java.io.tmpdir")));
+	
+
 //		
 //		System.exit(0);
 		
@@ -109,6 +77,65 @@ public class Main
 		
 		
 		
+	}
+	
+	private static void resizeHeap(String[] args) throws IOException
+	{
+		for(int i = 0; i < args.length; i++) {
+            if( args[i].equals(PARAM_HEAP_RESIZED) )
+            	return;
+        }
+		
+		//
+		// Determinate name of our jar. Will only work when run as .jar.
+		//
+		File jarFile = new java.io.File(Main.class.getProtectionDomain()
+				  .getCodeSource()
+				  .getLocation()
+				  .getPath());
+		
+		String jarPath = jarFile.getAbsolutePath();
+		if( jarPath.endsWith(".") )
+			jarPath = jarPath.substring(0, jarPath.length()-1);
+		if( !jarPath.endsWith(JAR_NAME) )
+			jarPath += JAR_NAME;
+		
+		jarFile = new File(jarPath);
+		if( !jarFile.exists() )
+			return;
+
+		//
+		// Read settings
+		//
+		String heapSizeS = Settings.getS(Settings.Key.HEAP_SIZE);
+		Integer heapSizeI = null;
+		try{
+			heapSizeI = new Integer(heapSizeS);
+		}catch(Throwable t){
+		}
+		
+		if( heapSizeI == null )
+			return;
+		if( heapSizeI < 128 )
+			return;
+
+		//
+		// Run new vm
+		//
+		ProcessBuilder pb = new ProcessBuilder( 
+				"java", 
+				"-Xmx"+ heapSizeI.toString() +"m", 
+				"-jar", 
+				jarPath, 
+				JAR_NAME, 
+				PARAM_HEAP_RESIZED );
+		Process p = pb.start();
+		try {
+			p.waitFor();
+		} catch (InterruptedException e) {
+		}
+		
+		System.exit(0);
 	}
 	
 

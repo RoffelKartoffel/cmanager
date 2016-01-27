@@ -17,6 +17,9 @@ import javax.swing.JLabel;
 import java.awt.GridBagConstraints;
 import javax.swing.JTextField;
 import java.awt.Insets;
+import javax.swing.SwingConstants;
+import java.awt.Component;
+import javax.swing.Box;
 
 public class SettingsDialog extends JDialog {
 
@@ -29,6 +32,7 @@ public class SettingsDialog extends JDialog {
 	private JLabel lblOkapiToken;
 	private JButton btnRequestNewToken;
 	private JTextField txtNameGC;
+	private JTextField txtHeapSize;
 
 
 
@@ -52,6 +56,7 @@ public class SettingsDialog extends JDialog {
 			public void actionPerformed(ActionEvent e) 
 			{
 				Settings.set(Settings.Key.GC_USERNAME, txtNameGC.getText());
+				Settings.set(Settings.Key.HEAP_SIZE, txtHeapSize.getText());
 				THIS.setVisible(false);
 			}
 		});
@@ -138,6 +143,78 @@ public class SettingsDialog extends JDialog {
 		
 		displayOkapiTokenStatus();
 		txtNameGC.setText( Settings.getS(Settings.Key.GC_USERNAME) );
+		
+		JPanel panelGeneral = new JPanel();
+		panelGeneral.setBorder(new EmptyBorder(10, 10, 10, 10));
+		tabbedPane.addTab("General", null, panelGeneral, null);
+		GridBagLayout gbl_panelGeneral = new GridBagLayout();
+		gbl_panelGeneral.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0};
+		gbl_panelGeneral.columnWeights = new double[]{1.0, 1.0, 0.0};
+		panelGeneral.setLayout(gbl_panelGeneral);
+		
+		Component verticalStrut_1 = Box.createVerticalStrut(20);
+		GridBagConstraints gbc_verticalStrut_1 = new GridBagConstraints();
+		gbc_verticalStrut_1.weighty = 0.1;
+		gbc_verticalStrut_1.insets = new Insets(0, 0, 5, 5);
+		gbc_verticalStrut_1.gridx = 0;
+		gbc_verticalStrut_1.gridy = 0;
+		panelGeneral.add(verticalStrut_1, gbc_verticalStrut_1);
+		
+		JLabel lblCurrentHeapSize = new JLabel("$size");
+		GridBagConstraints gbc_lblCurrentHeapSize = new GridBagConstraints();
+		gbc_lblCurrentHeapSize.insets = new Insets(0, 0, 5, 5);
+		gbc_lblCurrentHeapSize.gridx = 1;
+		gbc_lblCurrentHeapSize.gridy = 1;
+		panelGeneral.add(lblCurrentHeapSize, gbc_lblCurrentHeapSize);
+		lblCurrentHeapSize.setText( new Long(Runtime.getRuntime().maxMemory() /1024/1024 ).toString() );
+		
+		Component verticalStrut = Box.createVerticalStrut(20);
+		GridBagConstraints gbc_verticalStrut = new GridBagConstraints();
+		gbc_verticalStrut.weighty = 0.5;
+		gbc_verticalStrut.insets = new Insets(0, 0, 5, 5);
+		gbc_verticalStrut.gridx = 0;
+		gbc_verticalStrut.gridy = 3;
+		panelGeneral.add(verticalStrut, gbc_verticalStrut);
+		
+		JLabel lblNewLabel_2 = new JLabel("(*) Application restart required.");
+		lblNewLabel_2.setFont(new Font("Dialog", Font.PLAIN, 11));
+		GridBagConstraints gbc_lblNewLabel_2 = new GridBagConstraints();
+		gbc_lblNewLabel_2.gridwidth = 3;
+		gbc_lblNewLabel_2.anchor = GridBagConstraints.ABOVE_BASELINE;
+		gbc_lblNewLabel_2.gridx = 0;
+		gbc_lblNewLabel_2.gridy = 4;
+		panelGeneral.add(lblNewLabel_2, gbc_lblNewLabel_2);
+		
+		txtHeapSize = new JTextField();
+		txtHeapSize.setHorizontalAlignment(SwingConstants.CENTER);
+		GridBagConstraints gbc_textHeapSize = new GridBagConstraints();
+		gbc_textHeapSize.insets = new Insets(0, 0, 5, 0);
+		gbc_textHeapSize.gridwidth = 2;
+		gbc_textHeapSize.weightx = 1.0;
+		gbc_textHeapSize.anchor = GridBagConstraints.NORTHWEST;
+		gbc_textHeapSize.gridx = 1;
+		gbc_textHeapSize.gridy = 2;
+		gbc_textHeapSize.fill = GridBagConstraints.HORIZONTAL;
+		panelGeneral.add(txtHeapSize, gbc_textHeapSize);
+		txtHeapSize.setColumns(10);
+		txtHeapSize.setText( Settings.getS(Settings.Key.HEAP_SIZE) );
+		
+		JLabel lblNewLabel = new JLabel("Heap size* (MB):");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
+		gbc_lblNewLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_lblNewLabel.anchor = GridBagConstraints.NORTHWEST;
+		gbc_lblNewLabel.gridy = 2;
+		gbc_lblNewLabel.gridx = 0;
+		gbc_lblNewLabel.fill = GridBagConstraints.HORIZONTAL;
+		panelGeneral.add(lblNewLabel, gbc_lblNewLabel);
+		
+		JLabel lblNewLabel_1 = new JLabel("Current heap size (MB):");
+		GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
+		gbc_lblNewLabel_1.insets = new Insets(0, 0, 5, 5);
+		gbc_lblNewLabel_1.gridx = 0;
+		gbc_lblNewLabel_1.gridy = 1;
+		panelGeneral.add(lblNewLabel_1, gbc_lblNewLabel_1);
 		
 	}
 	

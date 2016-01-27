@@ -7,6 +7,8 @@ public class Settings {
 	private static Preferences prefs = Preferences.userRoot().node(Main.APP_NAME);
 	
 	public enum Key {
+		HEAP_SIZE,
+		
 		GC_USERNAME,
 		FILE_CHOOSER_LOAD_GPX,
 		
@@ -17,6 +19,8 @@ public class Settings {
 	public static String key(Key key) {
 		switch(key)
 		{
+		case HEAP_SIZE:
+			return "javaHeapSize";
 		case GC_USERNAME:
 			return "gcUsername";
 		case FILE_CHOOSER_LOAD_GPX:

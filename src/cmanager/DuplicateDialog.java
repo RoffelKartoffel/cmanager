@@ -315,8 +315,7 @@ public class DuplicateDialog extends JFrame {
 								
 								GeocacheLog logNext = null;
 								for(GeocacheLog log : gNext.getLogs() )
-					            	if( log.isAuthor(gcUsername) 
-					            			&& log.getTypeStr().equals("Found it"))
+					            	if( log.isAuthor(gcUsername) && log.isFoundLog() )
 					            	{
 					            		logNext = log;
 					            		break;
@@ -324,8 +323,7 @@ public class DuplicateDialog extends JFrame {
 								
 								GeocacheLog logCurr = null;
 								for(GeocacheLog log : gCurr.getLogs() )
-					            	if( log.isAuthor(gcUsername) 
-					            			&& log.getTypeStr().equals("Found it"))
+					            	if( log.isAuthor(gcUsername) && log.isFoundLog() )
 					            	{
 					            		logCurr = log;
 					            		break;

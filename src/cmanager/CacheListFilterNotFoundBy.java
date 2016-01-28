@@ -31,8 +31,7 @@ public class CacheListFilterNotFoundBy extends CacheListFilterModel
 	{
 		for(GeocacheLog log : g.getLogs())
 			for(String username : usernames )
-				if( log.getTypeStr().equals("Found it") && 
-						log.isAuthor(username) )
+				if( log.isFoundLog() && log.isAuthor(username) )
 					return false;
 		return true;
 	}

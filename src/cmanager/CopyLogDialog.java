@@ -79,7 +79,7 @@ public class CopyLogDialog extends JFrame {
             
             for(GeocacheLog log : gc.getLogs())
             {
-            	if( !log.getTypeStr().equals("Found it") )
+            	if( !log.isFoundLog() )
             		continue;
             	
             	String gcUsername = Settings.getS(Settings.Key.GC_USERNAME);

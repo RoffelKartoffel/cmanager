@@ -80,6 +80,16 @@ public class GeocacheLog implements Serializable
     	return author.toLowerCase().equals(name.toLowerCase());
     }
     
+    public boolean isFoundLog()
+    {
+    	String typeStr = getTypeStr();
+    	if( typeStr.equals("Found it") ||
+    		typeStr.equals("Attended") || 
+    		typeStr.equals("Webcam Photo Taken") )
+    			return true;
+    	
+    	return false;
+    }
     
     public String getText(){
         return text;

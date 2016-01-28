@@ -241,6 +241,16 @@ public class MainWindow extends JFrame {
 		});
 		mntmAddFilter.add(mntmTerrainFilter);
 		
+		JMenuItem mntmCacheNameFilter = new JMenuItem("Cachename");
+		mntmCacheNameFilter.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) 
+			{
+				CacheListController.getTopViewCacheController(desktopPane).addFilter(
+						new CacheListFilterCacheName() );
+			}
+		});
+		mntmAddFilter.add(mntmCacheNameFilter);
+		
 		JMenuItem mntmDifficultyFilter = new JMenuItem("Difficulty");
 		mntmDifficultyFilter.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 

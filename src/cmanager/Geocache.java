@@ -99,27 +99,27 @@ public class Geocache implements Serializable, Comparable<String>
 	
 	
 	
-	private static Object cacheManagerLock = new Object(); 
-	private static CacheManager cacheManager = null;
-	private static Cache<String, String> offloadingCache = null;
-	{
-		synchronized (cacheManagerLock) {
-			if( cacheManager == null )
-			{
-				cacheManager = CacheManagerBuilder.newCacheManagerBuilder()
-					    .with(new CacheManagerPersistenceConfiguration(new File("/tmp/", "cmanager"))) 
-					    .withCache("listings", CacheConfigurationBuilder.newCacheConfigurationBuilder()
-					        .withResourcePools(ResourcePoolsBuilder.newResourcePoolsBuilder()
-					            .heap(25, EntryUnit.ENTRIES)
-//					            .offheap(100, MemoryUnit.MB)
-					            .disk(1024, MemoryUnit.MB, true)) 
-					        .buildConfig(String.class, String.class))
-					    .build(true);
-				
-				offloadingCache = cacheManager.getCache("listings", String.class, String.class);
-			}
-		}
-	}
+//	private static Object cacheManagerLock = new Object(); 
+//	private static CacheManager cacheManager = null;
+//	private static Cache<String, String> offloadingCache = null;
+//	{
+//		synchronized (cacheManagerLock) {
+//			if( cacheManager == null )
+//			{
+//				cacheManager = CacheManagerBuilder.newCacheManagerBuilder()
+//					    .with(new CacheManagerPersistenceConfiguration(new File("/tmp/", "cmanager"))) 
+//					    .withCache("listings", CacheConfigurationBuilder.newCacheConfigurationBuilder()
+//					        .withResourcePools(ResourcePoolsBuilder.newResourcePoolsBuilder()
+//					            .heap(25, EntryUnit.ENTRIES)
+////					            .offheap(100, MemoryUnit.MB)
+//					            .disk(1024, MemoryUnit.MB, true)) 
+//					        .buildConfig(String.class, String.class))
+//					    .build(true);
+//				
+//				offloadingCache = cacheManager.getCache("listings", String.class, String.class);
+//			}
+//		}
+//	}
 	
 	
 	private String code;
@@ -131,7 +131,7 @@ public class Geocache implements Serializable, Comparable<String>
 	private Integer container;
 	private String owner = null;
 	private String code_gc = null;	// linked cache on gc
-//	private String listing = null;
+	private String listing = null;
 	private String listing_short = null;
 	private String hint = null;
 	
@@ -428,15 +428,15 @@ public class Geocache implements Serializable, Comparable<String>
 	}
 
 	public String getListing() {
-//		return listing;
-		return offloadingCache.get( hashCode() + getCode() + "listing" );
+		return listing;
+//		return offloadingCache.get( hashCode() + getCode() + "listing" );
 	}
 
 	public void setListing(String listing) {
-//		this.listing = listing;
-		if( listing == null)
-			return;
-		offloadingCache.put(hashCode() + getCode() + "listing", listing);
+		this.listing = listing;
+//		if( listing == null)
+//			return;
+//		offloadingCache.put(hashCode() + getCode() + "listing", listing);
 	}
 	
 	public int getContainer() {

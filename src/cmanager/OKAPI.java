@@ -57,7 +57,8 @@ public class OKAPI
 			"&center=" + lat.toString() + "|" + lon.toString() + 
 			"&radius=" + searchRadius.toString() + 
 			"&status=Available|Temporarily%20unavailable|Archived" +
-			"&limit=500"+
+			"&ignored_status=notignored_only" +
+			"&limit=500" +
 			(excludeUUID == null ? "" : "&not_found_by=" + excludeUUID);
 		String http = HTTP.get( url );
 		

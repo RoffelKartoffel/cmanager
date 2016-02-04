@@ -41,16 +41,17 @@ public class OKAPI
 	
 
 	
-	public static ArrayList<Geocache> getCachesAround(Geocache g, String excludeUUID, double searchRadius, ArrayList<Geocache> offlineStore) throws Exception
+	public static ArrayList<Geocache> getCachesAround(Geocache g, double searchRadius, ArrayList<Geocache> offlineStore, OCUser user, String excludeUUID) throws Exception
 	{
 		Coordinate c = g.getCoordinate();
-		return getCachesAround(c.getLat(), c.getLon(), excludeUUID, searchRadius, offlineStore);
+		return getCachesAround(c.getLat(), c.getLon(), searchRadius, offlineStore, user, excludeUUID);
 	}
 	
-	public static ArrayList<Geocache> getCachesAround(Double lat, Double lon, String excludeUUID, Double searchRadius, ArrayList<Geocache> offlineStore) throws Exception
+	public static ArrayList<Geocache> getCachesAround(Double lat, Double lon, Double searchRadius, ArrayList<Geocache> offlineStore, OCUser user, String excludeUUID) throws Exception
 	{
 		ArrayList<Geocache> caches = new ArrayList<Geocache>();
 		
+		boolean useOAuth = excludeUUID != null;
 		String url = "http://www.opencaching.de/okapi/services/caches/search/nearest" + 
 			"?consumer_key=" + CONSUMER_API_KEY + 
 			"&format=xmlmap2" + 
@@ -58,9 +59,20 @@ public class OKAPI
 			"&radius=" + searchRadius.toString() + 
 			"&status=Available|Temporarily%20unavailable|Archived" +
 			"&limit=500"+
-			(excludeUUID == null ? "" : "&not_found_by=" + excludeUUID);
-		String http = HTTP.get( url );
+			(useOAuth ? "&ignored_status=notignored_only" : "") +
+			(useOAuth ? "&not_found_by=" + excludeUUID : "");
 		
+		String http;
+		if( useOAuth )
+		{
+			OAuthService service = getOAuthService();
+			OAuthRequest request = new OAuthRequest(Verb.GET, url);
+			service.signRequest(user.getOkapiToken(), request); // the access token from step 4
+			Response response = request.send();
+			http = response.getBody();
+		}
+		else
+			http = HTTP.get( url );
 		
 		XMLElement root = XMLParser.parse(http);
 		for(XMLElement e : root.getChild("object").getChildren() )

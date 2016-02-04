@@ -138,7 +138,7 @@ public class MainWindow extends JFrame {
 		mntmFindSimilarOc.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
-				findOnOC(null);
+				findOnOC(null, null);
 			}
 		});
 		mnList.add(mntmFindSimilarOc);
@@ -148,16 +148,17 @@ public class MainWindow extends JFrame {
 			public void actionPerformed(ActionEvent e) 
 			{
 				try {
+					OCUser user = null;
 					String uuid = null;
 					try{
-						OCUser user = OCUser.getOCUser();
+						user = OCUser.getOCUser();
 						uuid = OKAPI.getUUID(user);
 					}catch(Exception ex){
 						JOptionPane.showMessageDialog(null,"Testing the OKAPI token faild. Check your settings!","Error", JOptionPane.ERROR_MESSAGE);
 						return;
 					}
 					
-					findOnOC(uuid);
+					findOnOC(user, uuid);
 				}
 				catch(Throwable ex){
 					ExceptionPanel.showErrorDialog(ex);
@@ -450,9 +451,9 @@ public class MainWindow extends JFrame {
 		wait.repaint();
 	}
 	
-	private void findOnOC(String uuid)
+	private void findOnOC(OCUser user, String uuid)
 	{
-		DuplicateDialog dd = new DuplicateDialog( CacheListController.getTopViewCacheController(desktopPane).getModel(), uuid);
+		DuplicateDialog dd = new DuplicateDialog( CacheListController.getTopViewCacheController(desktopPane).getModel(), user, uuid);
 //		dd.setModalityType(ModalityType.APPLICATION_MODAL);
 //		dd.setVisible(true);
 		

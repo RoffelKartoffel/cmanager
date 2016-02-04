@@ -62,7 +62,7 @@ public class DuplicateDialog extends JFrame {
 	/**
 	 * Create the dialog.
 	 */
-	public DuplicateDialog(final CacheListModel clm, final String uuid) 
+	public DuplicateDialog(final CacheListModel clm, final OCUser user, final String uuid) 
 	{
 		setResizable(true);
 		this.setMinimumSize(new Dimension(600, 300));
@@ -259,7 +259,7 @@ public class DuplicateDialog extends JFrame {
 			@Override
 			public void run() {
 				try {
-					OCUtil.findOnOc(clm, uuid, new OCUtil.OutputInterface() 
+					OCUtil.findOnOc(clm, new OCUtil.OutputInterface() 
 					{	
 						public void setProgress(Integer count, Integer max) {
 							progressBar.setMaximum(max);
@@ -284,7 +284,7 @@ public class DuplicateDialog extends JFrame {
 							}
 							lastNode.add(new DefaultMutableTreeNode( oc ));
 						}
-					});
+					}, user, uuid);
 					switchCards();
 					
 					

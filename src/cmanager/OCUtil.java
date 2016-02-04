@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class OCUtil {
 	
-	public static void findOnOc(CacheListModel clm, String uuid, OutputInterface oi) throws Exception
+	public static void findOnOc(CacheListModel clm, OutputInterface oi, OCUser user, String uuid) throws Exception
 	{
 		ArrayList<Geocache> offlineCacheStore = new ArrayList<>();
 		
@@ -18,7 +18,7 @@ public class OCUtil {
 				continue;
 			
 			double searchRadius = gc.hasVolatileStart() ? 1 : 0.05 ;
-			ArrayList<Geocache> similar = OKAPI.getCachesAround(gc, uuid, searchRadius, offlineCacheStore);
+			ArrayList<Geocache> similar = OKAPI.getCachesAround(gc, searchRadius, offlineCacheStore, user, uuid);
 			boolean match = false;
 			for( Geocache oc : similar )
 				if( oc.isSimilar(gc) )

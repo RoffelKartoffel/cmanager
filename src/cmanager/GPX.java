@@ -84,12 +84,10 @@ public class GPX
 				//	
 				
 				int listSize = gpx.getChildren().size();
-				int cores = Runtime.getRuntime().availableProcessors();
-				if( cores > listSize )
-					cores = listSize;
+				ThreadStore ts = new ThreadStore();
+				int cores = ts.getCores(listSize);
 				int perProcess = listSize / cores;
 				
-				ThreadStore ts = new ThreadStore();
 				for(int c=0; c<cores; c++)
 				{
 					final int start = perProcess*c;
@@ -99,7 +97,7 @@ public class GPX
 						tmp = listSize;
 					final int end = tmp;
 					
-					Thread t = new Thread(new Runnable() {
+					ts.addAndRun( new Thread(new Runnable() {
 						public void run() 
 						{
 							ArrayList<Geocache> gList_thread = new ArrayList<>();
@@ -142,11 +140,9 @@ public class GPX
 								wList.addAll(wList_thread);
 							}
 						}
-					});
-					ts.add(t);
-					t.start();
+					}));
 				}
-				ts.join();
+				ts.joinAndThrow();
 				
 			}
 				

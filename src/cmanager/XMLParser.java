@@ -204,12 +204,10 @@ public class XMLParser
 		else
 		{
 			int listSize = e.getChildren().size();
-			int cores = Runtime.getRuntime().availableProcessors();
-			if( cores > listSize )
-				cores = listSize;
+			ThreadStore ts = new ThreadStore();
+			int cores = ts.getCores(listSize);
 			int perProcess = listSize / cores;
 			
-			ThreadStore ts = new ThreadStore();
 			for(int c=0; c<cores; c++)
 			{
 				final int start = perProcess*c;
@@ -219,7 +217,7 @@ public class XMLParser
 					tmp = listSize;
 				final int end = tmp;
 				
-				Thread t = new Thread(new Runnable() {
+				ts.addAndRun( new Thread(new Runnable() {
 					public void run() 
 					{
 						try 
@@ -233,11 +231,9 @@ public class XMLParser
 						    t.getUncaughtExceptionHandler().uncaughtException(t, ex);
 						}
 					}
-				});
-				ts.add(t);
-				t.start();
+				}));
 			}
-			ts.join();
+			ts.joinAndThrow();
 		}
 		
 		
@@ -278,11 +274,10 @@ public class XMLParser
 				// use multiple threads, if there are many children e.g. the children of "gpx"
 				//
 				int listSize = e.getChildren().size();
-				int cores = Runtime.getRuntime().availableProcessors();
-				if( cores > listSize )
-					cores = listSize;
-				int perProcess = listSize / cores;
 				ThreadStore ts = new ThreadStore();
+				int cores = ts.getCores(listSize);
+				int perProcess = listSize / cores;
+				
 				for(int c=0; c<cores; c++)
 				{
 					final int start = perProcess*c;
@@ -292,7 +287,7 @@ public class XMLParser
 						tmp = listSize;
 					final int end = tmp;
 					
-					Thread t = new Thread(new Runnable(){
+					ts.addAndRun( new Thread(new Runnable(){
 						public void run() 
 						{
 							try {
@@ -321,12 +316,9 @@ public class XMLParser
 							    t.getUncaughtExceptionHandler().uncaughtException(t, ex);
 							}
 						}
-					});
-					ts.add(t);
-					t.start();
+					}));
 				}
-				
-				ts.join();
+				ts.joinAndThrow();
 				
 				//
 				//

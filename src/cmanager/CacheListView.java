@@ -13,6 +13,8 @@ import java.awt.Dimension;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 import org.openstreetmap.gui.jmapviewer.DefaultMapController;
 import org.openstreetmap.gui.jmapviewer.JMapViewer;
@@ -83,6 +85,10 @@ public class CacheListView extends JInternalFrame {
 				updateMapMarkers();
 			}
 		});
+		table.setAutoCreateRowSorter(true);
+//		TableRowSorter<TableModel> sorter = new TableRowSorter<>(table.getModel());
+//		table.setRowSorter(sorter);
+		
 		
 		panelFilters = new JPanel();
 		panelFilters.setVisible(false);

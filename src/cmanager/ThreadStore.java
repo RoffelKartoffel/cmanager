@@ -8,13 +8,14 @@ public class ThreadStore implements UncaughtExceptionHandler
 	private ArrayList<Thread> threads = new ArrayList<>();
 	private Throwable exception = null;
 	
-	public void add(Thread t)
+	public void addAndRun(Thread t)
 	{
 		t.setUncaughtExceptionHandler(this);
 		threads.add(t);
+		t.start();
 	}
 	
-	public void join() throws Throwable
+	public void joinAndThrow() throws Throwable
 	{
 		for(Thread t : threads)
 			try {
@@ -31,4 +32,15 @@ public class ThreadStore implements UncaughtExceptionHandler
 		exception = e;
 	}
 
+	public int getCores(){
+		return getCores(Integer.MAX_VALUE);
+	}
+	
+	public int getCores(int maximum)
+	{
+		int cores = Runtime.getRuntime().availableProcessors();
+		if( cores > maximum )
+			cores = maximum;
+		return cores;
+	}
 }

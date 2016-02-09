@@ -8,14 +8,39 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 public class FileHelper 
 {
+	public static <T extends Serializable> T deserializeFromFile(String path, Class<T> type) throws IOException, ClassNotFoundException 
+	{
+		FileInputStream fileIn = new FileInputStream(path);
+        ObjectInputStream in = new ObjectInputStream(fileIn);
+        @SuppressWarnings("unchecked")
+        T e = (T) in.readObject();
+        in.close();
+        fileIn.close();
+        return e;
+	}
+	
+	public static void serializeToFile(Serializable s, String path) throws IOException
+	{
+		FileOutputStream fileOut =
+		         new FileOutputStream(path);
+		ObjectOutputStream out = new ObjectOutputStream(fileOut);
+		out.writeObject(s);
+		out.close();
+		fileOut.close();
+	}
+	
+	
 	public static void processFiles(String path, FileHelper.InputAction ia) throws Throwable
 	{
 		if( path.toLowerCase().endsWith(".zip") )

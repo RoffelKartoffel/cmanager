@@ -2,6 +2,7 @@ package cmanager;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Dialog;
 import java.awt.Dialog.ModalityType;
 import java.awt.Dimension;
 
@@ -24,11 +25,16 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import java.awt.Toolkit;
 
 import javax.swing.JSeparator;
 import javax.swing.KeyStroke;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JButton;
+import java.awt.Font;
 
 public class MainWindow extends JFrame {
 
@@ -39,6 +45,7 @@ public class MainWindow extends JFrame {
 	private JPanel contentPane;
 	private JDesktopPane desktopPane;
 	private JMenu mnWindows;
+	private JComboBox<Location> comboBox;
 
 
 	/**
@@ -335,8 +342,49 @@ public class MainWindow extends JFrame {
 		
 		ExceptionPanel panelException = ExceptionPanel.getPanel();
 		panelSouth.add(panelException, BorderLayout.CENTER);	
+		
+		JPanel panelNorth = new JPanel();
+		contentPane.add(panelNorth, BorderLayout.NORTH);
+		panelNorth.setLayout(new BorderLayout(0, 0));
+		
+		JPanel panel = new JPanel();
+		panelNorth.add(panel, BorderLayout.EAST);
+		
+		JLabel lblNewLabel = new JLabel("Location:");
+		lblNewLabel.setFont(new Font("Dialog", Font.BOLD, 10));
+		panel.add(lblNewLabel);
+		
+		comboBox = new JComboBox();
+		comboBox.setFont(new Font("Dialog", Font.BOLD, 10));
+		panel.add(comboBox);
+		
+		JButton btnEdit = new JButton("Edit");
+		btnEdit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) 
+			{
+				LocationDialog ld = new LocationDialog();
+				ld.setLocationRelativeTo(THIS);
+				ld.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
+				ld.setVisible(true);
+
+				if( ld.modified )
+					updateLocationCombobox();
+			}
+		});
+		btnEdit.setFont(new Font("Dialog", Font.BOLD, 10));
+		panel.add(btnEdit);
+		
+		updateLocationCombobox();
 	}
 	
+	private void updateLocationCombobox()
+	{
+		ArrayList<Location> locations = LocationList.getList().getLocations();
+		
+		comboBox.removeAll();
+		for(Location l : locations)
+			comboBox.addItem(l);
+	}
 
 	
 	private void saveFile(boolean saveAs)

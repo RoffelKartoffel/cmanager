@@ -36,19 +36,21 @@ public class LocationDialog extends JDialog {
 	private JTextField txtName;
 	private JTextField txtLat;
 	private JTextField txtLon;
+	
+	public boolean modified = false;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		try {
-			LocationDialog dialog = new LocationDialog();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+//	public static void main(String[] args) {
+//		try {
+//			LocationDialog dialog = new LocationDialog();
+//			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+//			dialog.setVisible(true);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//	}
 
 	/**
 	 * Create the dialog.
@@ -115,6 +117,7 @@ public class LocationDialog extends JDialog {
 					return;
 				}
 				
+				modified = true;
 				dispose();
 			}
 		});

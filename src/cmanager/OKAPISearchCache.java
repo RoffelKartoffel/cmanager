@@ -37,7 +37,7 @@ public class OKAPISearchCache
 		CacheEntry e = new CacheEntry();
 		e.timeStamp = new DateTime();
 		
-		writeEntryToFile(e, f.getAbsolutePath());
+		FileHelper.serializeToFile(e, f.getAbsolutePath());
 	}
 	
 	public static boolean isEmptySearch(Geocache g, String excludeUUID) throws ClassNotFoundException, IOException
@@ -51,7 +51,7 @@ public class OKAPISearchCache
 		File f = new File(searchToFileName(g, excludeUUID));
 		if( f.exists() )
 		{
-			CacheEntry e = readEntryFromFile(f.getAbsolutePath());
+			CacheEntry e = FileHelper.deserializeFromFile(f.getAbsolutePath(), CacheEntry.class);
 			
 			int randomMonthCount = -1* ThreadLocalRandom.current().nextInt(4, 12 + 1);
 			int randomDayCount = -1* ThreadLocalRandom.current().nextInt(0, 31 + 1);
@@ -72,26 +72,6 @@ public class OKAPISearchCache
 		return false;
 	}
 	
-	
-	private static CacheEntry readEntryFromFile(String path) throws IOException, ClassNotFoundException 
-	{
-		FileInputStream fileIn = new FileInputStream(path);
-        ObjectInputStream in = new ObjectInputStream(fileIn);
-        CacheEntry e = (CacheEntry) in.readObject();
-        in.close();
-        fileIn.close();
-        return e;
-	}
-	
-	private static void writeEntryToFile(CacheEntry e, String path) throws IOException
-	{
-		FileOutputStream fileOut =
-		         new FileOutputStream(path);
-		ObjectOutputStream out = new ObjectOutputStream(fileOut);
-		out.writeObject(e);
-		out.close();
-		fileOut.close();
-	}
 	
 	private static class CacheEntry implements Serializable
 	{

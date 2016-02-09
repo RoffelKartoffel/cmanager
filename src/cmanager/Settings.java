@@ -13,7 +13,9 @@ public class Settings {
 		FILE_CHOOSER_LOAD_GPX,
 		
 		OKAPI_TOKEN,
-		OKAPI_SECRET
+		OKAPI_SECRET,
+		
+		LOCATION_LIST
 	}
 	
 	public static String key(Key key) {
@@ -29,6 +31,8 @@ public class Settings {
 			return "OKAPIToken";
 		case OKAPI_SECRET:
 			return "OKAPISecret";
+		case LOCATION_LIST:
+			return "locationList";
 			
 		default:
 			return null;

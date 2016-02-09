@@ -26,6 +26,8 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.util.ArrayList;
 
 public class LocationDialog extends JDialog {
 
@@ -56,11 +58,23 @@ public class LocationDialog extends JDialog {
 		getContentPane().setLayout(new BorderLayout());
 		
 		String columnNames[] = { "Name", "Lat", "Lon" };
-		String dataValues[][] =
-		{
-			{ "Home", "234", "67" },
-		};
+		String dataValues[][] = {};
 		DefaultTableModel dtm = new DefaultTableModel( dataValues, columnNames );
+		
+		try
+		{
+			ArrayList<Location> locations = LocationList.getList().getLocations();
+			for( Location l : locations )
+			{
+				String values[] = { l.getName(), l.getLat().toString(), l.getLon().toString() };
+				dtm.addRow(values);
+			}
+		}
+		catch(Exception e)
+		{
+//			e.printStackTrace();
+			ExceptionPanel.showErrorDialog(e);
+		}
 		
 		JPanel panelMaster = new JPanel();
 		panelMaster.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -78,6 +92,32 @@ public class LocationDialog extends JDialog {
 		buttonPaneOkCancel.setLayout(new FlowLayout(FlowLayout.RIGHT));
 		
 		JButton btnOK = new JButton("OK");
+		btnOK.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) 
+			{
+				try 
+				{
+					ArrayList<Location> locations = new ArrayList<>();
+					
+					DefaultTableModel dtm = ((DefaultTableModel)table.getModel());
+					for(int i = 0; i < dtm.getRowCount(); i++)
+					{
+						Location l = new Location( (String)table.getValueAt(i, 0), 
+								new Double((String)table.getValueAt(i, 1)), 
+								new Double((String)table.getValueAt(i, 2)));
+						locations.add(l);
+					}
+					
+					LocationList.getList().setLocations(locations);
+				} 
+				catch (Throwable t) {
+					ExceptionPanel.showErrorDialog(t);
+					return;
+				}
+				
+				dispose();
+			}
+		});
 		buttonPaneOkCancel.add(btnOK);
 		
 		JButton btnCancel = new JButton("Cancel");

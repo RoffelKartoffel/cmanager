@@ -19,24 +19,35 @@ import java.util.zip.ZipInputStream;
 
 public class FileHelper 
 {
-	public static <T extends Serializable> T deserializeFromFile(String path, Class<T> type) throws IOException, ClassNotFoundException 
+	public static <T extends Serializable> T deserialize(InputStream is, Class<T> type) throws IOException, ClassNotFoundException 
 	{
-		FileInputStream fileIn = new FileInputStream(path);
-        ObjectInputStream in = new ObjectInputStream(fileIn);
+        ObjectInputStream in = new ObjectInputStream(is);
         @SuppressWarnings("unchecked")
         T e = (T) in.readObject();
         in.close();
+        return e;
+	}
+	
+	public static <T extends Serializable> T deserializeFromFile(String path, Class<T> type) throws IOException, ClassNotFoundException 
+	{
+		FileInputStream fileIn = new FileInputStream(path);
+        T e = deserialize(fileIn, type);
         fileIn.close();
         return e;
+	}
+	
+	public static void serialize(Serializable s, OutputStream os) throws IOException
+	{
+		ObjectOutputStream out = new ObjectOutputStream(os);
+		out.writeObject(s);
+		out.close();
 	}
 	
 	public static void serializeToFile(Serializable s, String path) throws IOException
 	{
 		FileOutputStream fileOut =
 		         new FileOutputStream(path);
-		ObjectOutputStream out = new ObjectOutputStream(fileOut);
-		out.writeObject(s);
-		out.close();
+		serialize(s, fileOut);
 		fileOut.close();
 	}
 	

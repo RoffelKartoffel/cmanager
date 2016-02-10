@@ -78,7 +78,7 @@ public class CacheListView extends JInternalFrame {
 		table = new JTable(atm);
 		table.setRowSelectionAllowed(true);
 		table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);	//column autosize
+//		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);	//column autosize
 		table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent arg0) 
 			{

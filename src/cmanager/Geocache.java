@@ -5,16 +5,6 @@ import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import org.ehcache.Cache;
-import org.ehcache.CacheManager;
-import org.ehcache.CacheManagerBuilder;
-import org.ehcache.PersistentCacheManager;
-import org.ehcache.config.CacheConfigurationBuilder;
-import org.ehcache.config.ResourcePoolsBuilder;
-import org.ehcache.config.persistence.CacheManagerPersistenceConfiguration;
-import org.ehcache.config.units.EntryUnit;
-import org.ehcache.config.units.MemoryUnit;
-
 
 public class Geocache implements Serializable, Comparable<String>
 {	

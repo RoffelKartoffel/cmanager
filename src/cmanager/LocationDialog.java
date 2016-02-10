@@ -28,6 +28,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
+import javax.swing.JSeparator;
+import java.awt.Font;
 
 public class LocationDialog extends JDialog {
 
@@ -252,6 +254,15 @@ public class LocationDialog extends JDialog {
 			}
 		});
 		panelButton.add(btnAdd);
+		
+		JSeparator separator = new JSeparator();
+		panelButton.add(separator);
+		
+		final JButton btnRetrieve = new JButton("OKAPI Coordinates");
+		btnRetrieve.setVisible(false);
+		btnRetrieve.setEnabled(false);
+		btnRetrieve.setFont(new Font("Dialog", Font.BOLD, 9));
+		panelButton.add(btnRetrieve);
 		panelMaster.add(contentPanel);
 		contentPanel.setLayout(new FlowLayout());
 		contentPanel.setBorder(null);
@@ -275,6 +286,20 @@ public class LocationDialog extends JDialog {
 		contentPanel.add(scrollPane);
 		
 		pack();
+		
+		ThreadStore ts = new ThreadStore();
+		ts.addAndRun(new Thread(new Runnable() {
+			public void run() 
+			{
+				OCUser user = OCUser.getOCUser();
+				try {
+					if( user.getOkapiToken() != null && OKAPI.getUUID(user) != null )
+					{
+//						btnRetrieve.setEnabled(true);
+					}
+				} catch (Exception e) {}
+			}
+		}));
 	}
 
 }

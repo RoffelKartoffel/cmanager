@@ -53,7 +53,7 @@ public class MainWindow extends JFrame {
 	 */
 	public MainWindow() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(new Dimension(750, 550));
+		setSize(new Dimension(850, 550));
 		setLocationRelativeTo(null);
 		
 		JMenuBar menuBar = new JMenuBar();
@@ -79,7 +79,7 @@ public class MainWindow extends JFrame {
 			public void actionPerformed(ActionEvent e) 
 			{
 				try {
-					CacheListController.newCLC( desktopPane, mnWindows, null );
+					CacheListController.newCLC( desktopPane, mnWindows, (Location)comboBox.getSelectedItem(), null );
 				} catch (Throwable e1) {
 				}	
 			}
@@ -355,6 +355,12 @@ public class MainWindow extends JFrame {
 		panel.add(lblNewLabel);
 		
 		comboBox = new JComboBox();
+		comboBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) 
+			{
+				propagateSelectedLocationComboboxEntry();
+			}
+		});
 		comboBox.setFont(new Font("Dialog", Font.BOLD, 10));
 		panel.add(comboBox);
 		
@@ -368,24 +374,33 @@ public class MainWindow extends JFrame {
 				ld.setVisible(true);
 
 				if( ld.modified )
+				{
 					updateLocationCombobox();
+					propagateSelectedLocationComboboxEntry();
+				}
 			}
 		});
 		btnEdit.setFont(new Font("Dialog", Font.BOLD, 10));
 		panel.add(btnEdit);
 		
 		updateLocationCombobox();
+		propagateSelectedLocationComboboxEntry();
 	}
 	
 	private void updateLocationCombobox()
 	{
 		ArrayList<Location> locations = LocationList.getList().getLocations();
 		
-		comboBox.removeAll();
+		comboBox.removeAllItems();
 		for(Location l : locations)
 			comboBox.addItem(l);
 	}
-
+	
+	private void propagateSelectedLocationComboboxEntry()
+	{
+		CacheListController.setAllRelativeLocations((Location)comboBox.getSelectedItem());
+		repaint();	//update front most table
+	}
 	
 	private void saveFile(boolean saveAs)
 	{
@@ -460,7 +475,7 @@ public class MainWindow extends JFrame {
 				public void run() {
 					try {
 						if( createNewList )
-				        	CacheListController.newCLC( desktopPane, mnWindows,   
+				        	CacheListController.newCLC( desktopPane, mnWindows, (Location)comboBox.getSelectedItem(),   
 				                  chooser.getSelectedFile().getAbsolutePath() );				        	
 						else
 							CacheListController.getTopViewCacheController(desktopPane).addFromFile(

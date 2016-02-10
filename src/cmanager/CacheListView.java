@@ -13,6 +13,7 @@ import java.awt.Dimension;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
@@ -89,6 +90,12 @@ public class CacheListView extends JInternalFrame {
 //		TableRowSorter<TableModel> sorter = new TableRowSorter<>(table.getModel());
 //		table.setRowSorter(sorter);
 		
+		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+		centerRenderer.setHorizontalAlignment( JLabel.CENTER );
+		table.getColumnModel().getColumn(3).setCellRenderer( centerRenderer );
+		table.getColumnModel().getColumn(4).setCellRenderer( centerRenderer );
+		table.getColumnModel().getColumn(8).setCellRenderer( centerRenderer );
+		
 		
 		panelFilters = new JPanel();
 		panelFilters.setVisible(false);
@@ -97,7 +104,7 @@ public class CacheListView extends JInternalFrame {
 		
 		
 		final JScrollPane scrollPane = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		scrollPane.setMinimumSize(new Dimension(200, 300));
+		scrollPane.setMinimumSize(new Dimension(300, 300));
 
 		
 		final JSplitPane splitPane1 = new JSplitPane();
@@ -301,7 +308,7 @@ public class CacheListView extends JInternalFrame {
 	
 	public void updateCachePanelToSelection()
 	{
-		CacheListController.CLCTableModel model = (CacheListController.CLCTableModel)table.getModel();
+		CacheListModel.CLMTableModel model = (CacheListModel.CLMTableModel)table.getModel();
 		if( table.getSelectedRows().length == 1 )
 		{
 			Geocache g = model.getObject( table.getSelectedRow() );
@@ -319,7 +326,7 @@ public class CacheListView extends JInternalFrame {
 		
 		mapViewer.removeAllMapMarkers();
 		
-		CacheListController.CLCTableModel tableModel = (CacheListController.CLCTableModel)table.getModel();
+		CacheListModel.CLMTableModel tableModel = (CacheListModel.CLMTableModel)table.getModel();
 		if( table.getSelectedRows().length > 0 )
 			for( int selection : table.getSelectedRows() )
 			{
@@ -425,7 +432,7 @@ public class CacheListView extends JInternalFrame {
 		LinkedList<Geocache> list = new LinkedList<>();
 		list.addAll(list_in);
 		
-		CacheListController.CLCTableModel tableModel = (CacheListController.CLCTableModel)table.getModel();
+		CacheListModel.CLMTableModel tableModel = (CacheListModel.CLMTableModel)table.getModel();
 		for(int i=0; !list_in.isEmpty() && i < table.getRowCount(); i++)
 		{
 			Geocache gTable = tableModel.getObject( i );
@@ -479,7 +486,7 @@ public class CacheListView extends JInternalFrame {
 	
 	public ArrayList<Geocache> getSelectedCaches()
 	{
-		CacheListController.CLCTableModel model = (CacheListController.CLCTableModel)table.getModel();
+		CacheListModel.CLMTableModel model = (CacheListModel.CLMTableModel)table.getModel();
 		ArrayList<Geocache> selected = new ArrayList<>();
 		for( int row : table.getSelectedRows() )
 		{
@@ -493,8 +500,13 @@ public class CacheListView extends JInternalFrame {
 	
 	public void resetView()
 	{
-		((AbstractTableModel)table.getModel()).fireTableDataChanged();
+		updateTableView();
 		panelCache.setCache(null);
+	}
+	
+	public void updateTableView()
+	{
+		((AbstractTableModel)table.getModel()).fireTableDataChanged();
 	}
 	
 	public static void fixSplitPanes(JSplitPane pane1, JSplitPane pane2)

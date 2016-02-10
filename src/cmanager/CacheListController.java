@@ -18,14 +18,16 @@ import javax.swing.event.InternalFrameEvent;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableColumn;
 
+import cmanager.CacheListModel.CLMTableModel;
+
 
 public class CacheListController {
 	
 	private static ArrayList<CacheListController> controllerList = new ArrayList<CacheListController>();
 	
-	public static CacheListController newCLC(JDesktopPane desktop, JMenu mnWindows, String path) throws Throwable
+	public static CacheListController newCLC(JDesktopPane desktop, JMenu mnWindows, Location relativeLocation, String path) throws Throwable
 	{
-		CacheListController clc = new CacheListController(desktop, mnWindows, path);
+		CacheListController clc = new CacheListController(desktop, mnWindows, relativeLocation, path);
 		controllerList.add(clc);
 		return clc;
 	}
@@ -43,6 +45,9 @@ public class CacheListController {
 	
 	public static CacheListController getTopViewCacheController(JDesktopPane desktop)
 	{
+		if( desktop.getAllFrames().length == 0  )
+			return null;
+		
 		JInternalFrame jif = desktop.getAllFrames()[0];
 		return CacheListController.getCacheListController(jif);
 	}
@@ -50,6 +55,12 @@ public class CacheListController {
 	public static CacheListView getTopView(JDesktopPane desktop)
 	{
 		return (CacheListView)desktop.getAllFrames()[0];
+	}
+	
+	public static void setAllRelativeLocations(Location rl)
+	{
+		for(CacheListController clc : controllerList )
+			clc.setRelativeLocation(rl);
 	}
 	
 //////////////////////////////////////	
@@ -73,10 +84,12 @@ public class CacheListController {
 	
 
 	
-	public CacheListController(final JDesktopPane desktop, final JMenu mnWindows, String path) throws Throwable
+	public CacheListController(final JDesktopPane desktop, final JMenu mnWindows, Location relativeLocation, String path) throws Throwable
 	{
 		if(path != null)
 			model.load(path);
+		
+		setRelativeLocation(relativeLocation);
 		
 		// set up the view
 		view = new CacheListView(this);
@@ -147,6 +160,10 @@ public class CacheListController {
 	
 	public CacheListView getView(){
 		return view;
+	}
+	
+	public void setRelativeLocation(Location rl){
+		model.setRelativeLocation(rl);
 	}
 	
 	
@@ -272,90 +289,8 @@ public class CacheListController {
 		}	
 	}
 	
-//////////////////////////////////////
-//////////////////////////////////////
-/////// Table model
-//////////////////////////////////////
-//////////////////////////////////////
-	
-	public CLCTableModel getTableModel(){
-		return new CLCTableModel();
-	}
-	
-	public class CLCTableModel extends AbstractTableModel {
-
-		 /**
-		 * 
-		 */
-		private static final long serialVersionUID = -6159661237715863643L;
-
-		public String getColumnName(int col) {
-			 switch (col)
-			 {
-			 case 0:
-				 return "Code";
-			 case 1:
-				 return "Name";
-			 case 2:
-				 return "Type";
-			 case 3:
-				 return "Difficulty";
-			 case 4:
-				 return "Terrain";
-			 case 5:
-				 return "Lat";
-			 case 6:
-				 return "Lon";
-			 case 7:
-				 return "Owner";
-			 }
-			 
-		     return null;
-	    }
-		
-		@Override
-		public int getColumnCount() {
-			return 8;
-		}
-
-		@Override
-		public int getRowCount() {
-			return model.size();
-		}
-
-		public Geocache getObject(int row){
-			return model.get(row);
-		}
-		
-		@Override
-		public Object getValueAt(int arg0, int arg1) {
-			Geocache g = getObject(arg0);
-			
-			switch( arg1 )
-			{
-			case 0:
-				return g.getCode();
-			case 1:
-				return g.getName();
-			case 2:
-				return g.getTypeAsNice();
-			case 3:
-				return g.getDifficulty().toString();
-			case 4:
-				return g.getTerrain().toString();
-			case 5:
-				return g.getCoordinate().getLat().toString();
-			case 6:
-				return g.getCoordinate().getLon().toString();
-			case 7:
-				String owner = g.getOwner();
-				return owner != null ? owner : "";
-				
-			default:
-				return null;
-			}
-		}
-		
+	public CLMTableModel getTableModel(){
+		return model.getTableModel();
 	}
 
 }

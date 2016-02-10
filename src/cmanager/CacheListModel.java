@@ -8,10 +8,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 
+import javax.swing.table.AbstractTableModel;
+
 public class CacheListModel 
 {
 	private ArrayList<Geocache> list = new ArrayList<Geocache>();
 	private LinkedList<Waypoint> orphandWaypoints = new LinkedList<>();
+	private CacheListModel THIS = this;
+	private Location relativeLocation;
 	
 	private ArrayList<CacheListFilterModel> filters = new ArrayList<>();
 	
@@ -38,6 +42,10 @@ public class CacheListModel
 				break;
 			}
 		}
+	}
+	
+	public void setRelativeLocation(Location rl){
+		relativeLocation = rl;
 	}
 	
 	private void matchOrphands(Geocache g) 
@@ -171,4 +179,95 @@ public class CacheListModel
 		
 		System.gc();
 	}
+	
+//////////////////////////////////////
+//////////////////////////////////////
+/////// Table model
+//////////////////////////////////////
+//////////////////////////////////////
+	
+	public CLMTableModel getTableModel(){
+		return new CLMTableModel();
+	}
+	
+	public class CLMTableModel extends AbstractTableModel {
+	
+		/**
+		* 
+		*/
+		private static final long serialVersionUID = -6159661237715863643L;
+		
+		public String getColumnName(int col) {
+			switch (col)
+			{
+				case 0:
+					return "Code";
+				case 1:
+					return "Name";
+				case 2:
+					return "Type";
+				case 3:
+					return "Difficulty";
+				case 4:
+					return "Terrain";
+				case 5:
+					return "Lat";
+				case 6:
+					return "Lon";
+				case 7:
+					return "Owner";
+				case 8:
+					return "Distance (km)";
+			}
+			
+			return null;
+		}
+		
+		@Override
+		public int getColumnCount() {
+			return 9;
+		}
+		
+		@Override
+		public int getRowCount() {
+			return THIS.size();
+		}
+		
+		public Geocache getObject(int row){
+			return THIS.get(row);
+		}
+		
+		@Override
+		public Object getValueAt(int arg0, int arg1) {
+			Geocache g = getObject(arg0);
+			
+			switch( arg1 )
+			{
+				case 0:
+					return g.getCode();
+				case 1:
+					return g.getName();
+				case 2:
+					return g.getTypeAsNice();
+				case 3:
+					return g.getDifficulty().toString();
+				case 4:
+					return g.getTerrain().toString();
+				case 5:
+					return g.getCoordinate().getLat().toString();
+				case 6:
+					return g.getCoordinate().getLon().toString();
+				case 7:
+					String owner = g.getOwner();
+					return owner != null ? owner : "";
+				case 8:
+					return relativeLocation != null ? g.getCoordinate().distanceSphereRounded(relativeLocation) : "";
+				
+				default:
+				return null;
+			}
+		}
+	
+	}
+	
 }

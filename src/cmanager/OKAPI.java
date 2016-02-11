@@ -279,6 +279,33 @@ public class OKAPI
 //		object><boolean key="success">true</boolean><string key="message">Your cache log entry was posted successfully.</string><string key="log_uuid">e1d494fc-0ab4-48b0-b709-aa566f20dc4d</string></object>
 	}
 	
+	
+	public static Coordinate getHomeCoordinates(OCUser user) throws MalFormedException, IOException
+	{
+		String uuid = getUUID(user);
+		
+		String url = "http://www.opencaching.de/okapi/services/users/user" +
+				"?format=xmlmap2" + 
+				"&fields=home_location" +
+				"&user_uuid=" + uuid;
+				
+		OAuthService service = getOAuthService();
+		OAuthRequest request = new OAuthRequest(Verb.GET, url);
+		service.signRequest(user.getOkapiToken(), request); // the access token from step 4
+		Response response = request.send();
+		String http = response.getBody();
+		
+		// <object><string key="home_location">53.047117|9.608</string></object>
+		XMLElement root = XMLParser.parse( http );
+		for(XMLElement e : root.getChild("object").getChildren() )
+			if( e.attrIs("key", "home_location") )
+			{
+				String[] parts = e.getUnescapedBody().split("\\|");
+				return new Coordinate(parts[0], parts[1]);
+			}
+		
+		return null;
+	}
 
 
 	

@@ -223,6 +223,31 @@ public class CacheListModel
 			return null;
 		}
 		
+		public Class<?> getColumnClass(int columnIndex) {
+			switch (columnIndex)
+			{
+				case 0:
+				case 1:
+				case 2:
+					return String.class;
+					
+				case 3:
+				case 4:
+				case 5:
+				case 6:
+					return Double.class;
+					
+				
+				case 7:
+					return String.class;
+					
+				case 8:
+					return Double.class;
+			}
+	        
+	        return null;
+	    }
+		
 		@Override
 		public int getColumnCount() {
 			return 9;
@@ -250,13 +275,13 @@ public class CacheListModel
 				case 2:
 					return g.getTypeAsNice();
 				case 3:
-					return g.getDifficulty().toString();
+					return g.getDifficulty();
 				case 4:
-					return g.getTerrain().toString();
+					return g.getTerrain();
 				case 5:
-					return g.getCoordinate().getLat().toString();
+					return g.getCoordinate().getLat();
 				case 6:
-					return g.getCoordinate().getLon().toString();
+					return g.getCoordinate().getLon();
 				case 7:
 					String owner = g.getOwner();
 					return owner != null ? owner : "";

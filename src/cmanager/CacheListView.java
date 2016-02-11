@@ -94,6 +94,8 @@ public class CacheListView extends JInternalFrame {
 		centerRenderer.setHorizontalAlignment( JLabel.CENTER );
 		table.getColumnModel().getColumn(3).setCellRenderer( centerRenderer );
 		table.getColumnModel().getColumn(4).setCellRenderer( centerRenderer );
+		table.getColumnModel().getColumn(5).setCellRenderer( centerRenderer );
+		table.getColumnModel().getColumn(6).setCellRenderer( centerRenderer );
 		table.getColumnModel().getColumn(8).setCellRenderer( centerRenderer );
 		
 		

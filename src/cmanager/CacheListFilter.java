@@ -11,6 +11,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
 import javax.swing.JToggleButton;
@@ -36,7 +37,7 @@ public abstract class CacheListFilter extends JPanel
 	protected JTextField textField;
 	private JPanel panel_4;
 	
-	private Runnable runOnRemove = null;
+	private ArrayList<Runnable> runOnRemove = new ArrayList<>();
 	private Runnable runOnFilterUpdate = null;
 	protected Runnable runDoModelUpdateNow = null;
 	
@@ -145,14 +146,15 @@ public abstract class CacheListFilter extends JPanel
 				parent.remove(THIS);
 				parent.revalidate();
 				
-				runOnRemove.run();
+				for(Runnable action : runOnRemove)
+					action.run();
 			}
 		});
 
 	}
 	
 	public void addRemoveAction(Runnable action){
-		runOnRemove = action;
+		runOnRemove.add(action);
 	}
 	
 	public void addFilterUpdateAction(Runnable action){

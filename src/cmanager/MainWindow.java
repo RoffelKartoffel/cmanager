@@ -279,6 +279,8 @@ public class MainWindow extends JFrame {
 		});
 		mntmAddFilter.add(mntmNotFoundBy);
 		
+		
+		
 		JSeparator separator_5 = new JSeparator();
 		mnFilter.add(separator_5);
 		
@@ -363,6 +365,37 @@ public class MainWindow extends JFrame {
 		});
 		comboBox.setFont(new Font("Dialog", Font.BOLD, 10));
 		panel.add(comboBox);
+		
+		
+		JMenuItem mntmDistance = new JMenuItem("Distance");
+		mntmDistance.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) 
+			{
+				final CacheListFilterDistance filter = new CacheListFilterDistance();
+				CacheListController.getTopViewCacheController(desktopPane).addFilter(
+						 filter );
+				
+				// set current location
+				filter.setLocation((Location)comboBox.getSelectedItem());
+				
+				// update filter on location change
+				final ActionListener al = new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						filter.setLocation((Location)comboBox.getSelectedItem());
+					}
+				};
+				comboBox.addActionListener(al);
+				
+				// remove update hook on removal
+				filter.addRemoveAction( new Runnable() {
+					public void run() {
+						comboBox.removeActionListener(al);
+					}
+				});
+			}
+		});
+//		mntmAddFilter.add(mntmDistance);
+		
 		
 		JButton btnEdit = new JButton("Edit");
 		btnEdit.addActionListener(new ActionListener() {

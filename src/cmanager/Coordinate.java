@@ -41,15 +41,15 @@ public class Coordinate implements Serializable
 		// http://www.kompf.de/gps/distcalc.html
 		// mit dist: Entfernung in km 
 		
-		final double km = 6378.388 * 2 * Math.PI / 360; 
-		double dist = km * Math.acos(Math.sin(lat) * Math.sin(c2.lat) 
-				+ Math.cos(lat) * Math.cos(c2.lat) * Math.cos(c2.lon - lon));
-		return dist;
+		double lat1 = (lat + c2.lat) / 2 * Math.PI / 360;
+		double dx = 111.3 * Math.cos(lat1) * (lon - c2.lon);
+		double dy = 111.3 * (lat - c2.lat);
+		return Math.sqrt(dx * dx + dy * dy);
 	}
 	
 	public double distanceSphereRounded(Coordinate c2)
 	{
-		return round(distance(c2), 3);
+		return round(distanceSphere(c2), 3);
 	}
 	
 	public static double round(double value, int places) {
@@ -60,15 +60,15 @@ public class Coordinate implements Serializable
 	    return bd.doubleValue();
 	}
 	
-	public double distance(Coordinate c2)
-	{
-		// quick version
-		// http://www.kompf.de/gps/distcalc.html
-		
-		final double dx = 71.5 * (lon - c2.lon);
-		final double dy = 111.3 * (lat - c2.lat);
-		double distance = Math.sqrt(dx * dx + dy * dy);
-		return distance;
-	}
+//	public double distance(Coordinate c2)
+//	{
+//		// quick version
+//		// http://www.kompf.de/gps/distcalc.html
+//		
+//		final double dx = 71.5 * (lon - c2.lon);
+//		final double dy = 111.3 * (lat - c2.lat);
+//		double distance = Math.sqrt(dx * dx + dy * dy);
+//		return distance;
+//	}
 
 }

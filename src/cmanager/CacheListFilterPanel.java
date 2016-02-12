@@ -17,11 +17,11 @@ import javax.swing.SwingConstants;
 import javax.swing.JToggleButton;
 import javax.swing.BoxLayout;
 
-public abstract class CacheListFilter extends JPanel 
+public abstract class CacheListFilterPanel extends JPanel 
 {
 	private static final long serialVersionUID = -6181151635761995945L;
 	
-	private CacheListFilter THIS = this;
+	private CacheListFilterPanel THIS = this;
 	private JTextField txtLinks;
 	private JTextField txtRechts;
 	private JLabel lblLinks;
@@ -38,13 +38,13 @@ public abstract class CacheListFilter extends JPanel
 	private JPanel panel_4;
 	
 	private ArrayList<Runnable> runOnRemove = new ArrayList<>();
-	private Runnable runOnFilterUpdate = null;
 	protected Runnable runDoModelUpdateNow = null;
+	protected ArrayList<Runnable> runOnFilterUpdate = new ArrayList<>();
 	
 	/**
 	 * Create the panel.
 	 */
-	public CacheListFilter() {
+	public CacheListFilterPanel() {
 		
 		KeyAdapter keyEnterUpdate = new KeyAdapter() {
 			@Override
@@ -73,7 +73,8 @@ public abstract class CacheListFilter extends JPanel
 			public void actionPerformed(ActionEvent arg0) 
 			{
 				runDoModelUpdateNow.run();
-				runOnFilterUpdate.run();
+				for(Runnable action : runOnFilterUpdate)
+					action.run();
 			}
 		});
 		
@@ -83,7 +84,8 @@ public abstract class CacheListFilter extends JPanel
 			{
 				inverted = tglbtnInvert.isSelected();
 				runDoModelUpdateNow.run();
-				runOnFilterUpdate.run();
+				for(Runnable action : runOnFilterUpdate)
+					action.run();
 			}
 		});
 		panel_3.add(tglbtnInvert);
@@ -153,15 +155,16 @@ public abstract class CacheListFilter extends JPanel
 
 	}
 	
+	public void addRunOnFilterUpdate(Runnable action)
+	{
+		runOnFilterUpdate.add(action);
+	}
+	
 	public void addRemoveAction(Runnable action){
 		runOnRemove.add(action);
 	}
 	
-	public void addFilterUpdateAction(Runnable action){
-		runOnFilterUpdate = action;
-	}
-	
-	
+		
 
 	protected JLabel getLblLinks() {
 		return lblLinks;

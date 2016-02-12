@@ -2,7 +2,7 @@ package cmanager;
 
 import java.util.ArrayList;
 
-public abstract class CacheListFilterModel extends CacheListFilter
+public abstract class CacheListFilterModel extends CacheListFilterPanel
 {
 	private static final long serialVersionUID = 6947085305393841410L;
 

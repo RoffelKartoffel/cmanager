@@ -562,7 +562,7 @@ public class CacheListView extends JInternalFrame {
 				clc.removeFilter(filter);
 			}
 		});
-		filter.addFilterUpdateAction(new Runnable() {
+		filter.addRunOnFilterUpdate(new Runnable() {
 			public void run() {
 				clc.filtersUpdated();
 			}

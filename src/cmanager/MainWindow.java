@@ -394,7 +394,7 @@ public class MainWindow extends JFrame {
 				});
 			}
 		});
-//		mntmAddFilter.add(mntmDistance);
+		mntmAddFilter.add(mntmDistance);
 		
 		
 		JButton btnEdit = new JButton("Edit");

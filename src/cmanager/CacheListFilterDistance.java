@@ -30,6 +30,7 @@ public class CacheListFilterDistance extends CacheListFilterModel
 		if( location == null || maxDistance == null)
 			return true;
 		
-		return g.getCoordinate().distanceSphere(location) < maxDistance;
+		double distance = g.getCoordinate().distanceSphere(location);
+		return distance < maxDistance;
 	}
 }

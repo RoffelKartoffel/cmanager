@@ -1,6 +1,8 @@
 package cmanager;
 
-public class GeocacheAttribute 
+import java.io.Serializable;
+
+public class GeocacheAttribute implements Serializable
 {
 	private int ID;
 	private int inc;

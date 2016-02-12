@@ -17,17 +17,28 @@ public class CacheListModel
 	private CacheListModel THIS = this;
 	private Location relativeLocation;
 	
+	private boolean refilteringRequired = true;
 	private ArrayList<CacheListFilterModel> filters = new ArrayList<>();
+	private ArrayList<Geocache> list_filtered;
 	
 	
 	public void addCache(Geocache g){
 		list.add(g);
 		matchOrphands(g);
+		
+		refilteringRequired = true;
 	}
 	
 	public void addFilter(CacheListFilterModel filter)
 	{
+		filter.addRunOnFilterUpdate(new Runnable() {
+			public void run() {
+				refilteringRequired = true;
+			}
+		});
 		filters.add(filter);
+		
+		refilteringRequired = true;
 	}
 	
 	public void removeFilter(CacheListFilterModel filter)
@@ -42,9 +53,17 @@ public class CacheListModel
 				break;
 			}
 		}
+		
+		refilteringRequired = true;
 	}
 	
-	public void setRelativeLocation(Location rl){
+	public void filterUpdate()
+	{
+		refilteringRequired = true;
+	}
+	
+	public void setRelativeLocation(Location rl)
+	{
 		relativeLocation = rl;
 	}
 	
@@ -91,6 +110,8 @@ public class CacheListModel
 					list.remove(i);
 					break;
 				}
+		
+		refilteringRequired = true;
 	}
 	
 	public void addCaches(ArrayList<Geocache> addList)
@@ -109,14 +130,20 @@ public class CacheListModel
 				addCache(gAdd);
 		}
 		
+		refilteringRequired = true;
 	}
 	
 	public ArrayList<Geocache> getList() 
 	{
+		if( !refilteringRequired )
+			return list_filtered;
+		
 		ArrayList<Geocache> filtered = new ArrayList<>( list );
 		for(CacheListFilterModel filter : filters)
 			filtered = filter.getFiltered( filtered );
 		
+		refilteringRequired = false;
+		list_filtered = filtered;
 		return filtered;
 	}
 	
@@ -169,6 +196,7 @@ public class CacheListModel
 			}
 		});
 		
+		refilteringRequired = true;
 	}
 	
 	public void store(String pathToGPX, String name) throws Throwable

@@ -313,7 +313,7 @@ public class CacheListView extends JInternalFrame {
 		CacheListModel.CLMTableModel model = (CacheListModel.CLMTableModel)table.getModel();
 		if( table.getSelectedRows().length == 1 )
 		{
-			Geocache g = model.getObject( table.getSelectedRow() );
+			Geocache g = model.getObject( table.convertRowIndexToModel(table.getSelectedRow()) );
 			panelCache.setCache(g);
 		}	
 		if( table.getSelectedRows().length == 0 )
@@ -332,7 +332,7 @@ public class CacheListView extends JInternalFrame {
 		if( table.getSelectedRows().length > 0 )
 			for( int selection : table.getSelectedRows() )
 			{
-				Geocache g = tableModel.getObject( selection );
+				Geocache g = tableModel.getObject( table.convertRowIndexToModel(selection) );
 				addMapMarker(g);
 			}
 		else
@@ -437,7 +437,7 @@ public class CacheListView extends JInternalFrame {
 		CacheListModel.CLMTableModel tableModel = (CacheListModel.CLMTableModel)table.getModel();
 		for(int i=0; !list_in.isEmpty() && i < table.getRowCount(); i++)
 		{
-			Geocache gTable = tableModel.getObject( i );
+			Geocache gTable = tableModel.getObject( table.convertRowIndexToModel(i) );
 			
 			Iterator<Geocache> it = list.iterator();
 			while(it.hasNext())
@@ -492,7 +492,7 @@ public class CacheListView extends JInternalFrame {
 		ArrayList<Geocache> selected = new ArrayList<>();
 		for( int row : table.getSelectedRows() )
 		{
-			Geocache g = model.getObject( row );
+			Geocache g = model.getObject( table.convertRowIndexToModel(row) );
 //			panelCache.setCache(g);
 			selected.add(g);
 		}	

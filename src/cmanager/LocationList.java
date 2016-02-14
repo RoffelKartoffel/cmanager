@@ -36,8 +36,11 @@ public class LocationList
 	{
 		String base64 = Settings.getS(Settings.Key.LOCATION_LIST);
 		
-		ByteArrayInputStream bis = new ByteArrayInputStream(Base64.decodeBase64(base64));
-		locations = FileHelper.deserialize(bis, new ArrayList<Location>().getClass());
+		if(base64 != null)
+		{
+			ByteArrayInputStream bis = new ByteArrayInputStream(Base64.decodeBase64(base64));
+			locations = FileHelper.deserialize(bis, new ArrayList<Location>().getClass());
+		}
 	}
 	
 	public ArrayList<Location> getLocations()

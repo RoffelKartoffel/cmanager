@@ -242,9 +242,23 @@ public class MainWindow extends JFrame {
 		
 		JSeparator separator_3 = new JSeparator();
 		mnList.add(separator_3);
+
 		
-		JMenu mnFilter = new JMenu("Filter");
-		mnList.add(mnFilter);
+		JSeparator separator_4 = new JSeparator();
+		mnList.add(separator_4);
+		
+		JMenuItem mntmAddFromFile = new JMenuItem("Add from File");
+		mntmAddFromFile.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) 
+			{
+				openFile(false);
+			}
+		});
+		mnList.add(mntmAddFromFile);
+		
+		final JMenu mnFilter = new JMenu("Filter");
+		mnFilter.setEnabled(false);
+		menuBar.add(mnFilter);
 		
 		JMenu mntmAddFilter = new JMenu("Add");
 		mnFilter.add(mntmAddFilter);
@@ -302,19 +316,36 @@ public class MainWindow extends JFrame {
 			}
 		});
 		mnFilter.add(mntmDeleteCachesNot);
-
 		
-		JSeparator separator_4 = new JSeparator();
-		mnList.add(separator_4);
 		
-		JMenuItem mntmAddFromFile = new JMenuItem("Add from File");
-		mntmAddFromFile.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) 
+		JMenuItem mntmDistance = new JMenuItem("Distance");
+		mntmDistance.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) 
 			{
-				openFile(false);
+				final CacheListFilterDistance filter = new CacheListFilterDistance();
+				CacheListController.getTopViewCacheController(desktopPane).addFilter(
+						 filter );
+				
+				// set current location
+				filter.setLocation((Location)comboBox.getSelectedItem());
+				
+				// update filter on location change
+				final ActionListener al = new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						filter.setLocation((Location)comboBox.getSelectedItem());
+					}
+				};
+				comboBox.addActionListener(al);
+				
+				// remove update hook on removal
+				filter.addRemoveAction( new Runnable() {
+					public void run() {
+						comboBox.removeActionListener(al);
+					}
+				});
 			}
 		});
-		mnList.add(mntmAddFromFile);
+		mntmAddFilter.add(mntmDistance);
 		
 		
 		mnWindows.setEnabled(false);
@@ -341,6 +372,7 @@ public class MainWindow extends JFrame {
 				mntmSave.setEnabled( visible );
 				mntmSaveAs.setEnabled( visible );
 				mnList.setEnabled( visible );
+				mnFilter.setEnabled( visible );
 //				mntmDeleteSelectedCaches.setEnabled( visible );
 				mnWindows.setEnabled( visible );
 			}
@@ -375,36 +407,6 @@ public class MainWindow extends JFrame {
 		});
 		comboBox.setFont(new Font("Dialog", Font.BOLD, 10));
 		panel.add(comboBox);
-		
-		
-		JMenuItem mntmDistance = new JMenuItem("Distance");
-		mntmDistance.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) 
-			{
-				final CacheListFilterDistance filter = new CacheListFilterDistance();
-				CacheListController.getTopViewCacheController(desktopPane).addFilter(
-						 filter );
-				
-				// set current location
-				filter.setLocation((Location)comboBox.getSelectedItem());
-				
-				// update filter on location change
-				final ActionListener al = new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						filter.setLocation((Location)comboBox.getSelectedItem());
-					}
-				};
-				comboBox.addActionListener(al);
-				
-				// remove update hook on removal
-				filter.addRemoveAction( new Runnable() {
-					public void run() {
-						comboBox.removeActionListener(al);
-					}
-				});
-			}
-		});
-		mntmAddFilter.add(mntmDistance);
 		
 		
 		JButton btnEdit = new JButton("Edit");

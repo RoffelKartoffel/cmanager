@@ -25,9 +25,14 @@ public class CacheListController {
 	
 	private static ArrayList<CacheListController> controllerList = new ArrayList<CacheListController>();
 	
-	public static CacheListController newCLC(JDesktopPane desktop, JMenu mnWindows, Location relativeLocation, String path) throws Throwable
+	public static CacheListController newCLC(
+			JDesktopPane desktop, 
+			JMenu mnWindows, 
+			Location relativeLocation, 
+			String path,
+			CacheListView.RunLocationDialogI ldi) throws Throwable
 	{
-		CacheListController clc = new CacheListController(desktop, mnWindows, relativeLocation, path);
+		CacheListController clc = new CacheListController(desktop, mnWindows, relativeLocation, path, ldi);
 		controllerList.add(clc);
 		return clc;
 	}
@@ -84,7 +89,12 @@ public class CacheListController {
 	
 
 	
-	public CacheListController(final JDesktopPane desktop, final JMenu mnWindows, Location relativeLocation, String path) throws Throwable
+	public CacheListController(
+			final JDesktopPane desktop, 
+			final JMenu mnWindows, 
+			Location relativeLocation, 
+			String path,
+			CacheListView.RunLocationDialogI ldi) throws Throwable
 	{
 		if(path != null)
 			model.load(path);
@@ -92,7 +102,7 @@ public class CacheListController {
 		setRelativeLocation(relativeLocation);
 		
 		// set up the view
-		view = new CacheListView(this);
+		view = new CacheListView(this, ldi);
 //		view.setMaximizable(true);
 		view.setMinimumSize(new Dimension(100, 100));
 		view.setClosable(true);

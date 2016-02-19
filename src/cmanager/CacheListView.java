@@ -4,6 +4,7 @@ import javax.swing.InputMap;
 import javax.swing.JComponent;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenuItem;
 
 import java.awt.BasicStroke;
 import java.awt.BorderLayout;
@@ -26,6 +27,8 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
+
 import java.awt.FlowLayout;
 import java.awt.Toolkit;
 
@@ -65,13 +68,14 @@ public class CacheListView extends JInternalFrame {
 	private JLabel lblLblwaypointscount;
 	private CustomJMapViewer mapViewer;
 	private JPanel panelFilters;
+	private Point popupPoint;
 
 
 
 	/**
 	 * Create the frame.
 	 */
-	public CacheListView(final CacheListController clc) {
+	public CacheListView(final CacheListController clc, final CacheListView.RunLocationDialogI ldi) {
 		this.clc = clc;
 		
 		AbstractTableModel atm = clc.getTableModel();
@@ -291,6 +295,27 @@ public class CacheListView extends JInternalFrame {
 		});
 		panelButtons.add(tglbtnCache);
 		panelButtons.add(tglbtnMap);
+		
+		
+		table.addMouseListener(new MouseAdapter() {
+			public void mouseReleased(MouseEvent e) {
+				popupPoint = e.getPoint();
+			}
+		});
+		
+		JPopupMenu jpm = new JPopupMenu();
+		table.setComponentPopupMenu(jpm);
+		
+		final JMenuItem mnLocationDialog = new JMenuItem("Add as Location");
+		mnLocationDialog.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int row = table.rowAtPoint(popupPoint);
+				CacheListModel.CLMTableModel model = (CacheListModel.CLMTableModel)table.getModel();
+				Geocache g = model.getObject( table.convertRowIndexToModel(row) );
+				ldi.openDialog(g);
+			}
+		});
+		jpm.add(mnLocationDialog);
 	
 		table.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).getParent().remove(
 				KeyStroke.getKeyStroke('C', Toolkit.getDefaultToolkit ().getMenuShortcutKeyMask()));
@@ -303,6 +328,7 @@ public class CacheListView extends JInternalFrame {
 		table.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).getParent().remove(
 				KeyStroke.getKeyStroke('I', Toolkit.getDefaultToolkit ().getMenuShortcutKeyMask()));
 
+	
 		
 //		tglbtnCache.doClick();
 //		tglbtnMap.doClick();
@@ -608,5 +634,11 @@ public class CacheListView extends JInternalFrame {
 	}
 	public JMapViewer getMapViewer() {
 		return mapViewer;
+	}
+	
+	
+	public interface RunLocationDialogI
+	{
+		public void openDialog(Geocache g);
 	}
 }

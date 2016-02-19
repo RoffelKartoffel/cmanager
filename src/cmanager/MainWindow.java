@@ -79,7 +79,16 @@ public class MainWindow extends JFrame {
 			public void actionPerformed(ActionEvent e) 
 			{
 				try {
-					CacheListController.newCLC( desktopPane, mnWindows, (Location)comboBox.getSelectedItem(), null );
+					CacheListController.newCLC( 
+							desktopPane, 
+							mnWindows, 
+							(Location)comboBox.getSelectedItem(), 
+							null,
+							new CacheListView.RunLocationDialogI() {
+								public void openDialog(Geocache g) {
+									openLocationDialog(g);
+								}
+							});
 				} catch (Throwable e1) {
 				}	
 			}
@@ -413,16 +422,7 @@ public class MainWindow extends JFrame {
 		btnEdit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
-				LocationDialog ld = new LocationDialog();
-				ld.setLocationRelativeTo(THIS);
-				ld.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
-				ld.setVisible(true);
-
-				if( ld.modified )
-				{
-					updateLocationCombobox();
-					propagateSelectedLocationComboboxEntry();
-				}
+				openLocationDialog(null);
 			}
 		});
 		btnEdit.setFont(new Font("Dialog", Font.BOLD, 10));
@@ -439,6 +439,22 @@ public class MainWindow extends JFrame {
 		comboBox.removeAllItems();
 		for(Location l : locations)
 			comboBox.addItem(l);
+	}
+	
+	private void openLocationDialog(Geocache g)
+	{
+		LocationDialog ld = new LocationDialog();
+		if( g != null )
+			ld.setGeocache(g);
+		ld.setLocationRelativeTo(THIS);
+		ld.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
+		ld.setVisible(true);
+
+		if( ld.modified )
+		{
+			updateLocationCombobox();
+			propagateSelectedLocationComboboxEntry();
+		}
 	}
 	
 	private void propagateSelectedLocationComboboxEntry()
@@ -520,8 +536,16 @@ public class MainWindow extends JFrame {
 				public void run() {
 					try {
 						if( createNewList )
-				        	CacheListController.newCLC( desktopPane, mnWindows, (Location)comboBox.getSelectedItem(),   
-				                  chooser.getSelectedFile().getAbsolutePath() );				        	
+				        	CacheListController.newCLC( 
+				        			desktopPane, 
+				        			mnWindows, 
+				        			(Location)comboBox.getSelectedItem(),   
+				                    chooser.getSelectedFile().getAbsolutePath(),
+				                    new CacheListView.RunLocationDialogI() {
+										public void openDialog(Geocache g) {
+											openLocationDialog(g);
+										}
+									});				        	
 						else
 							CacheListController.getTopViewCacheController(desktopPane).addFromFile(
 									chooser.getSelectedFile().getAbsolutePath() );

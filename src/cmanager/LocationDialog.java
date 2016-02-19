@@ -317,5 +317,12 @@ public class LocationDialog extends JDialog {
 			}
 		}));
 	}
+	
+	public void setGeocache(Geocache g)
+	{
+		txtName.setText(g.getName());
+		txtLat.setText(g.getCoordinate().getLat().toString());
+		txtLon.setText(g.getCoordinate().getLon().toString());
+	}
 
 }

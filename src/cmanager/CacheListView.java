@@ -300,7 +300,8 @@ public class CacheListView extends JInternalFrame {
 				KeyStroke.getKeyStroke('X', Toolkit.getDefaultToolkit ().getMenuShortcutKeyMask()));
 		table.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).getParent().remove(
 				KeyStroke.getKeyStroke('A', Toolkit.getDefaultToolkit ().getMenuShortcutKeyMask()));
-		
+		table.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).getParent().remove(
+				KeyStroke.getKeyStroke('I', Toolkit.getDefaultToolkit ().getMenuShortcutKeyMask()));
 
 		
 //		tglbtnCache.doClick();
@@ -418,19 +419,6 @@ public class CacheListView extends JInternalFrame {
 	{
 		doNotUpdateMakers = true;
 		
-//		CacheListController.CLCTableModel tableModel = (CacheListController.CLCTableModel)table.getModel();
-//		for(int i=0; i < table.getRowCount(); i++)
-//		{
-//			Geocache gTable = tableModel.getObject( i );
-//			
-//			for(Geocache g : list)
-//				if( gTable == g )
-//				{
-//					table.addRowSelectionInterval(i, i);
-//					break;
-//				}
-//		}
-		
 		LinkedList<Geocache> list = new LinkedList<>();
 		list.addAll(list_in);
 		
@@ -450,6 +438,37 @@ public class CacheListView extends JInternalFrame {
 					break;
 				}
 			}
+		}
+		
+		doNotUpdateMakers = false;
+		updateMapMarkers();
+	}
+	
+	private void addRowSelectionInterval(int i1, int i2)
+	{
+		if( i1 > i2 )
+			return;
+		
+		table.addRowSelectionInterval(i1, i2);
+	}
+	
+	public void invertTableSelection()
+	{
+		doNotUpdateMakers = true;
+		
+		if( table.getSelectedRowCount() == 0 )
+		{
+			table.selectAll();
+		}
+		else
+		{
+			int selection[] = table.getSelectedRows();
+			table.clearSelection();
+			
+			addRowSelectionInterval(0, selection[0] -1);	// preceding rows
+			for(int i=0; i<selection.length -1; i++)
+				addRowSelectionInterval(selection[i] +1, selection[i +1] -1);
+			addRowSelectionInterval(selection[selection.length -1] +1, table.getRowCount() -1);	// proceding rows
 		}
 		
 		doNotUpdateMakers = false;

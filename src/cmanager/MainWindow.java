@@ -196,6 +196,16 @@ public class MainWindow extends JFrame {
 		});
 		mnList.add(mntmSelectAll);
 		
+		JMenuItem mntInvertSelection = new JMenuItem("Invert Selection");
+		mntInvertSelection.setAccelerator(KeyStroke.getKeyStroke('I', Toolkit.getDefaultToolkit ().getMenuShortcutKeyMask()));
+		mntInvertSelection.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) 
+			{
+				CacheListController.getTopViewCacheController(desktopPane).getView().invertTableSelection();
+			}
+		});
+		mnList.add(mntInvertSelection);
+		
 		JSeparator separator_6 = new JSeparator();
 		mnList.add(separator_6);
 		mnList.add(mntmCopy);

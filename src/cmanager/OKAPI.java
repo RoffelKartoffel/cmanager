@@ -24,7 +24,7 @@ public class OKAPI
 	
 	public static String usernameToUUID(String username) throws Exception
 	{
-		String url = "http://www.opencaching.de/okapi/services/users/by_username" + 
+		String url = "https://www.opencaching.de/okapi/services/users/by_username" +
 				"?consumer_key=" + CONSUMER_API_KEY +
 				"&format=xmlmap2" + 
 				"&username=" + URLEncoder.encode(username, "UTF-8") +
@@ -52,7 +52,7 @@ public class OKAPI
 		ArrayList<Geocache> caches = new ArrayList<Geocache>();
 		
 		boolean useOAuth = excludeUUID != null;
-		String url = "http://www.opencaching.de/okapi/services/caches/search/nearest" + 
+		String url = "https://www.opencaching.de/okapi/services/caches/search/nearest" +
 			"?consumer_key=" + CONSUMER_API_KEY + 
 			"&format=xmlmap2" + 
 			"&center=" + lat.toString() + "|" + lon.toString() + 
@@ -101,7 +101,7 @@ public class OKAPI
 		if(index >= 0 )
 			return offlineStore.get(index);
 		
-		String http = HTTP.get("http://www.opencaching.de/okapi/services/caches/geocache"+
+		String http = HTTP.get("https://www.opencaching.de/okapi/services/caches/geocache"+
 			"?consumer_key="+ CONSUMER_API_KEY +
 			"&format=xmlmap2" + 
 			"&cache_code=" + code +
@@ -169,7 +169,7 @@ public class OKAPI
 	
 	public static Geocache completeCacheDetails(Geocache g) throws Exception 
 	{
-		String http = HTTP.get("http://www.opencaching.de/okapi/services/caches/geocache"+
+		String http = HTTP.get("https://www.opencaching.de/okapi/services/caches/geocache"+
 				"?consumer_key="+ CONSUMER_API_KEY +
 				"&format=xmlmap2" + 
 				"&cache_code=" + g.getCode() +
@@ -241,7 +241,7 @@ public class OKAPI
 	
 	public static String getUUID(OCUser user) throws MalFormedException, IOException
 	{
-		String url = "http://www.opencaching.de/okapi/services/users/user" +
+		String url = "https://www.opencaching.de/okapi/services/users/user" +
 				"?format=xmlmap2" + 
 				"&fields=uuid";
 		
@@ -262,7 +262,7 @@ public class OKAPI
 	
 	public static void postLog(OCUser user, Geocache cache, GeocacheLog log) throws MalFormedException, UnsupportedEncodingException
 	{
-		String url = "http://www.opencaching.de/okapi/services/logs/submit" +
+		String url = "https://www.opencaching.de/okapi/services/logs/submit" +
 				"?format=xmlmap2" + 
 				"&cache_code=" + URLEncoder.encode( cache.getCode(), "UTF-8") +
 				"&logtype=" + URLEncoder.encode("Found it", "UTF-8") +
@@ -284,7 +284,7 @@ public class OKAPI
 	{
 		String uuid = getUUID(user);
 		
-		String url = "http://www.opencaching.de/okapi/services/users/user" +
+		String url = "https://www.opencaching.de/okapi/services/users/user" +
 				"?format=xmlmap2" + 
 				"&fields=home_location" +
 				"&user_uuid=" + uuid;

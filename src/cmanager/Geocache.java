@@ -264,9 +264,9 @@ public class Geocache implements Serializable, Comparable<String>
 	
 	public String getURL(){
 		if( isGC() )
-			return "http://www.geocaching.com/geocache/" + code;
+			return "https://www.geocaching.com/geocache/" + code;
 		if( isOC() )
-			return "http://www.opencaching.de/" + code;
+			return "https://www.opencaching.de/" + code;
 		
 		return null;
 	}

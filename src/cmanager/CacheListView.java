@@ -55,6 +55,10 @@ import java.awt.Graphics2D;
 import java.awt.List;
 import java.awt.Point;
 import javax.swing.BoxLayout;
+import javax.swing.SwingConstants;
+import javax.swing.border.SoftBevelBorder;
+import javax.swing.border.BevelBorder;
+import javax.swing.JSeparator;
 
 public class CacheListView extends JInternalFrame {
 	/**
@@ -251,10 +255,49 @@ public class CacheListView extends JInternalFrame {
 		
 		JPanel panel_1 = new JPanel();
 		panel.add(panel_1, BorderLayout.SOUTH);
+		panel_1.setLayout(new BorderLayout(10, 0));
 		
 		lblLblwaypointscount = new JLabel("0 Waypoints");
+		lblLblwaypointscount.setHorizontalAlignment(SwingConstants.CENTER);
 		lblLblwaypointscount.setFont(new Font("Dialog", Font.BOLD, 10));
-		panel_1.add(lblLblwaypointscount);
+		panel_1.add(lblLblwaypointscount, BorderLayout.NORTH);
+		
+		final JPanel panelSelected = new JPanel();
+		panel_1.add(panelSelected, BorderLayout.SOUTH);
+		panelSelected.setLayout(new BorderLayout(10, 0));
+		panelSelected.setVisible(false);
+		
+		JSeparator separator = new JSeparator();
+		panelSelected.add(separator, BorderLayout.NORTH);
+		
+		JPanel panel_4 = new JPanel();
+		panelSelected.add(panel_4, BorderLayout.SOUTH);
+		panel_4.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		
+		final JLabel lblSelected = new JLabel("0");
+		lblSelected.setFont(new Font("Dialog", Font.PLAIN, 10));
+		panel_4.add(lblSelected);
+		
+		JLabel lblNewLabel_1 = new JLabel("Selected");
+		lblNewLabel_1.setFont(new Font("Dialog", Font.PLAIN, 10));
+		panel_4.add(lblNewLabel_1);
+		
+		table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent e) 
+			{
+				int selected = table.getSelectedRowCount();
+				if( selected == 0 )
+				{
+					panelSelected.setVisible(false);
+				}
+				else
+				{
+					lblSelected.setText(new Integer(selected).toString());
+					panelSelected.setVisible(true);
+				}
+			}
+		});
+		
 		
 		JPanel panelButtons = new JPanel();
 		panelBar.add(panelButtons, BorderLayout.WEST);

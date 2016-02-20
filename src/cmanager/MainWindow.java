@@ -249,6 +249,19 @@ public class MainWindow extends JFrame {
 		});
 		mnList.add(mntmDeleteSelectedCaches);
 		
+		JSeparator separator_7 = new JSeparator();
+		mnList.add(separator_7);
+		
+		final JMenuItem mntmUndoAction = new JMenuItem("Undo");
+		mntmUndoAction.setAccelerator(KeyStroke.getKeyStroke('Z', Toolkit.getDefaultToolkit ().getMenuShortcutKeyMask()));
+		mntmUndoAction.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) 
+			{
+				CacheListController.getTopViewCacheController(desktopPane).replayLastUndoAction();
+			}
+		});
+		mnList.add(mntmUndoAction);
+		
 		JSeparator separator_3 = new JSeparator();
 		mnList.add(separator_3);
 

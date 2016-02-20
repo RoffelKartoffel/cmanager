@@ -302,5 +302,16 @@ public class CacheListController {
 	public CLMTableModel getTableModel(){
 		return model.getTableModel();
 	}
+	
+	public void replayLastUndoAction()
+	{
+		model.replayLastUndoAction();
+		cachesAddedOrRemoved();
+	}
+	
+	public int getUndoActionCount()
+	{
+		return model.getUndoActionCount();
+	}
 
 }

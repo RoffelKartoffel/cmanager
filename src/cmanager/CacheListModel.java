@@ -21,8 +21,10 @@ public class CacheListModel
 	private ArrayList<CacheListFilterModel> filters = new ArrayList<>();
 	private ArrayList<Geocache> list_filtered;
 	
+	private final int MAX_UNDO_COUNT = 300;
+	private ArrayList<UndoAction> undoActions = new ArrayList<>();
 	
-	public void addCache(Geocache g){
+	private void addCache(Geocache g){
 		list.add(g);
 		matchOrphands(g);
 		
@@ -103,6 +105,8 @@ public class CacheListModel
 	
 	public void removeCaches(ArrayList<Geocache> removeList)
 	{
+		recordUndoAction();
+		
 		for(Geocache remove : removeList)
 			for(int i=0; i < list.size(); i++)
 				if( list.get(i) == remove )
@@ -116,6 +120,8 @@ public class CacheListModel
 	
 	public void addCaches(ArrayList<Geocache> addList)
 	{
+		recordUndoAction();
+		
 		for( Geocache gAdd : addList )
 		{
 			boolean match = false;
@@ -149,6 +155,8 @@ public class CacheListModel
 	
 	public void removeCachesNotInFilter()
 	{
+		recordUndoAction();
+		
 		ArrayList<Geocache> filterList = getList();
 		
 		Iterator<Geocache> i = list.iterator();
@@ -207,6 +215,28 @@ public class CacheListModel
 		
 		System.gc();
 	}
+	
+	private void recordUndoAction()
+	{
+		undoActions.add(new UndoAction( list ));
+		if( undoActions.size() > MAX_UNDO_COUNT )
+			undoActions.remove(0);
+	}
+	
+	public void replayLastUndoAction()
+	{
+		if( undoActions.size() == 0 )
+			return;
+		UndoAction action = undoActions.remove( undoActions.size() -1 );
+		list = action.getState();
+		refilteringRequired = true;
+	}
+	
+	public int getUndoActionCount()
+	{
+		return undoActions.size();
+	}
+	
 	
 //////////////////////////////////////
 //////////////////////////////////////

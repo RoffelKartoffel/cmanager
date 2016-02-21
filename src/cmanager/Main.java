@@ -155,7 +155,7 @@ public class Main
     */
    public static void gc() {
      Object obj = new Object();
-     WeakReference ref = new WeakReference<Object>(obj);
+     WeakReference<Object> ref = new WeakReference<Object>(obj);
      obj = null;
      while(ref.get() != null) {
        System.gc();

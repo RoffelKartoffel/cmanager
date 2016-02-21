@@ -419,7 +419,7 @@ public class MainWindow extends JFrame {
 		lblNewLabel.setFont(new Font("Dialog", Font.BOLD, 10));
 		panel.add(lblNewLabel);
 		
-		comboBox = new JComboBox();
+		comboBox = new JComboBox<Location>();
 		comboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{

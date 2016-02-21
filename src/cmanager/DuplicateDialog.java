@@ -34,14 +34,17 @@ import javax.swing.JLabel;
 public class DuplicateDialog extends JFrame {
 
 	private static final long serialVersionUID = 1L;
+	
 	private JFrame THIS = this;
 	private final JPanel contentPanel = new JPanel();
 	private JTree tree = null;
 	private DefaultMutableTreeNode rootNode = null;
-	private Thread backgroundThread = null;
 	private JProgressBar progressBar = null;
 	private String selectedURL = null;
 	private JScrollPane scrollPaneTree;
+	
+	private volatile boolean stopBackgroundThread = false;
+	private Thread backgroundThread = null;
 	
 
 	/**
@@ -219,10 +222,14 @@ public class DuplicateDialog extends JFrame {
 			panel_1.add(okButton);
 			okButton.setHorizontalAlignment(SwingConstants.RIGHT);
 			okButton.addActionListener(new ActionListener() {
+				@SuppressWarnings("deprecation")
 				public void actionPerformed(ActionEvent e) {
 					THIS.setVisible(false);
 					if( backgroundThread != null )
+					{
+						stopBackgroundThread = true;
 						backgroundThread.stop();
+					}
 					THIS.dispose();
 				}
 			});
@@ -347,7 +354,8 @@ public class DuplicateDialog extends JFrame {
 				} 
 				catch (Throwable e1) 
 				{
-					ExceptionPanel.showErrorDialog(e1);
+					if( !(e1 instanceof ThreadDeath && stopBackgroundThread) )
+						ExceptionPanel.showErrorDialog(e1);
 					THIS.setVisible(false);
 				}
 			}

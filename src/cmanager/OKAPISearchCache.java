@@ -70,10 +70,9 @@ public class OKAPISearchCache
 	{
 		private static final long serialVersionUID = 7106170690451900376L;
 		
-		public int protocolVersion = 0; 
-		
+
 		public DateTime timeStamp;
-		
+
 //		public Double lat;
 //		public Double lon;
 //		public String excludeUUID;

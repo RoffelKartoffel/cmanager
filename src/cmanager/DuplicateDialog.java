@@ -41,7 +41,6 @@ public class DuplicateDialog extends JFrame {
 	private Thread backgroundThread = null;
 	private JProgressBar progressBar = null;
 	private String selectedURL = null;
-	private LogPanel panelLog = null;
 	private JScrollPane scrollPaneTree;
 	
 

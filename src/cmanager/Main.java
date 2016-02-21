@@ -2,34 +2,14 @@ package cmanager;
 
 
 
-import java.awt.BorderLayout;
 import java.awt.Desktop;
-import java.awt.Dimension;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.lang.ref.WeakReference;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.prefs.Preferences;
-
-import javax.lang.model.element.ExecutableElement;
-import javax.swing.BoxLayout;
-import javax.swing.JApplet;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.UIManager;
-import javax.swing.UIManager.LookAndFeelInfo;
-
-import org.apache.commons.lang3.StringEscapeUtils;
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
 
 
 public class Main 
@@ -175,7 +155,7 @@ public class Main
     */
    public static void gc() {
      Object obj = new Object();
-     WeakReference ref = new WeakReference<Object>(obj);
+     WeakReference<Object> ref = new WeakReference<Object>(obj);
      obj = null;
      while(ref.get() != null) {
        System.gc();

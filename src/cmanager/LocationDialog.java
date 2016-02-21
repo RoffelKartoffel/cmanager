@@ -12,27 +12,24 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-import java.awt.GridLayout;
 import javax.swing.border.LineBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.JSeparator;
 import java.awt.Font;
 
 public class LocationDialog extends JDialog {
 
+	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 	private JTable table;
 	private JTextField txtName;

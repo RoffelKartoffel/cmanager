@@ -22,7 +22,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.ContainerEvent;
 import java.awt.event.ContainerListener;
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -420,7 +419,7 @@ public class MainWindow extends JFrame {
 		lblNewLabel.setFont(new Font("Dialog", Font.BOLD, 10));
 		panel.add(lblNewLabel);
 		
-		comboBox = new JComboBox();
+		comboBox = new JComboBox<Location>();
 		comboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{

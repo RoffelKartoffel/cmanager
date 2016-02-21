@@ -18,6 +18,7 @@ import javax.swing.JLayeredPane;
 
 public class AboutDialog extends JDialog {
 
+	private static final long serialVersionUID = 1L;
 	private final JLayeredPane contentPanel = new JLayeredPane();
 
 	

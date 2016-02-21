@@ -4,40 +4,25 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 
 import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeSelectionModel;
 
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.net.URI;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.awt.event.ActionEvent;
 import javax.swing.JTree;
 import java.awt.CardLayout;
-import java.awt.Dialog.ModalityType;
 import java.awt.Dimension;
 
 import javax.swing.JProgressBar;
-import javax.swing.JRootPane;
 import javax.swing.JScrollPane;
-import javax.swing.BoxLayout;
-import java.awt.GridLayout;
-import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
@@ -48,6 +33,7 @@ import javax.swing.JLabel;
 
 public class DuplicateDialog extends JFrame {
 
+	private static final long serialVersionUID = 1L;
 	private JFrame THIS = this;
 	private final JPanel contentPanel = new JPanel();
 	private JTree tree = null;
@@ -55,7 +41,6 @@ public class DuplicateDialog extends JFrame {
 	private Thread backgroundThread = null;
 	private JProgressBar progressBar = null;
 	private String selectedURL = null;
-	private LogPanel panelLog = null;
 	private JScrollPane scrollPaneTree;
 	
 

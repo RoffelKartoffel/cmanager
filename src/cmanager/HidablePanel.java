@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 
 public class HidablePanel extends JPanel {
 
+	private static final long serialVersionUID = 1L;
 	private JPanel panelHidable;
 	
 	/**

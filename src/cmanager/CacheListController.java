@@ -15,7 +15,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JTable;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
-import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableColumn;
 
 import cmanager.CacheListModel.CLMTableModel;

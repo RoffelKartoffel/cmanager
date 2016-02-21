@@ -37,7 +37,7 @@ public class LocationList
 		if(base64 != null)
 		{
 			ByteArrayInputStream bis = new ByteArrayInputStream(Base64.decodeBase64(base64));
-			locations = FileHelper.deserialize(bis, new ArrayList<Location>().getClass());
+			locations = FileHelper.deserialize(bis);
 		}
 	}
 	

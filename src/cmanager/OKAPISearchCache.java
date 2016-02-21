@@ -44,7 +44,7 @@ public class OKAPISearchCache
 		File f = new File(searchToFileName(g, excludeUUID));
 		if( f.exists() )
 		{
-			CacheEntry e = FileHelper.deserializeFromFile(f.getAbsolutePath(), CacheEntry.class);
+			CacheEntry e = FileHelper.deserializeFromFile(f.getAbsolutePath());
 			
 			int randomMonthCount = -1* ThreadLocalRandom.current().nextInt(4, 12 + 1);
 			int randomDayCount = -1* ThreadLocalRandom.current().nextInt(0, 31 + 1);

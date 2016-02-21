@@ -3,6 +3,7 @@ package cmanager;
 public class CacheListFilterDistance extends CacheListFilterModel
 {
 
+	private static final long serialVersionUID = 1L;
 	private Double maxDistance;
 	private Location location;
 

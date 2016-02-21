@@ -17,6 +17,7 @@ import java.awt.FlowLayout;
 
 public class ExceptionPanel extends JPanel {
 	
+	private static final long serialVersionUID = 1L;
 	private static ExceptionPanel THIS = null;
 	
 

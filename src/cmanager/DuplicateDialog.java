@@ -33,6 +33,7 @@ import javax.swing.JLabel;
 
 public class DuplicateDialog extends JFrame {
 
+	private static final long serialVersionUID = 1L;
 	private JFrame THIS = this;
 	private final JPanel contentPanel = new JPanel();
 	private JTree tree = null;

@@ -4,8 +4,6 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import javax.xml.bind.DatatypeConverter;
-
 import org.apache.commons.codec.binary.Base64;
 
 public class LocationList 

@@ -169,7 +169,7 @@ public class MainWindow extends JFrame {
 						user = OCUser.getOCUser();
 						uuid = OKAPI.getUUID(user);
 					}catch(Exception ex){
-						JOptionPane.showMessageDialog(null,"Testing the OKAPI token faild. Check your settings!","Error", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null,"Testing the OKAPI token failed. Check your settings!","Error", JOptionPane.ERROR_MESSAGE);
 						return;
 					}
 					

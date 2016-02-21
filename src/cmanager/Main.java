@@ -10,12 +10,13 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 
 public class Main 
 {
 	public static final String APP_NAME = "cmanager";
-	public static final String VERSION = "0.2v";
+	public static final String VERSION = "0.2w";
 	
 	private static final String JAR_NAME = "cm.jar";
 	private static final String PARAM_HEAP_RESIZED = "resized";
@@ -102,12 +103,20 @@ public class Main
 				JAR_NAME, 
 				PARAM_HEAP_RESIZED );
 		Process p = pb.start();
+		int retval = -1;
 		try {
-			p.waitFor();
+			retval = p.waitFor();
 		} catch (InterruptedException e) {
 		}
 		
-		System.exit(0);
+		if( retval == 0 )
+			System.exit(0);	// New vm ran fine
+		else
+		{
+			String message = "The chosen heap size could not be applied. \n" +
+							"Maybe there are insufficient system resources.";
+		    JOptionPane.showMessageDialog(null, message, "Memory Settings", JOptionPane.INFORMATION_MESSAGE);
+		}
 	}
 	
 

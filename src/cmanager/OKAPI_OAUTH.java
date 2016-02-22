@@ -1,9 +1,7 @@
 package cmanager;
 
-import org.scribe.builder.api.DefaultApi10a;
-import org.scribe.model.Token;
-
-
+import com.github.scribejava.core.builder.api.DefaultApi10a;
+import com.github.scribejava.core.model.Token;
 
 public class OKAPI_OAUTH extends DefaultApi10a
 {

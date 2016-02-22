@@ -305,6 +305,7 @@ public class CacheListController {
 	public void replayLastUndoAction()
 	{
 		model.replayLastUndoAction();
+		modifiedAndUnsafed = true;
 		cachesAddedOrRemoved();
 	}
 	

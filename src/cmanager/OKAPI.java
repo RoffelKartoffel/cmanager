@@ -9,13 +9,14 @@ import java.util.Comparator;
 
 import javax.swing.JOptionPane;
 
-import org.scribe.builder.ServiceBuilder;
-import org.scribe.model.OAuthRequest;
-import org.scribe.model.Response;
-import org.scribe.model.Token;
-import org.scribe.model.Verb;
-import org.scribe.model.Verifier;
-import org.scribe.oauth.OAuthService;
+import com.github.scribejava.core.builder.ServiceBuilder;
+import com.github.scribejava.core.model.OAuthRequest;
+import com.github.scribejava.core.model.Response;
+import com.github.scribejava.core.model.Token;
+import com.github.scribejava.core.model.Verb;
+import com.github.scribejava.core.model.Verifier;
+import com.github.scribejava.core.oauth.OAuth10aService;
+import com.github.scribejava.core.oauth.OAuthService;
 
 public class OKAPI 
 {
@@ -66,7 +67,7 @@ public class OKAPI
 		if( useOAuth )
 		{
 			OAuthService service = getOAuthService();
-			OAuthRequest request = new OAuthRequest(Verb.GET, url);
+			OAuthRequest request = new OAuthRequest(Verb.GET, url, service);
 			service.signRequest(user.getOkapiToken(), request); // the access token from step 4
 			Response response = request.send();
 			http = response.getBody();
@@ -207,19 +208,18 @@ public class OKAPI
 		return g;		
 }
 	
-	private static OAuthService getOAuthService()
+	private static OAuth10aService getOAuthService()
 	{
 		return new ServiceBuilder()
-                .provider(OKAPI_OAUTH.class)
                 .apiKey( CONSUMER_API_KEY )
                 .apiSecret( CONSUMER_SECRET_KEY )
-                .build();
+                .build(new OKAPI_OAUTH());
 	}
 	
 	public static Token requestAuthorization()
 	{
 		// Step One: Create the OAuthService object
-		OAuthService service = getOAuthService();
+		OAuth10aService service = getOAuthService();
 		
 		// Step Two: Get the request token
 		Token requestToken = service.getRequestToken();
@@ -246,7 +246,7 @@ public class OKAPI
 				"&fields=uuid";
 		
 		OAuthService service = getOAuthService();
-		OAuthRequest request = new OAuthRequest(Verb.GET, url);
+		OAuthRequest request = new OAuthRequest(Verb.GET, url, service);
 		service.signRequest(user.getOkapiToken(), request); // the access token from step 4
 		Response response = request.send();
 		String http = response.getBody();
@@ -270,7 +270,7 @@ public class OKAPI
 				"&when=" + URLEncoder.encode(log.getDateStrISO8601NoTime(), "UTF-8");
 		
 		OAuthService service = getOAuthService();
-		OAuthRequest request = new OAuthRequest(Verb.GET, url);
+		OAuthRequest request = new OAuthRequest(Verb.GET, url, service);
 		service.signRequest(user.getOkapiToken(), request); // the access token from step 4
 		request.send();
 		
@@ -290,7 +290,7 @@ public class OKAPI
 				"&user_uuid=" + uuid;
 				
 		OAuthService service = getOAuthService();
-		OAuthRequest request = new OAuthRequest(Verb.GET, url);
+		OAuthRequest request = new OAuthRequest(Verb.GET, url, service);
 		service.signRequest(user.getOkapiToken(), request); // the access token from step 4
 		Response response = request.send();
 		String http = response.getBody();

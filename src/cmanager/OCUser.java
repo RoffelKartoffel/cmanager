@@ -1,6 +1,6 @@
 package cmanager;
 
-import org.scribe.model.Token;
+import com.github.scribejava.core.model.Token;
 
 public class OCUser 
 {

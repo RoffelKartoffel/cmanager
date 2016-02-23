@@ -1,10 +1,7 @@
 package cmanager;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import org.apache.commons.codec.binary.Base64;
 
 public class LocationList 
 {
@@ -32,13 +29,7 @@ public class LocationList
 	
 	private void load() throws ClassNotFoundException, IOException
 	{
-		String base64 = Settings.getS(Settings.Key.LOCATION_LIST);
-		
-		if(base64 != null)
-		{
-			ByteArrayInputStream bis = new ByteArrayInputStream(Base64.decodeBase64(base64));
-			locations = FileHelper.deserialize(bis);
-		}
+		locations = Settings.getSerialized(Settings.Key.LOCATION_LIST);
 	}
 	
 	public ArrayList<Location> getLocations()
@@ -58,13 +49,7 @@ public class LocationList
 	
 	public void setLocations(ArrayList<Location> newLocations) throws IOException
 	{
-		ByteArrayOutputStream bos = new ByteArrayOutputStream();
-		FileHelper.serialize(newLocations, bos);
-		byte[] bytes = bos.toByteArray();
-		
-		String base64 = Base64.encodeBase64String(bytes);
-		Settings.set(Settings.Key.LOCATION_LIST, base64);
-		
+		Settings.setSerialized(Settings.Key.LOCATION_LIST, newLocations);
 		locations = newLocations;
 	}
 	

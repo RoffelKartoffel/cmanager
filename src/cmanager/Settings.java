@@ -1,6 +1,12 @@
 package cmanager;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.Serializable;
 import java.util.prefs.Preferences;
+
+import org.apache.commons.codec.binary.Base64;
 
 public class Settings {
 	
@@ -59,5 +65,25 @@ public class Settings {
 	public static String getS(Key key){
 		return prefs.get(key(key), defaultS(key));
 	}
+	
+	public static void setSerialized(Key key, Serializable val) throws IOException
+	{
+		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		FileHelper.serialize(val, bos);
+		byte[] bytes = bos.toByteArray();
+		
+		String base64 = Base64.encodeBase64String(bytes);
+		Settings.set(key, base64);
+	}
 
+	public static <T extends Serializable> T getSerialized(Key key) throws ClassNotFoundException, IOException
+	{
+		String base64 = Settings.getS(key);
+		
+		if(base64 == null)
+			return null;
+
+		ByteArrayInputStream bis = new ByteArrayInputStream(Base64.decodeBase64(base64));
+		return FileHelper.deserialize(bis);
+	}
 }

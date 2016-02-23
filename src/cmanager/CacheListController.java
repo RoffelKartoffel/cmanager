@@ -69,11 +69,19 @@ public class CacheListController {
 			clc.setRelativeLocation(rl);
 	}
 	
-	public static void storePersistanceInfo() throws IOException
+	public static void storePersistanceInfo(JDesktopPane desktop) throws IOException
 	{
+		CacheListController top = getTopViewCacheController(desktop);
+		
 		ArrayList<PersistenceInfo> pi = new ArrayList<>();
 		for(CacheListController clc : controllerList )
+		{
+			if( clc == top )
+				continue;
 			pi.add( clc.getPersistenceO() );
+		}
+		if( top != null )
+			pi.add( top.getPersistenceO() );
 		
 		Settings.setSerialized(Settings.Key.CLC_LIST, pi);
 	}

@@ -451,7 +451,7 @@ public class MainWindow extends JFrame {
 			public void windowClosing(WindowEvent e) 
 			{
 				try {
-					CacheListController.storePersistanceInfo();
+					CacheListController.storePersistanceInfo(desktopPane);
 				} catch (IOException e1) {
 					ExceptionPanel.showErrorDialog(e1);
 				}

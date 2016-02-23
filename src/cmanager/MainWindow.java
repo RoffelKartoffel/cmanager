@@ -21,7 +21,10 @@ import javax.swing.JOptionPane;
 import java.awt.event.ActionListener;
 import java.awt.event.ContainerEvent;
 import java.awt.event.ContainerListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -30,6 +33,7 @@ import java.awt.Toolkit;
 
 import javax.swing.JSeparator;
 import javax.swing.KeyStroke;
+import javax.swing.SwingUtilities;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JButton;
@@ -442,6 +446,37 @@ public class MainWindow extends JFrame {
 		
 		updateLocationCombobox();
 		propagateSelectedLocationComboboxEntry();
+		
+		this.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) 
+			{
+				try {
+					CacheListController.storePersistanceInfo();
+				} catch (IOException e1) {
+					ExceptionPanel.showErrorDialog(e1);
+				}
+			}
+		});
+		
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() 
+			{
+				actionWithWaitDialog(new Runnable() {
+					public void run() 
+					{
+						CacheListController.reopenPersitantCLCs(
+								desktopPane, 
+				    			mnWindows, 
+				    			(Location)comboBox.getSelectedItem(),   
+				                new CacheListView.RunLocationDialogI() {
+									public void openDialog(Geocache g) {
+										openLocationDialog(g);
+									}
+								});
+					}
+				}, THIS);				
+			}
+		});
 	}
 	
 	private void updateLocationCombobox()

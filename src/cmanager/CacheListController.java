@@ -4,6 +4,8 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyVetoException;
+import java.io.IOException;
+import java.io.Serializable;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -67,6 +69,41 @@ public class CacheListController {
 			clc.setRelativeLocation(rl);
 	}
 	
+	public static void storePersistanceInfo() throws IOException
+	{
+		ArrayList<PersistenceInfo> pi = new ArrayList<>();
+		for(CacheListController clc : controllerList )
+			pi.add( clc.getPersistenceO() );
+		
+		Settings.setSerialized(Settings.Key.CLC_LIST, pi);
+	}
+	
+	public static void reopenPersitantCLCs(
+			JDesktopPane desktop, 
+			JMenu mnWindows, 
+			Location relativeLocation, 
+			CacheListView.RunLocationDialogI ldi)
+	{
+		ArrayList<PersistenceInfo> pi;
+		try {
+			pi = Settings.getSerialized(Settings.Key.CLC_LIST);
+			if( pi == null )
+				return;
+		}catch(Throwable t){
+			ExceptionPanel.showErrorDialog(t);
+			return;
+		}
+		
+		for( PersistenceInfo aPI : pi )
+		{
+			try{
+				newCLC(desktop, mnWindows, relativeLocation, aPI.getPath(), ldi);
+			}catch(Throwable t){
+				ExceptionPanel.showErrorDialog(t);
+			}
+		}
+	}
+	
 //////////////////////////////////////	
 //////////////////////////////////////
 /////// Member functions
@@ -79,7 +116,6 @@ public class CacheListController {
 	private CacheListController THIS = this;
 	private Boolean modifiedAndUnsafed = null;
 	private JMenuItem mnWindow = null;
-	
 
 	
 	@SuppressWarnings("unused")
@@ -313,5 +349,31 @@ public class CacheListController {
 	{
 		return model.getUndoActionCount();
 	}
+	
+	private PersistenceInfo getPersistenceO()
+	{
+		return new PersistenceInfo(path.toString());
+	}
 
+//////////////////////////////////////
+//////////////////////////////////////
+/////// Persistence
+//////////////////////////////////////
+//////////////////////////////////////	
+	
+	public static class PersistenceInfo implements Serializable
+	{
+		private static final long serialVersionUID = 1L;
+		
+		private String path;
+		
+		public PersistenceInfo(String path){
+			this.path = path;
+		}
+		
+		public String getPath(){
+			return path;
+		}
+	}
+	
 }

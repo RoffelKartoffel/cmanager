@@ -21,7 +21,9 @@ public class Settings {
 		OKAPI_TOKEN,
 		OKAPI_SECRET,
 		
-		LOCATION_LIST
+		LOCATION_LIST,
+		
+		CLC_LIST
 	}
 	
 	public static String key(Key key) {
@@ -39,6 +41,8 @@ public class Settings {
 			return "OKAPISecret";
 		case LOCATION_LIST:
 			return "locationList";
+		case CLC_LIST:
+			return "clcList";
 			
 		default:
 			return null;

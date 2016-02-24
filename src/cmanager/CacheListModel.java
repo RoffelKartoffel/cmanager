@@ -197,8 +197,6 @@ public class CacheListModel
 				
 				for(Geocache g : gList )
 					addCache(g);
-				
-				System.gc();
 			}
 		});
 		
@@ -210,8 +208,6 @@ public class CacheListModel
 		OutputStream os = FileHelper.openFileWrite(pathToGPX);
 		GPX.cachlistToBuffer(list, name, os);
 		os.close();
-		
-		System.gc();
 	}
 	
 	private void recordUndoAction()

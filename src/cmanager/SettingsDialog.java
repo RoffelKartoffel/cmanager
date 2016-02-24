@@ -69,8 +69,8 @@ public class SettingsDialog extends JDialog {
 				if( changesWhichNeedRestart )
 				{
 					String message = "You have made changes which need cmanager to restart in order be applied.\n" +
-								"Do you want to restart now?";
-					int dialogResult = JOptionPane.showConfirmDialog (THIS, message, "Restart now?", JOptionPane.YES_NO_OPTION);
+								"Do you want to restart " + Main.APP_NAME + " now?";
+					int dialogResult = JOptionPane.showConfirmDialog (THIS, message, "Restart " + Main.APP_NAME + " now?", JOptionPane.YES_NO_OPTION);
 					if(dialogResult == JOptionPane.YES_OPTION)
 					{
 						try{

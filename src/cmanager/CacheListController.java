@@ -203,12 +203,6 @@ public class CacheListController {
 		cachesAddedOrRemoved();
 	}
 	
-//	public void setPath(String path)
-//	{
-//		this.path = Paths.get(path);
-//		updateTitleAndCount();
-//	}
-	
 	public CacheListModel getModel() {
 		return model;
 	}

@@ -33,8 +33,7 @@ public class Main
 			t.printStackTrace();
 		}
 	
-//		
-//		System.exit(0);
+
 		
 		////// release //////  
 		
@@ -50,13 +49,8 @@ public class Main
 		
 	}
 	
-	private static void resizeHeap(String[] args) throws IOException
+	private static String getJarPath()
 	{
-		for(int i = 0; i < args.length; i++) {
-            if( args[i].equals(PARAM_HEAP_RESIZED) )
-            	return;
-        }
-		
 		//
 		// Determinate name of our jar. Will only work when run as .jar.
 		//
@@ -65,14 +59,44 @@ public class Main
 				  .getLocation()
 				  .getPath());
 		
+		
 		String jarPath = jarFile.getAbsolutePath();
 		if( jarPath.endsWith(".") )
 			jarPath = jarPath.substring(0, jarPath.length()-1);
 		if( !jarPath.endsWith(JAR_NAME) )
 			jarPath += JAR_NAME;
+		return jarPath;
+	}
+	
+	public static void runCopyAndExit() throws Exception
+	{
+		String jarPath = getJarPath();
+		if( !new File(jarPath).exists() )
+			throw new Exception("Path of jar file could not be determined. ");
 		
-		jarFile = new File(jarPath);
-		if( !jarFile.exists() )
+		//
+		// Run new vm
+		//
+		ProcessBuilder pb = new ProcessBuilder( 
+				"java", 
+				"-jar", 
+				jarPath, 
+				JAR_NAME, 
+				PARAM_HEAP_RESIZED );
+		pb.start();
+		
+		System.exit(0);
+	}
+	
+	private static void resizeHeap(String[] args) throws IOException
+	{
+		for(int i = 0; i < args.length; i++) {
+            if( args[i].equals(PARAM_HEAP_RESIZED) )
+            	return;
+        }
+		
+		String jarPath = getJarPath();
+		if( !new File(jarPath).exists() )
 			return;
 
 		//

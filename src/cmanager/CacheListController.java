@@ -316,19 +316,23 @@ public class CacheListController {
 		}
 	}
 	
-	private static ArrayList<Geocache> copyList = null;
+	private static ArrayList<Geocache> copyList = new ArrayList<>();
 	public void copySelected()
 	{
 		ArrayList<Geocache> selected = view.getSelectedCaches();
-		copyList = new ArrayList<>(selected.size());
+		copyList.clear();
+		copyList.ensureCapacity(selected.size());
 		for(Geocache g : selected )
 			copyList.add( ObjectHelper.copy(g) );
 	}
 	
 	public void cutSelected()
 	{
-		copyList = view.getSelectedCaches();
-		if( copyList != null && copyList.size() > 0 )
+		ArrayList<Geocache> selected = view.getSelectedCaches();
+		copyList.clear();
+		copyList.ensureCapacity(selected.size());
+		copyList.addAll(selected);
+		if( !copyList.isEmpty() )
 		{
 			model.removeCaches(copyList);
 			cachesAddedOrRemoved();
@@ -337,7 +341,7 @@ public class CacheListController {
 	
 	public void pasteSelected()
 	{
-		if( copyList != null && copyList.size() > 0 )
+		if( !copyList.isEmpty() )
 		{
 			model.addCaches( copyList );
 			cachesAddedOrRemoved();

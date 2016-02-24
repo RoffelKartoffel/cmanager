@@ -12,7 +12,7 @@ public class Geocache implements Serializable, Comparable<String>
 
 	
 	
-	public static TMap TYPE = new TMap();
+	public static final TMap TYPE = new TMap();
 	static {
 		//  pretty name 	-- 	GC 			-- OC
 		TYPE.add("Tradi", 		"Traditional Cache", "Traditional");
@@ -59,7 +59,7 @@ public class Geocache implements Serializable, Comparable<String>
 	
 	
 	
-	public static TMap CONTAINER = new TMap();
+	public static final TMap CONTAINER = new TMap();
 	static {
 		CONTAINER.add("None");
 		CONTAINER.add("Nano");

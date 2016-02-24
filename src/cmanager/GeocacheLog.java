@@ -14,7 +14,7 @@ public class GeocacheLog implements Serializable
 	private static final long serialVersionUID = -2611937420437874774L;
 	
 	
-	public static TMap TYPE = new TMap();
+	public static final TMap TYPE = new TMap();
 	static {
 		TYPE.add("Found it");
 		TYPE.add("Didn't find it");

@@ -26,15 +26,13 @@ public class Main
 	
 	
 	public static void main(String[] args) 
-	{			
+	{
 		try {
 			resizeHeap(args);
 		} catch (Throwable t) {
 			t.printStackTrace();
 		}
-		
 	
-
 //		
 //		System.exit(0);
 		
@@ -116,6 +114,15 @@ public class Main
 			String message = "The chosen heap size could not be applied. \n" +
 							"Maybe there are insufficient system resources.";
 		    JOptionPane.showMessageDialog(null, message, "Memory Settings", JOptionPane.INFORMATION_MESSAGE);
+		    
+		    if( System.getProperty("sun.arch.data.model").equals("32") )
+		    {
+		    	message = "You are running a 32bit Java VM. \n" +
+		    			"This limits your available memory to less than 4096MB \n" +
+		    			"and in some configurations to less than 2048MB. \n\n" +
+		    			"Install a 64bit VM to get rid of this limitation!";
+		    	JOptionPane.showMessageDialog(null, message, "Memory Settings", JOptionPane.INFORMATION_MESSAGE);
+		    }
 		}
 	}
 	

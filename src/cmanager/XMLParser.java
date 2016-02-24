@@ -17,23 +17,17 @@ public class XMLParser
 	public static XMLElement parse(String element) 
 			throws MalFormedException, IOException
 	{
-		return parse(new BufferAbstraction(element));
+		return parse(new BufferAbstraction(element), null);
 	}
 	
-	public static XMLElement parse(StringBuilder element) 
+	public static XMLElement parse(InputStream is, XMLParserCallbackI callback) 
 			throws MalFormedException, IOException
 	{
-		return parse(new BufferAbstraction(element));
-	}
-	
-	public static XMLElement parse(InputStream is) 
-			throws MalFormedException, IOException
-	{
-		return parse(new BufferAbstraction(is));
+		return parse(new BufferAbstraction(is), callback);
 	}
 	
 	
-	private static XMLElement parse(BufferAbstraction element) 
+	private static XMLElement parse(BufferAbstraction element, XMLParserCallbackI callback) 
 			throws MalFormedException, IOException
 	{
 		XMLElement root = new XMLElement();
@@ -44,7 +38,7 @@ public class XMLParser
 				int index = element.indexOf("?>");
 				element.deleteUntil(index +2);
 			}
-			parse(element, root);
+			parse(element, root, callback);
 			removeDelimiter(element);
 		}
 		while( element.available() );
@@ -52,7 +46,7 @@ public class XMLParser
 		return root;
 	}
 	
-	private static void parse(BufferAbstraction element, XMLElement root) 
+	private static void parse(BufferAbstraction element, XMLElement root, XMLParserCallbackI callback) 
 			throws MalFormedException, IOException
 	{
 		removeDelimiter(element);
@@ -62,7 +56,6 @@ public class XMLParser
 			return;
 		
 		XMLElement ele = new XMLElement();
-		root.getChildren().add(ele);
 		
 		int nameEnd = endOfName(element);
 		String elementName = element.substring(1, nameEnd);
@@ -75,16 +68,16 @@ public class XMLParser
 		{
 			removeDelimiter(element);
 			
-			// catch ?> endings
 			// catch /> endings
-			if( (element.charAt(0) == '?' && element.charAt(1) == '>')
-					|| (element.charAt(0) == '/' && element.charAt(1) == '>') )
+			if( (element.charAt(0) == '/' && element.charAt(1) == '>') )
 			{
 				element.deleteChar();
 				element.deleteChar();
 				
-				parse(element, root);
-				return;		// end of <? .. ?> 
+				parse(element, root, callback);
+				if( callback == null || !callback.elementFinished(ele) )
+					root.getChildren().add(ele);
+				return;		 
 			}
 			
 			int index = element.indexOf("=");
@@ -116,7 +109,7 @@ public class XMLParser
 				StringBuilder element_tmp = element.toStringBuilder();
 				trim(element_tmp);
 				if(element_tmp.length() == 0 )
-					return;
+					break;
 				else
 					throw new MalFormedException();
 			}
@@ -140,9 +133,12 @@ public class XMLParser
 			}
 			else
 			{
-				parse(element, ele);
+				parse(element, ele, callback);
 			}
 		}
+		
+		if( callback == null || !callback.elementFinished(ele) )
+			root.getChildren().add(ele);
 	}
 	
 	
@@ -343,29 +339,29 @@ public class XMLParser
 			bwa.append(" ");
 	}
 	
+///////////////////////////////
+// XMLParserCallbackI
+///////////////////////////////	
+	
+	public static interface XMLParserCallbackI
+	{
+		public boolean elementFinished(XMLElement element);
+	}
 	
 	
+///////////////////////////////
+// 	BufferAbstraction
+///////////////////////////////
 	
-	
-	
-	
-	
-	
-		
 	private static class BufferAbstraction 
 	{
 		private final int LIMIT = 1024*1024*10;
 		private char[] cbuf = new char[LIMIT]; 
 		private BufferedReader br; 
-	
-		
-		public BufferAbstraction(StringBuilder sb) throws UnsupportedEncodingException{
-			this(sb.toString());
-		}
 		
 		public BufferAbstraction(InputStream is) throws UnsupportedEncodingException
 		{
-			br = new BufferedReader(new InputStreamReader(is, "UTF-8"), LIMIT*2);
+			br = new BufferedReader(new InputStreamReader(is, "UTF-8"), LIMIT);
 		}
 		
 		public BufferAbstraction(String s) throws UnsupportedEncodingException{
@@ -454,62 +450,4 @@ public class XMLParser
 		}
 		
 	}
-	
-	
-//	private static class BufferAbstraction {
-//		
-//		private StringBuilder sb;
-//		private int offset = 0;
-//		
-//		public BufferAbstraction(StringBuilder sb){
-//			this.sb = sb;
-//		}
-//		
-//		public BufferAbstraction(String s){
-//			sb = new StringBuilder(s);
-//		}
-//		
-//		
-////		private void sync(){
-////			sb.delete(0, offset);
-////			offset = 0;
-////		}
-//		
-//		
-//		public char charAt(int index){
-//			return sb.charAt(index +offset);
-//		}
-//		
-//		public int length(){
-//			int l = sb.length() - offset;
-//			return l >= 0 ? l : 0;
-//		}
-//		
-//		public void deleteChar(){
-//			offset++;
-////			sync();
-//		}
-//		
-//		public void deleteCharAt(int index){
-//			sb.deleteCharAt(index+offset);
-////			sync();
-//		}
-//		
-//		public void deleteUntil(int end){
-//			offset += end;
-////			sync();
-//		}
-//		
-//		
-//		public String substring(int start, int end){
-//			return sb.substring(start +offset, end +offset);
-//		}
-//
-//		public int indexOf(String str){
-//			int index = sb.indexOf(str, offset);
-//			return index != -1 ? index - offset : -1;
-//		}
-//		
-//	}
-
 }

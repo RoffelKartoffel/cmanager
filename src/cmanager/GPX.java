@@ -16,21 +16,12 @@ import cmanager.XMLElement.XMLAttribute;
 
 public class GPX 
 {
-	public static void xmlToCachlistWithFree(
-			StringBuilder sb,
-			ArrayList<Geocache> gList,
-			ArrayList<Waypoint> wList) throws Throwable
-	{
-		XMLElement root = XMLParser.parse( sb );
-		xmlToCachlistWithFree(root, gList, wList);
-	}
-	
 	public static void fileToXmlToCachlist(
 			InputStream is,
 			ArrayList<Geocache> gList,
 			ArrayList<Waypoint> wList) throws Throwable
 	{		
-		XMLElement root = XMLParser.parse( is );
+		XMLElement root = XMLParser.parse( is, null );
 		xmlToCachlistWithFree(root, gList, wList);
 	}
 	

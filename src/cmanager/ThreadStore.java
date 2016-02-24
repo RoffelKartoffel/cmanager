@@ -32,10 +32,6 @@ public class ThreadStore implements UncaughtExceptionHandler
 		exception = e;
 	}
 
-	public int getCores(){
-		return getCores(Integer.MAX_VALUE);
-	}
-	
 	public int getCores(int maximum)
 	{
 		int cores = Runtime.getRuntime().availableProcessors();

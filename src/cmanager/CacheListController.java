@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyVetoException;
+import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.nio.file.Path;
@@ -105,7 +106,8 @@ public class CacheListController {
 		for( PersistenceInfo aPI : pi )
 		{
 			try{
-				newCLC(desktop, mnWindows, relativeLocation, aPI.getPath(), ldi);
+				if( new File(aPI.getPath()).exists() )
+					newCLC(desktop, mnWindows, relativeLocation, aPI.getPath(), ldi);
 			}catch(Throwable t){
 				ExceptionPanel.showErrorDialog(t);
 			}

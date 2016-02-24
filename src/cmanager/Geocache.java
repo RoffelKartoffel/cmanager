@@ -85,31 +85,7 @@ public class Geocache implements Serializable, Comparable<String>
 		this.container = CONTAINER.getLC(container);
 	}
 	
-	
-	
-	
-//	private static Object cacheManagerLock = new Object(); 
-//	private static CacheManager cacheManager = null;
-//	private static Cache<String, String> offloadingCache = null;
-//	{
-//		synchronized (cacheManagerLock) {
-//			if( cacheManager == null )
-//			{
-//				cacheManager = CacheManagerBuilder.newCacheManagerBuilder()
-//					    .with(new CacheManagerPersistenceConfiguration(new File("/tmp/", "cmanager"))) 
-//					    .withCache("listings", CacheConfigurationBuilder.newCacheConfigurationBuilder()
-//					        .withResourcePools(ResourcePoolsBuilder.newResourcePoolsBuilder()
-//					            .heap(25, EntryUnit.ENTRIES)
-////					            .offheap(100, MemoryUnit.MB)
-//					            .disk(1024, MemoryUnit.MB, true)) 
-//					        .buildConfig(String.class, String.class))
-//					    .build(true);
-//				
-//				offloadingCache = cacheManager.getCache("listings", String.class, String.class);
-//			}
-//		}
-//	}
-	
+
 	
 	private String code;
 	private String name;
@@ -401,9 +377,6 @@ public class Geocache implements Serializable, Comparable<String>
 		return terrain;
 	}
 
-//	public Type getType() {
-//		return type;
-//	}
 	public int getType() {
 		return type;
 	}
@@ -418,14 +391,10 @@ public class Geocache implements Serializable, Comparable<String>
 
 	public String getListing() {
 		return listing;
-//		return offloadingCache.get( hashCode() + getCode() + "listing" );
 	}
 
 	public void setListing(String listing) {
 		this.listing = listing;
-//		if( listing == null)
-//			return;
-//		offloadingCache.put(hashCode() + getCode() + "listing", listing);
 	}
 	
 	public int getContainer() {

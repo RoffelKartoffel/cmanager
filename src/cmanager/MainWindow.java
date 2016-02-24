@@ -10,6 +10,7 @@ import java.awt.Dimension;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.MenuEvent;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.JDesktopPane;
 import javax.swing.JFileChooser;
@@ -265,6 +266,15 @@ public class MainWindow extends JFrame {
 		});
 		mnList.add(mntmUndoAction);
 		
+		// only enable undo menu when undo actions are available
+		mnList.addMenuListener( new MenuAdapter() {
+			public void menuSelected(MenuEvent e) 
+			{
+				mntmUndoAction.setEnabled( CacheListController.getTopViewCacheController(desktopPane).getUndoActionCount() > 0 );
+			}
+		});
+		
+		
 		JSeparator separator_3 = new JSeparator();
 		mnList.add(separator_3);
 
@@ -446,6 +456,11 @@ public class MainWindow extends JFrame {
 		
 		updateLocationCombobox();
 		propagateSelectedLocationComboboxEntry();
+		
+		
+		//
+		// store and reopen cache lists
+		//
 		
 		this.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) 

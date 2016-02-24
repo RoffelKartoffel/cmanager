@@ -14,6 +14,8 @@ import java.awt.event.ActionEvent;
 import javax.swing.JTabbedPane;
 import java.awt.GridBagLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.GridBagConstraints;
 import javax.swing.JTextField;
 import java.awt.Insets;
@@ -55,8 +57,30 @@ public class SettingsDialog extends JDialog {
 		btnSaveApply.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
+				boolean changesWhichNeedRestart = false;
+				
+				final String newHeapSize = txtHeapSize.getText();
+				if( !Settings.getS(Settings.Key.HEAP_SIZE).equals(newHeapSize) )
+					changesWhichNeedRestart = true;
+				
 				Settings.set(Settings.Key.GC_USERNAME, txtNameGC.getText());
-				Settings.set(Settings.Key.HEAP_SIZE, txtHeapSize.getText());
+				Settings.set(Settings.Key.HEAP_SIZE, newHeapSize);
+				
+				if( changesWhichNeedRestart )
+				{
+					String message = "You have made changes which need cmanager to restart in order be applied.\n" +
+								"Do you want to restart now?";
+					int dialogResult = JOptionPane.showConfirmDialog (THIS, message, "Restart now?", JOptionPane.YES_NO_OPTION);
+					if(dialogResult == JOptionPane.YES_OPTION)
+					{
+						try{
+							Main.runCopyAndExit();
+						}catch(Throwable t){
+							ExceptionPanel.showErrorDialog(t);
+						}
+					}
+				}
+				
 				THIS.setVisible(false);
 			}
 		});

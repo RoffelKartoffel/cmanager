@@ -81,8 +81,7 @@ public class Main
 				"java", 
 				"-jar", 
 				jarPath, 
-				JAR_NAME, 
-				PARAM_HEAP_RESIZED );
+				JAR_NAME );
 		pb.start();
 		
 		System.exit(0);

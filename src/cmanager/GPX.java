@@ -5,6 +5,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -13,128 +16,55 @@ import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.ISODateTimeFormat;
 
 import cmanager.XMLElement.XMLAttribute;
+import cmanager.XMLParser.XMLParserCallbackI;
 
 public class GPX 
 {
 	public static void fileToXmlToCachlist(
 			InputStream is,
-			ArrayList<Geocache> gList,
-			ArrayList<Waypoint> wList) throws Throwable
-	{		
-		XMLElement root = XMLParser.parse( is, null );
-		xmlToCachlistWithFree(root, gList, wList);
-	}
-	
-	
-	private static void xmlToCachlistWithFree(
-			XMLElement root, 
 			final ArrayList<Geocache> gList,
 			final ArrayList<Waypoint> wList) throws Throwable
-	{ 
-		for(XMLElement e : root.getChildren())
-			if( e.is("gpx") )
+	{		
+		final ExecutorService service = Executors.newFixedThreadPool( Runtime.getRuntime().availableProcessors() *2 );
+		
+		XMLParser.parse( is, new XMLParserCallbackI() {
+			public boolean elementFinished(final XMLElement element) 
 			{
-				final XMLElement gpx = e;
+				if( !element.is("wpt") )
+					return false;
 				
-				// single threaded version
-				
-//				for(XMLElement ee : gpx.getChildren())
-//				{
-//					if( ee.is("wpt") )
-//					{
-//						Geocache g = null;
-//						Waypoint w = null;
-//						
-//						try{
-//							w = toWaypoint(ee);
-//							g = toCache(ee);
-//						}
-//						catch(NullPointerException ex){
-//							ExceptionPanel.display(ex);
-//						}
-//						
-//						if( g != null )
-//						{
-//							gList.add( g );
-//						}
-//						else if( w != null )
-//						{
-//							wList.add(w);
-//						}
-//						
-//					}
-//				}
-				
-				//
-				// multi threaded version
-				//	
-				
-				int listSize = gpx.getChildren().size();
-				ThreadStore ts = new ThreadStore();
-				int cores = ts.getCores(listSize);
-				int perProcess = listSize / cores;
-				
-				for(int c=0; c<cores; c++)
-				{
-					final int start = perProcess*c;
-					
-					int tmp = perProcess*(c+1) < listSize ? perProcess*(c+1) : listSize;
-					if( c == cores -1 )
-						tmp = listSize;
-					final int end = tmp;
-					
-					ts.addAndRun( new Thread(new Runnable() {
-						public void run() 
-						{
-							ArrayList<Geocache> gList_thread = new ArrayList<>();
-							ArrayList<Waypoint> wList_thread = new ArrayList<>();
-							
-							for(int i=start; i<end; i++)
-							{
-								XMLElement ee = gpx.getChildren().get(i);
-								if( ee.is("wpt") )
-								{
-									Geocache g = null;
-									Waypoint w = null;
-									
-									try{
-										w = toWaypoint(ee);
-										g = toCache(ee);
-									}
-									catch(NullPointerException ex){
-										ExceptionPanel.display(ex);
-									}
-									
-									
-									if( g != null )
-									{
-										gList_thread.add( g );
-									}
-									else if( w != null )
-									{
-										wList_thread.add(w);
-									}
-								}
-								// free memory
-								gpx.getChildren().set(i, null);
-							}
-							
-							synchronized (gList) {
-								gList.addAll(gList_thread);
-							}
-							synchronized (wList) {
-								wList.addAll(wList_thread);
-							}
+				service.submit(new Runnable() {
+					public void run() 
+					{
+						Geocache g = null;
+						Waypoint w = null;
+						
+						try{
+							w = toWaypoint(element);
+							g = toCache(element);
 						}
-					}));
-				}
-				ts.joinAndThrow();
-				
+						catch(NullPointerException ex){
+							ExceptionPanel.display(ex);
+						}
+						
+						if( g != null )
+							synchronized(gList) {
+								gList.add( g );
+							}
+						else if( w != null )
+							synchronized (wList) {
+								wList.add(w);
+							}
+					}
+				});
+				return true;
 			}
-				
-				
-			
+		});
+		
+		service.shutdown();
+		service.awaitTermination(Long.MAX_VALUE, TimeUnit.DAYS);	// incredible high delay but still ugly
 	}
+	
 	
 	private static Waypoint toWaypoint(XMLElement wpt)
 	{

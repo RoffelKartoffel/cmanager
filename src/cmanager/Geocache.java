@@ -8,9 +8,7 @@ import java.util.ArrayList;
 public class Geocache implements Serializable, Comparable<String>
 {	
 	private static final long serialVersionUID = 6173771530979347662L;
-	
 
-	
 	
 	public static final TMap TYPE = new TMap();
 	static {

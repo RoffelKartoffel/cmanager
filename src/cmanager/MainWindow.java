@@ -57,7 +57,7 @@ public class MainWindow extends JFrame {
 	 */
 	public MainWindow() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(new Dimension(850, 550));
+		setSize(new Dimension(1050, 550));
 		setLocationRelativeTo(null);
 		
 		JMenuBar menuBar = new JMenuBar();

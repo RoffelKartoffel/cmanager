@@ -4,6 +4,8 @@ package cmanager;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import org.joda.time.DateTime;
+
 
 public class Geocache implements Serializable, Comparable<String>
 {	
@@ -275,6 +277,20 @@ public class Geocache implements Serializable, Comparable<String>
     
     public ArrayList<GeocacheLog> getLogs(){
         return logs;
+    }
+    
+    public DateTime getMostRecentFoundLog(String username)
+    {
+    	GeocacheLog mostRecentLog = null;
+    	for(GeocacheLog log : logs)
+    	{
+    		if( log.isAuthor(username) && log.isFoundLog() )
+    			if( mostRecentLog == null )
+    				mostRecentLog = log;
+    			else if( log.getDate().isAfter( mostRecentLog.getDate() ) )
+					mostRecentLog = log;
+    	}
+    	return mostRecentLog == null ? null : mostRecentLog.getDate();
     }
     
     public void add(Waypoint wp){

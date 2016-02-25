@@ -110,10 +110,14 @@ public class GeocacheLog implements Serializable
 		return fmt.print(date);
     }
     
-    public String getDateStrISO8601NoTime()
+    public static String getDateStrISO8601NoTime(DateTime date)
     {
-		DateTimeFormatter fmt = ISODateTimeFormat.date();;
+    	DateTimeFormatter fmt = ISODateTimeFormat.date();;
 		return fmt.print(date);
+    }
+    
+    public String getDateStrISO8601NoTime() {
+    	return getDateStrISO8601NoTime(date);
     }
         
     public boolean equals(GeocacheLog log)

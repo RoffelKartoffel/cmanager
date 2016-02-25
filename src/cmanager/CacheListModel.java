@@ -8,6 +8,8 @@ import java.util.LinkedList;
 
 import javax.swing.table.AbstractTableModel;
 
+import org.joda.time.DateTime;
+
 public class CacheListModel 
 {
 	private ArrayList<Geocache> list = new ArrayList<Geocache>();
@@ -270,6 +272,8 @@ public class CacheListModel
 					return "Owner";
 				case 8:
 					return "Distance (km)";
+				case 9:
+					return "Found (GC)";
 			}
 			
 			return null;
@@ -295,6 +299,9 @@ public class CacheListModel
 					
 				case 8:
 					return Double.class;
+					
+				case 9:
+					return DateTime.class;
 			}
 	        
 	        return null;
@@ -302,7 +309,7 @@ public class CacheListModel
 		
 		@Override
 		public int getColumnCount() {
-			return 9;
+			return 10;
 		}
 		
 		@Override
@@ -339,6 +346,9 @@ public class CacheListModel
 					return owner != null ? owner : "";
 				case 8:
 					return relativeLocation != null ? g.getCoordinate().distanceSphereRounded(relativeLocation) : "";
+				case 9:
+					DateTime date = g.getMostRecentFoundLog(Settings.getS(Settings.Key.GC_USERNAME));
+					return date == null ? null : GeocacheLog.getDateStrISO8601NoTime(date);
 				
 				default:
 				return null;

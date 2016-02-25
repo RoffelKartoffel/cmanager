@@ -260,6 +260,27 @@ public class OKAPI
 		return null;
 	}
 	
+	public static String getUsername(OCUser user) throws MalFormedException, IOException
+	{
+		String url = "https://www.opencaching.de/okapi/services/users/user" +
+				"?format=xmlmap2" + 
+				"&fields=username";
+		
+		OAuthService service = getOAuthService();
+		OAuthRequest request = new OAuthRequest(Verb.GET, url, service);
+		service.signRequest(user.getOkapiToken(), request); // the access token from step 4
+		Response response = request.send();
+		String http = response.getBody();
+		
+		// <object><string key="uuid">0b34f954-ee48-11e4-89ed-525400e33611</string></object>
+		XMLElement root = XMLParser.parse( http );
+		for(XMLElement e : root.getChild("object").getChildren() )
+			if( e.attrIs("key", "username") )
+				return e.getUnescapedBody();
+		
+		return null;
+	}
+	
 	public static void postLog(OCUser user, Geocache cache, GeocacheLog log) throws MalFormedException, UnsupportedEncodingException
 	{
 		String url = "https://www.opencaching.de/okapi/services/logs/submit" +

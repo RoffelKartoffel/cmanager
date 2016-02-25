@@ -16,6 +16,7 @@ public class Settings {
 		HEAP_SIZE,
 		
 		GC_USERNAME,
+		OC_USERNAME,
 		FILE_CHOOSER_LOAD_GPX,
 		
 		OKAPI_TOKEN,
@@ -33,6 +34,8 @@ public class Settings {
 			return "javaHeapSize";
 		case GC_USERNAME:
 			return "gcUsername";
+		case OC_USERNAME:
+			return "ocUsername";
 		case FILE_CHOOSER_LOAD_GPX:
 			return "fileChooserGpx";
 		case OKAPI_TOKEN:

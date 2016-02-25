@@ -22,6 +22,7 @@ import java.awt.Insets;
 import javax.swing.SwingConstants;
 import java.awt.Component;
 import javax.swing.Box;
+import javax.swing.SpringLayout;
 
 public class SettingsDialog extends JDialog {
 
@@ -32,6 +33,7 @@ public class SettingsDialog extends JDialog {
 	private JDialog THIS = this;
 	private JPanel contentPane;
 	private JLabel lblOkapiToken;
+	private JLabel lblOCUsername;
 	private JButton btnRequestNewToken;
 	private JTextField txtNameGC;
 	private JTextField txtHeapSize;
@@ -100,26 +102,22 @@ public class SettingsDialog extends JDialog {
 		JPanel panelOC = new JPanel();
 		panelOC.setBorder(new EmptyBorder(10, 10, 10, 10));
 		tabbedPane.addTab("opencaching.de", null, panelOC, null);
-		GridBagLayout gbl_panelOC = new GridBagLayout();
-		gbl_panelOC.columnWidths = new int[]{411, 0};
-		gbl_panelOC.rowHeights = new int[]{19, 0, 0};
-		gbl_panelOC.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-		gbl_panelOC.rowWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
-		panelOC.setLayout(gbl_panelOC);
+		SpringLayout sl_panelOC = new SpringLayout();
+		panelOC.setLayout(sl_panelOC);
 		
-		JPanel panelOKAPI = new JPanel();
-		GridBagConstraints gbc_panelOKAPI = new GridBagConstraints();
-		gbc_panelOKAPI.fill = GridBagConstraints.HORIZONTAL;
-		gbc_panelOKAPI.anchor = GridBagConstraints.NORTHWEST;
-		gbc_panelOKAPI.gridx = 0;
-		gbc_panelOKAPI.gridy = 1;
-		panelOC.add(panelOKAPI, gbc_panelOKAPI);
-		panelOKAPI.setLayout(new BorderLayout(0, 0));
+		JLabel label = new JLabel("OKAPI Token:");
+		sl_panelOC.putConstraint(SpringLayout.NORTH, label, 40, SpringLayout.NORTH, panelOC);
+		sl_panelOC.putConstraint(SpringLayout.WEST, label, 10, SpringLayout.WEST, panelOC);
+		panelOC.add(label);
 		
 		lblOkapiToken = new JLabel("New label");
-		panelOKAPI.add(lblOkapiToken, BorderLayout.WEST);
+		sl_panelOC.putConstraint(SpringLayout.NORTH, lblOkapiToken, 0, SpringLayout.NORTH, label);
+		sl_panelOC.putConstraint(SpringLayout.WEST, lblOkapiToken, 101, SpringLayout.EAST, label);
+		panelOC.add(lblOkapiToken);
 		
 		btnRequestNewToken = new JButton("Request new token");
+		sl_panelOC.putConstraint(SpringLayout.SOUTH, btnRequestNewToken, 0, SpringLayout.SOUTH, panelOC);
+		sl_panelOC.putConstraint(SpringLayout.EAST, btnRequestNewToken, 0, SpringLayout.EAST, panelOC);
 		btnRequestNewToken.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) 
 			{
@@ -133,7 +131,21 @@ public class SettingsDialog extends JDialog {
 				
 			}
 		});
-		panelOKAPI.add(btnRequestNewToken, BorderLayout.EAST);
+		panelOC.add(btnRequestNewToken);
+		
+		
+		JLabel lblNewLabel_3 = new JLabel("OC Username: ");
+		sl_panelOC.putConstraint(SpringLayout.NORTH, lblNewLabel_3, 6, SpringLayout.SOUTH, label);
+		sl_panelOC.putConstraint(SpringLayout.WEST, lblNewLabel_3, 0, SpringLayout.WEST, label);
+		panelOC.add(lblNewLabel_3);
+		
+		lblOCUsername = new JLabel("");
+		sl_panelOC.putConstraint(SpringLayout.NORTH, lblOCUsername, 6, SpringLayout.SOUTH, lblOkapiToken);
+		sl_panelOC.putConstraint(SpringLayout.WEST, lblOCUsername, 204, SpringLayout.WEST, panelOC);
+		sl_panelOC.putConstraint(SpringLayout.EAST, lblOCUsername, -31, SpringLayout.EAST, panelOC);
+		lblOCUsername.setHorizontalAlignment(SwingConstants.LEFT);
+		lblOCUsername.setText( Settings.getS(Settings.Key.OC_USERNAME));
+		panelOC.add(lblOCUsername);
 		
 		JPanel panelGC = new JPanel();
 		tabbedPane.addTab("geocaching.com", null, panelGC, null);
@@ -244,7 +256,7 @@ public class SettingsDialog extends JDialog {
 	
 	private void displayOkapiTokenStatus()
 	{
-		lblOkapiToken.setText("OKAPI Token:   missing or offline" );
+		lblOkapiToken.setText("missing or offline" );
 		Font f = lblOkapiToken.getFont();
 		lblOkapiToken.setFont(f.deriveFont(f.getStyle() | Font.ITALIC));
 		btnRequestNewToken.setVisible(true);
@@ -253,10 +265,14 @@ public class SettingsDialog extends JDialog {
 		try {
 			if( user.getOkapiToken() != null && OKAPI.getUUID(user) != null )
 			{
-				lblOkapiToken.setText("OKAPI Token:   okay" );
+				lblOkapiToken.setText("okay" );
 				f = lblOkapiToken.getFont();
 				lblOkapiToken.setFont(f.deriveFont(f.getStyle() & ~Font.ITALIC));
 				btnRequestNewToken.setVisible(false);
+				
+				String username = OKAPI.getUsername(user);
+				Settings.set(Settings.Key.OC_USERNAME, username);
+				lblOCUsername.setText(username);
 			}
 		} catch (Exception e) {
 		}

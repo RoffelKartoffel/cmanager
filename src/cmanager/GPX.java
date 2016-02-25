@@ -59,6 +59,16 @@ public class GPX
 				});
 				return true;
 			}
+			
+			public boolean elementLocatedCorrectly(XMLElement element, XMLElement parent) 
+			{
+				if( element.is("gpx") )
+						return parent.getName() == null ? true : false;
+				if( element.is("wpt") )
+						return parent.is("gpx");
+				
+				return true;
+			}
 		});
 		
 		service.shutdown();

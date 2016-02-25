@@ -75,6 +75,10 @@ public class XMLParser
 				element.deleteChar();
 				
 				parse(element, root, callback);
+				
+				if( callback != null && !callback.elementLocatedCorrectly(ele, root) )
+					throw new MalFormedException();
+				
 				if( callback == null || !callback.elementFinished(ele) )
 					root.getChildren().add(ele);
 				return;		 
@@ -136,6 +140,9 @@ public class XMLParser
 				parse(element, ele, callback);
 			}
 		}
+		
+		if( callback != null && !callback.elementLocatedCorrectly(ele, root) )
+			throw new MalFormedException();
 		
 		if( callback == null || !callback.elementFinished(ele) )
 			root.getChildren().add(ele);
@@ -345,6 +352,7 @@ public class XMLParser
 	
 	public static interface XMLParserCallbackI
 	{
+		public boolean elementLocatedCorrectly(XMLElement element, XMLElement parent);
 		public boolean elementFinished(XMLElement element);
 	}
 	

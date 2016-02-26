@@ -21,7 +21,7 @@ public class OKAPISearchCache
 	}
 	
 
-	public static void setEmptySearch(Geocache g, String excludeUUID) throws IOException
+	public static synchronized void setEmptySearch(Geocache g, String excludeUUID) throws IOException
 	{
 		File f = new File(searchToFileName(g, excludeUUID));
 		if( f.exists() )
@@ -33,7 +33,7 @@ public class OKAPISearchCache
 		FileHelper.serializeToFile(e, f.getAbsolutePath());
 	}
 	
-	public static boolean isEmptySearch(Geocache g, String excludeUUID) throws ClassNotFoundException, IOException
+	public static synchronized boolean isEmptySearch(Geocache g, String excludeUUID) throws ClassNotFoundException, IOException
 	{
 		if( !initDone )
 		{

@@ -16,6 +16,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.awt.event.ActionEvent;
 import javax.swing.JTree;
 import java.awt.CardLayout;
@@ -43,7 +44,7 @@ public class DuplicateDialog extends JFrame {
 	private String selectedURL = null;
 	private JScrollPane scrollPaneTree;
 	
-	private volatile boolean stopBackgroundThread = false;
+	private AtomicBoolean stopBackgroundThread = new AtomicBoolean(false);
 	private Thread backgroundThread = null;
 	
 
@@ -222,14 +223,10 @@ public class DuplicateDialog extends JFrame {
 			panel_1.add(okButton);
 			okButton.setHorizontalAlignment(SwingConstants.RIGHT);
 			okButton.addActionListener(new ActionListener() {
-				@SuppressWarnings("deprecation")
 				public void actionPerformed(ActionEvent e) {
 					THIS.setVisible(false);
 					if( backgroundThread != null )
-					{
-						stopBackgroundThread = true;
-						backgroundThread.stop();
-					}
+						stopBackgroundThread.set(true);
 					THIS.dispose();
 				}
 			});
@@ -251,7 +248,7 @@ public class DuplicateDialog extends JFrame {
 			@Override
 			public void run() {
 				try {
-					OCUtil.findOnOc(clm, new OCUtil.OutputInterface() 
+					OCUtil.findOnOc(stopBackgroundThread, clm, new OCUtil.OutputInterface() 
 					{	
 						public void setProgress(Integer count, Integer max) {
 							progressBar.setMaximum(max);
@@ -279,6 +276,8 @@ public class DuplicateDialog extends JFrame {
 					}, user, uuid);
 					switchCards();
 					
+					if( stopBackgroundThread.get() )
+						return;
 					
 					// sort
 					ArrayList<DefaultMutableTreeNode> sortedList = new ArrayList<>();
@@ -353,10 +352,10 @@ public class DuplicateDialog extends JFrame {
 				    	tree.setVisible(false);
 				} 
 				catch (Throwable e1) 
-				{
+				{	
 					// Since Thread.stop() is used, the threads will most likely
 					// complain in weird ways. We do not care about these exceptions. 
-					if( !stopBackgroundThread )	
+					if( !stopBackgroundThread.get() )
 						ExceptionPanel.showErrorDialog(e1);
 					THIS.setVisible(false);
 				}

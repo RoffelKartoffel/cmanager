@@ -5,12 +5,13 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class OCUtil {
 	
-	public static void findOnOc(final CacheListModel clm, final OutputInterface oi, final OCUser user, final String uuid) throws Throwable
+	public static void findOnOc(final AtomicBoolean stopBackgroundThread, final CacheListModel clm, final OutputInterface oi, final OCUser user, final String uuid) throws Throwable
 	{
 		final ArrayList<Geocache> offlineCacheStore = new ArrayList<>();
 		final AtomicInteger count = new AtomicInteger(0);
@@ -23,9 +24,15 @@ public class OCUtil {
 			if( throwable.get() != null )
 				break;
 			
+			if( stopBackgroundThread.get() )
+				break;
+			
 			Callable<Void> callable = new Callable<Void>() {
 				public Void call() 
 				{
+					if( stopBackgroundThread.get() )
+						return null;
+					
 					try {
 						oi.setProgress(count.get(), clm.getList().size());
 						count.getAndIncrement();

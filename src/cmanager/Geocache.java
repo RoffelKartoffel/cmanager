@@ -279,16 +279,20 @@ public class Geocache implements Serializable, Comparable<String>
         return logs;
     }
     
-    public DateTime getMostRecentFoundLog(String username)
+    public DateTime getMostRecentFoundLog(String usernameGC, String usernameOC)
     {
     	GeocacheLog mostRecentLog = null;
     	for(GeocacheLog log : logs)
     	{
-    		if( log.isAuthor(username) && log.isFoundLog() )
-    			if( mostRecentLog == null )
-    				mostRecentLog = log;
-    			else if( log.getDate().isAfter( mostRecentLog.getDate() ) )
-					mostRecentLog = log;
+    		if( log.isFoundLog() )
+    			if( (usernameGC != null && log.isAuthor(usernameGC)) || 
+    				(usernameOC != null && log.isAuthor(usernameOC)) )
+    			{
+	    			if( mostRecentLog == null )
+	    				mostRecentLog = log;
+	    			else if( log.getDate().isAfter( mostRecentLog.getDate() ) )
+						mostRecentLog = log;
+    			}
     	}
     	return mostRecentLog == null ? null : mostRecentLog.getDate();
     }

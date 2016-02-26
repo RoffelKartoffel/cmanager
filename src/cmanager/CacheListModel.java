@@ -273,7 +273,7 @@ public class CacheListModel
 				case 8:
 					return "Distance (km)";
 				case 9:
-					return "Found (GC)";
+					return "Found";
 			}
 			
 			return null;
@@ -347,7 +347,9 @@ public class CacheListModel
 				case 8:
 					return relativeLocation != null ? g.getCoordinate().distanceSphereRounded(relativeLocation) : "";
 				case 9:
-					DateTime date = g.getMostRecentFoundLog(Settings.getS(Settings.Key.GC_USERNAME));
+					DateTime date = g.getMostRecentFoundLog(
+							Settings.getS(Settings.Key.GC_USERNAME),
+							Settings.getS(Settings.Key.OC_USERNAME));
 					return date == null ? null : GeocacheLog.getDateStrISO8601NoTime(date);
 				
 				default:

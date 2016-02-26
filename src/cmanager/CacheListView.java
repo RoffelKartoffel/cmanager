@@ -90,6 +90,7 @@ public class CacheListView extends JInternalFrame {
 		table.getColumnModel().getColumn(5).setCellRenderer( centerRenderer );
 		table.getColumnModel().getColumn(6).setCellRenderer( centerRenderer );
 		table.getColumnModel().getColumn(8).setCellRenderer( centerRenderer );
+		table.getColumnModel().getColumn(9).setCellRenderer( centerRenderer );
 		
 		
 		panelFilters = new JPanel();

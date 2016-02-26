@@ -354,7 +354,9 @@ public class DuplicateDialog extends JFrame {
 				} 
 				catch (Throwable e1) 
 				{
-					if( !(e1 instanceof ThreadDeath && stopBackgroundThread) )
+					// Since Thread.stop() is used, the threads will most likely
+					// complain in weird ways. We do not care about these exceptions. 
+					if( !stopBackgroundThread )	
 						ExceptionPanel.showErrorDialog(e1);
 					THIS.setVisible(false);
 				}

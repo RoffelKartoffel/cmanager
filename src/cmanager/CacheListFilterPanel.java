@@ -8,22 +8,28 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import java.awt.FlowLayout;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
+
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
-import javax.swing.SwingConstants;
 import javax.swing.JToggleButton;
 import javax.swing.BoxLayout;
 
 public abstract class CacheListFilterPanel extends JPanel 
 {
+	protected enum FILTER_TYPE {
+		BETWEEN_ONE_AND_FIVE_FILTER_VALUE,
+		SINGLE_FILTER_VALUE
+	}
+	
 	private static final long serialVersionUID = -6181151635761995945L;
 	
 	private CacheListFilterPanel THIS = this;
-	private JTextField txtLinks;
-	private JTextField txtRechts;
+	private JComboBox<Double> leftComboBox;
+	private JComboBox<Double> rightComboBox;
 	private JLabel lblLinks;
 	private JLabel lblRechts;
 	private JButton btnRemove;
@@ -44,7 +50,7 @@ public abstract class CacheListFilterPanel extends JPanel
 	/**
 	 * Create the panel.
 	 */
-	public CacheListFilterPanel() {
+	public CacheListFilterPanel(FILTER_TYPE filterType) {
 		
 		KeyAdapter keyEnterUpdate = new KeyAdapter() {
 			@Override
@@ -88,59 +94,8 @@ public abstract class CacheListFilterPanel extends JPanel
 					action.run();
 			}
 		});
-		panel_3.add(tglbtnInvert);
-		panel_3.add(btnUpdate);
 		
 		btnRemove = new JButton("X");
-		panel_3.add(btnRemove);
-		
-		panel_4 = new JPanel();
-		panel.add(panel_4, BorderLayout.CENTER);
-		panel_4.setLayout(new BoxLayout(panel_4, BoxLayout.Y_AXIS));
-		
-		panel_2 = new JPanel();
-		panel_4.add(panel_2);
-		panel_2.setVisible(false);
-		panel_2.setLayout(new BorderLayout(5, 10));
-		
-		lblLinks2 = new JLabel("New label");
-		panel_2.add(lblLinks2, BorderLayout.WEST);
-		
-		textField = new JTextField();
-		panel_2.add(textField, BorderLayout.CENTER);
-		textField.addKeyListener(keyEnterUpdate);
-		
-		panel_1 = new JPanel();
-		panel_4.add(panel_1);
-		panel_1.setVisible(false);
-		panel_1.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		
-		JPanel panelLinks = new JPanel();
-		panel_1.add(panelLinks);
-		panelLinks.setLayout(new BorderLayout(5, 0));
-		
-		lblLinks = new JLabel("Label");
-		panelLinks.add(lblLinks, BorderLayout.WEST);
-		
-		txtLinks = new JTextField();
-		txtLinks.setHorizontalAlignment(SwingConstants.CENTER);
-		panelLinks.add(txtLinks, BorderLayout.EAST);
-		txtLinks.setColumns(10);
-		txtLinks.addKeyListener(keyEnterUpdate);
-		
-		JPanel panelRechts = new JPanel();
-		panel_1.add(panelRechts);
-		panelRechts.setLayout(new BorderLayout(5, 0));
-		
-		lblRechts = new JLabel("Label");
-		panelRechts.add(lblRechts, BorderLayout.WEST);
-		
-		txtRechts = new JTextField();
-		txtRechts.setHorizontalAlignment(SwingConstants.CENTER);
-		panelRechts.add(txtRechts, BorderLayout.EAST);
-		txtRechts.setColumns(10);
-		txtRechts.addKeyListener(keyEnterUpdate);
-		
 		btnRemove.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) 
 			{
@@ -152,7 +107,58 @@ public abstract class CacheListFilterPanel extends JPanel
 					action.run();
 			}
 		});
-
+		
+		panel_3.add(tglbtnInvert);
+		panel_3.add(btnUpdate);
+		panel_3.add(btnRemove);
+		
+		panel_4 = new JPanel();
+		panel.add(panel_4, BorderLayout.CENTER);
+		panel_4.setLayout(new BoxLayout(panel_4, BoxLayout.Y_AXIS));
+		
+		if(filterType == FILTER_TYPE.SINGLE_FILTER_VALUE)
+		{
+			panel_2 = new JPanel();
+			panel_4.add(panel_2);
+			panel_2.setLayout(new BorderLayout(5, 10));
+			
+			lblLinks2 = new JLabel("New label");
+			panel_2.add(lblLinks2, BorderLayout.WEST);
+			
+			textField = new JTextField();
+			panel_2.add(textField, BorderLayout.CENTER);
+			textField.addKeyListener(keyEnterUpdate);
+		}
+		else if(filterType == FILTER_TYPE.BETWEEN_ONE_AND_FIVE_FILTER_VALUE)
+		{
+			final Double[] values = { 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0 };
+			panel_1 = new JPanel();
+			panel_4.add(panel_1);
+			panel_1.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+			
+			JPanel panelLinks = new JPanel();
+			panel_1.add(panelLinks);
+			panelLinks.setLayout(new BorderLayout(5, 0));
+			
+			lblLinks = new JLabel("Label");
+			panelLinks.add(lblLinks, BorderLayout.WEST);
+			
+			leftComboBox = new JComboBox<Double>(values);
+			leftComboBox.setMaximumRowCount(values.length);
+			panelLinks.add(leftComboBox, BorderLayout.EAST);
+			
+			JPanel panelRechts = new JPanel();
+			panel_1.add(panelRechts);
+			panelRechts.setLayout(new BorderLayout(5, 0));
+			
+			lblRechts = new JLabel("Label");
+			panelRechts.add(lblRechts, BorderLayout.WEST);
+			
+			rightComboBox = new JComboBox<Double>(values);
+			rightComboBox.setMaximumRowCount(values.length);
+			rightComboBox.setSelectedIndex(values.length - 1);
+			panelRechts.add(rightComboBox, BorderLayout.EAST);
+		}
 	}
 	
 	public void addRunOnFilterUpdate(Runnable action)
@@ -163,25 +169,25 @@ public abstract class CacheListFilterPanel extends JPanel
 	public void addRemoveAction(Runnable action){
 		runOnRemove.add(action);
 	}
-	
-		
 
 	protected JLabel getLblLinks() {
 		return lblLinks;
 	}
-	protected JTextField getTxtLinks() {
-		return txtLinks;
-	}
 	protected JLabel getLblRechts() {
 		return lblRechts;
 	}
-	protected JTextField getTxtRechts() {
-		return txtRechts;
-	}
+
 	protected JButton getBtnRemove() {
 		return btnRemove;
 	}
 	protected JButton getBtnUpdate() {
 		return btnUpdate;
+	}
+
+	protected Double getValueRight() {
+		return rightComboBox.getItemAt(rightComboBox.getSelectedIndex());
+	}
+	protected Double getValueLeft() {
+		return leftComboBox.getItemAt(leftComboBox.getSelectedIndex());
 	}
 }

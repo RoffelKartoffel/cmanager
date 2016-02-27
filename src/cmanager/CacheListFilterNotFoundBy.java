@@ -10,6 +10,7 @@ public class CacheListFilterNotFoundBy extends CacheListFilterModel
 
 	public CacheListFilterNotFoundBy()
 	{
+		super(FILTER_TYPE.SINGLE_FILTER_VALUE);
 		lblLinks2.setText("Not Found by: ");
 		runDoModelUpdateNow = new Runnable() {
 			@Override
@@ -22,8 +23,6 @@ public class CacheListFilterNotFoundBy extends CacheListFilterModel
 					usernames.add( part.trim().toLowerCase() );
 			}
 		};
-		
-		panel_2.setVisible(true);
 	}
 	
 	@Override

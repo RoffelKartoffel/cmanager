@@ -9,6 +9,7 @@ public class CacheListFilterDistance extends CacheListFilterModel
 
 	public CacheListFilterDistance() 
 	{
+		super(FILTER_TYPE.SINGLE_FILTER_VALUE);
 		lblLinks2.setText("Maximum distance to location (km): ");
 		runDoModelUpdateNow = new Runnable() {
 			@Override
@@ -17,8 +18,6 @@ public class CacheListFilterDistance extends CacheListFilterModel
 				maxDistance = new Double( textField.getText() );
 			}
 		};
-		
-		panel_2.setVisible(true);
 	}
 	
 	public void setLocation(Location l){

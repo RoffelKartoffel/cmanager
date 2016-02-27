@@ -6,6 +6,10 @@ public abstract class CacheListFilterModel extends CacheListFilterPanel
 {
 	private static final long serialVersionUID = 6947085305393841410L;
 
+	public CacheListFilterModel(FILTER_TYPE filterType)
+	{
+		super(filterType);
+	}
 	
 	public ArrayList<Geocache> getFiltered(final ArrayList<Geocache> originalList)
 	{

@@ -9,6 +9,7 @@ public class CacheListFilterCacheName extends CacheListFilterModel {
 
 	public CacheListFilterCacheName() 
 	{
+		super(FILTER_TYPE.SINGLE_FILTER_VALUE);
 		lblLinks2.setText("Cachename contains: ");
 		runDoModelUpdateNow = new Runnable() {
 			@Override
@@ -17,8 +18,6 @@ public class CacheListFilterCacheName extends CacheListFilterModel {
 				filterString = textField.getText().toLowerCase();
 			}
 		};
-		
-		panel_2.setVisible(true);
 	}
 	
 	@Override

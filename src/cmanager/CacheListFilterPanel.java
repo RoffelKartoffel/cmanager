@@ -145,6 +145,14 @@ public abstract class CacheListFilterPanel extends JPanel
 			
 			leftComboBox = new JComboBox<Double>(values);
 			leftComboBox.setMaximumRowCount(values.length);
+			leftComboBox.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					runDoModelUpdateNow.run();
+					for(Runnable action : runOnFilterUpdate)
+						action.run();
+				}
+			});
 			panelLinks.add(leftComboBox, BorderLayout.EAST);
 			
 			JPanel panelRechts = new JPanel();
@@ -157,6 +165,14 @@ public abstract class CacheListFilterPanel extends JPanel
 			rightComboBox = new JComboBox<Double>(values);
 			rightComboBox.setMaximumRowCount(values.length);
 			rightComboBox.setSelectedIndex(values.length - 1);
+			rightComboBox.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					runDoModelUpdateNow.run();
+					for(Runnable action : runOnFilterUpdate)
+						action.run();
+				}
+			});
 			panelRechts.add(rightComboBox, BorderLayout.EAST);
 		}
 	}

@@ -13,6 +13,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
+
+import org.openstreetmap.gui.jmapviewer.DefaultMapController;
 import org.openstreetmap.gui.jmapviewer.JMapViewer;
 import org.openstreetmap.gui.jmapviewer.MapMarkerDot;
 import org.openstreetmap.gui.jmapviewer.interfaces.MapMarker;
@@ -136,8 +138,8 @@ public class CacheListView extends JInternalFrame {
 		panel_2.add(lblNewLabel);
 
 		// Make map movable with mouse
-//		DefaultMapController mapController = new DefaultMapController(mapViewer);
-//	    mapController.setMovementMouseButton(MouseEvent.BUTTON1);
+		DefaultMapController mapController = new DefaultMapController(mapViewer);
+	    mapController.setMovementMouseButton(MouseEvent.BUTTON2);
 
 	    mapViewer.addMouseListener(new MouseAdapter() 
 	    {

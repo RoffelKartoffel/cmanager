@@ -11,9 +11,11 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class OCUtil {
 	
+	static final ArrayList<Geocache> offlineCacheStore = new ArrayList<>();
+	
+	
 	public static void findOnOc(final AtomicBoolean stopBackgroundThread, final CacheListModel clm, final OutputInterface oi, final OCUser user, final String uuid) throws Throwable
 	{
-		final ArrayList<Geocache> offlineCacheStore = new ArrayList<>();
 		final AtomicInteger count = new AtomicInteger(0);
 		
 		final ExecutorService service = Executors.newFixedThreadPool( 10 );

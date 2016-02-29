@@ -21,6 +21,7 @@ public class PersitentTileCache implements TileCache
 	final MemoryTileCache mtc = new MemoryTileCache();
 	final ExecutorService service = Executors.newFixedThreadPool( 10 );
 	private boolean online = false;
+	private boolean firstTileServed = false;
 	
 	
 	public PersitentTileCache(String path)
@@ -82,6 +83,15 @@ public class PersitentTileCache implements TileCache
 	@Override
 	public Tile getTile(TileSource source, int x, int y, int z) 
 	{
+		// Deny serving very first tile in order to trigger download for this tile
+		// and thus to check whether we are online. This tile is unimportant since
+		// the display of JMapViewer is relocated after adding caches.
+		if( !firstTileServed )
+		{
+			firstTileServed = true;
+			return null;
+		}
+		
 		// Tile in memory cache?
 		Tile tile = mtc.getTile(source, x, y, z);
 		if( tile != null )

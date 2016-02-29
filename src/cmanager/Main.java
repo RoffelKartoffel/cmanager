@@ -18,6 +18,8 @@ public class Main
 	public static final String APP_NAME = "cmanager";
 	public static final String VERSION = "0.2.27";
 	
+	public static final String CACHE_FOLDER = System.getProperty("user.home") + "/." + Main.APP_NAME + "/cache/";
+	
 	private static final String JAR_NAME = "cm.jar";
 	private static final String PARAM_HEAP_RESIZED = "resized";
 	

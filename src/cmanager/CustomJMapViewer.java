@@ -7,6 +7,7 @@ import java.awt.Point;
 import java.awt.geom.Rectangle2D;
 
 import org.openstreetmap.gui.jmapviewer.JMapViewer;
+import org.openstreetmap.gui.jmapviewer.interfaces.TileCache;
 
 
 public class CustomJMapViewer extends JMapViewer
@@ -17,6 +18,11 @@ public class CustomJMapViewer extends JMapViewer
 	private Point p2 = null;
 	
 	
+	public CustomJMapViewer(TileCache cache) {
+		super(cache);
+	}
+
+
 	public void setPoints(Point p1, Point p2)
 	{
 		this.p1 = p1;

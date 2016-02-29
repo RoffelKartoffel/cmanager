@@ -124,7 +124,7 @@ public class CacheListView extends JInternalFrame {
 		
 		
 		
-		mapViewer = new CustomJMapViewer();
+		mapViewer = new CustomJMapViewer(new PersitentTileCache( Main.CACHE_FOLDER + "maps.osm/"));
 		mapViewer.setFocusable(true);
 		panelMap.add(mapViewer, BorderLayout.CENTER);
 		

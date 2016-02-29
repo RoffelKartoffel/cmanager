@@ -10,7 +10,7 @@ import org.joda.time.DateTime;
 public class OKAPISearchCache 
 {
 	
-	private static final String cacheFolder = System.getProperty("user.home") + "/." + Main.APP_NAME + "/cache/";
+	private static final String cacheFolder = Main.CACHE_FOLDER;
 	private static boolean initDone = false;
 	
 	private static String searchToFileName(Geocache g, String excludeUUID)

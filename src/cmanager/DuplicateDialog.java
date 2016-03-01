@@ -47,6 +47,7 @@ public class DuplicateDialog extends JFrame {
 	private AtomicBoolean stopBackgroundThread = new AtomicBoolean(false);
 	private Thread backgroundThread = null;
 	
+	private ArrayList<GeocacheLog> logsCopied = new ArrayList<>();
 
 	/**
 	 * Create the dialog.
@@ -182,7 +183,7 @@ public class DuplicateDialog extends JFrame {
 				        	Geocache gc = (Geocache)parent.getUserObject();
 				        
 				        	try {
-					        	CopyLogDialog cld = new CopyLogDialog(gc, oc);
+					        	CopyLogDialog cld = new CopyLogDialog(gc, oc, logsCopied);
 					        	cld.setLocationRelativeTo(THIS);
 					        	FrameHelper.showModalFrame(cld, THIS);
 				        	}

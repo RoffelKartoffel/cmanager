@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -37,7 +38,7 @@ public class CopyLogDialog extends JFrame {
 	/**
 	 * Create the dialog.
 	 */
-	public CopyLogDialog(final Geocache gc, final Geocache oc) 
+	public CopyLogDialog(final Geocache gc, final Geocache oc, final ArrayList<GeocacheLog> logsCopied) 
 	{
 		setResizable(true);
 		
@@ -82,6 +83,9 @@ public class CopyLogDialog extends JFrame {
             	if( !log.isFoundLog() )
             		continue;
             	
+            	if( logsCopied.contains(log) )
+            		continue;
+            	
             	String gcUsername = Settings.getS(Settings.Key.GC_USERNAME);
             	if( !log.isAuthor(gcUsername) )
             		continue;
@@ -109,6 +113,7 @@ public class CopyLogDialog extends JFrame {
 								try {
 									OKAPI.postLog(OCUser.getOCUser(), oc, log);
 									button.setVisible(false);
+									logsCopied.add(log);
 								} catch (UnsupportedEncodingException | MalFormedException e) {
 									ExceptionPanel.showErrorDialog(e);
 								}

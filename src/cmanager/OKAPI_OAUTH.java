@@ -1,7 +1,7 @@
 package cmanager;
 
 import com.github.scribejava.core.builder.api.DefaultApi10a;
-import com.github.scribejava.core.model.Token;
+import com.github.scribejava.core.model.OAuth1RequestToken;
 
 public class OKAPI_OAUTH extends DefaultApi10a
 {
@@ -18,7 +18,7 @@ public class OKAPI_OAUTH extends DefaultApi10a
   }
 
   @Override
-  public String getAuthorizationUrl(Token requestToken)
+  public String getAuthorizationUrl(OAuth1RequestToken requestToken)
   {
     return String.format("https://www.opencaching.de/okapi/services/oauth/authorize?oauth_token=%s",
     		requestToken.getToken());

@@ -1,6 +1,6 @@
 package cmanager;
 
-import com.github.scribejava.core.model.Token;
+import com.github.scribejava.core.model.OAuth1AccessToken;
 
 public class OCUser 
 {
@@ -20,13 +20,13 @@ public class OCUser
 //////////////////////////////////////	
 	
 	
-	private Token okapiAccessToken = null;
+	private OAuth1AccessToken okapiAccessToken = null;
 	
 	
 	private OCUser()
 	{
 		try {
-			okapiAccessToken = new Token(
+			okapiAccessToken = new OAuth1AccessToken(
 					Settings.getS(Settings.Key.OKAPI_TOKEN),
 					Settings.getS(Settings.Key.OKAPI_SECRET));
 		}
@@ -35,7 +35,7 @@ public class OCUser
 		}
 	}
 	
-	public Token getOkapiToken()
+	public OAuth1AccessToken getOkapiToken()
 	{
 		return okapiAccessToken;
 	}
@@ -46,7 +46,7 @@ public class OCUser
 		if( okapiAccessToken != null )
 		{
 			Settings.set(Settings.Key.OKAPI_TOKEN, okapiAccessToken.getToken());
-			Settings.set(Settings.Key.OKAPI_SECRET, okapiAccessToken.getSecret());
+			Settings.set(Settings.Key.OKAPI_SECRET, okapiAccessToken.getTokenSecret());
 
 		}
 	}

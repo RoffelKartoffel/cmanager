@@ -10,13 +10,13 @@ import java.util.Comparator;
 import javax.swing.JOptionPane;
 
 import com.github.scribejava.core.builder.ServiceBuilder;
+import com.github.scribejava.core.model.OAuth1AccessToken;
+import com.github.scribejava.core.model.OAuth1RequestToken;
 import com.github.scribejava.core.model.OAuthRequest;
 import com.github.scribejava.core.model.Response;
-import com.github.scribejava.core.model.Token;
 import com.github.scribejava.core.model.Verb;
 import com.github.scribejava.core.model.Verifier;
 import com.github.scribejava.core.oauth.OAuth10aService;
-import com.github.scribejava.core.oauth.OAuthService;
 
 public class OKAPI 
 {
@@ -66,7 +66,7 @@ public class OKAPI
 		String http;
 		if( useOAuth )
 		{
-			OAuthService service = getOAuthService();
+			OAuth10aService service = getOAuthService();
 			OAuthRequest request = new OAuthRequest(Verb.GET, url, service);
 			service.signRequest(user.getOkapiToken(), request); // the access token from step 4
 			Response response = request.send();
@@ -222,13 +222,13 @@ public class OKAPI
                 .build(new OKAPI_OAUTH());
 	}
 	
-	public static Token requestAuthorization()
+	public static OAuth1AccessToken requestAuthorization()
 	{
 		// Step One: Create the OAuthService object
 		OAuth10aService service = getOAuthService();
 		
 		// Step Two: Get the request token
-		Token requestToken = service.getRequestToken();
+		OAuth1RequestToken requestToken = service.getRequestToken();
 
 		// Step Three: Making the user validate your request token
 		String authUrl = service.getAuthorizationUrl(requestToken);
@@ -240,7 +240,7 @@ public class OKAPI
 		
 		// Step Four: Get the access Token
 		Verifier v = new Verifier(pin);
-		Token accessToken = service.getAccessToken(requestToken, v); // the requestToken you had from step 2
+		OAuth1AccessToken accessToken = service.getAccessToken(requestToken, v); // the requestToken you had from step 2
 		
 		return accessToken;
 	}
@@ -251,7 +251,7 @@ public class OKAPI
 				"?format=xmlmap2" + 
 				"&fields=uuid";
 		
-		OAuthService service = getOAuthService();
+		OAuth10aService service = getOAuthService();
 		OAuthRequest request = new OAuthRequest(Verb.GET, url, service);
 		service.signRequest(user.getOkapiToken(), request); // the access token from step 4
 		Response response = request.send();
@@ -272,7 +272,7 @@ public class OKAPI
 				"?format=xmlmap2" + 
 				"&fields=username";
 		
-		OAuthService service = getOAuthService();
+		OAuth10aService service = getOAuthService();
 		OAuthRequest request = new OAuthRequest(Verb.GET, url, service);
 		service.signRequest(user.getOkapiToken(), request); // the access token from step 4
 		Response response = request.send();
@@ -296,7 +296,7 @@ public class OKAPI
 				"&comment=" + URLEncoder.encode(log.getText(), "UTF-8") +
 				"&when=" + URLEncoder.encode(log.getDateStrISO8601NoTime(), "UTF-8");
 		
-		OAuthService service = getOAuthService();
+		OAuth10aService service = getOAuthService();
 		OAuthRequest request = new OAuthRequest(Verb.GET, url, service);
 		service.signRequest(user.getOkapiToken(), request); // the access token from step 4
 		request.send();
@@ -316,7 +316,7 @@ public class OKAPI
 				"&fields=home_location" +
 				"&user_uuid=" + uuid;
 				
-		OAuthService service = getOAuthService();
+		OAuth10aService service = getOAuthService();
 		OAuthRequest request = new OAuthRequest(Verb.GET, url, service);
 		service.signRequest(user.getOkapiToken(), request); // the access token from step 4
 		Response response = request.send();

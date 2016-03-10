@@ -98,9 +98,12 @@ public class OKAPI
 	
 	public static Geocache getCache(String code, ArrayList<Geocache> offlineStore) throws Exception 
 	{
-		int index = Collections.binarySearch(offlineStore, code); 
-		if(index >= 0 )
-			return offlineStore.get(index);
+		synchronized( offlineStore )
+		{
+			int index = Collections.binarySearch(offlineStore, code); 
+			if(index >= 0 )
+				return offlineStore.get(index);
+		}
 		
 		String http = HTTP.get("https://www.opencaching.de/okapi/services/caches/geocache"+
 			"?consumer_key="+ CONSUMER_API_KEY +
@@ -157,13 +160,16 @@ public class OKAPI
 				g.setAvailable(false);
 				g.setArchived(true);
 			}
-		
-		offlineStore.add(g);
-		Collections.sort(offlineStore, new Comparator<Geocache>() {
-			public int compare(Geocache o1, Geocache o2) {
-				return o1.getCode().compareTo( o2.getCode() );
-			}
-		});
+			
+		synchronized( offlineStore )
+		{
+			offlineStore.add(g);
+			Collections.sort(offlineStore, new Comparator<Geocache>() {
+				public int compare(Geocache o1, Geocache o2) {
+					return o1.getCode().compareTo( o2.getCode() );
+				}
+			});
+		}
 		
 		return g;		
 	}

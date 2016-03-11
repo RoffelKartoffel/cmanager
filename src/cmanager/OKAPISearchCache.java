@@ -10,14 +10,15 @@ import org.joda.time.DateTime;
 public class OKAPISearchCache 
 {
 	
-	private static final String cacheFolder = Main.CACHE_FOLDER;
+	private static final String LEGACY_CACHE_FOLDER = Main.CACHE_FOLDER;
+	private static final String CACHE_FOLDER = Main.CACHE_FOLDER + "OC.OKAPI.emptySearches/";
 	private static boolean initDone = false;
 	
 	private static String searchToFileName(Geocache g, String excludeUUID)
 	{
 		String name = g.getCode()
 					+ (excludeUUID == null ? "" : " " + excludeUUID);
-		return cacheFolder + name;
+		return CACHE_FOLDER + name;
 	}
 	
 
@@ -37,7 +38,14 @@ public class OKAPISearchCache
 	{
 		if( !initDone )
 		{
-			new File(cacheFolder).mkdirs();
+			new File(CACHE_FOLDER).mkdirs();
+			
+			// if there are files in the legacy foler, move them
+			// into the new folder
+			for(File f : new File(LEGACY_CACHE_FOLDER).listFiles())
+				if( f.getName().startsWith("GC") )
+					f.renameTo( new File(CACHE_FOLDER + f.getName()) );
+			
 			initDone = true;
 		}
 	
@@ -72,12 +80,6 @@ public class OKAPISearchCache
 		
 
 		public DateTime timeStamp;
-
-//		public Double lat;
-//		public Double lon;
-//		public String excludeUUID;
-//		public Double searchRadius;
-//		public ArrayList<String> codes;
 	}
 	
 }

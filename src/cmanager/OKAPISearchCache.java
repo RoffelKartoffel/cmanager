@@ -2,7 +2,6 @@ package cmanager;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.Serializable;
 import java.util.concurrent.ThreadLocalRandom;
 
 import org.joda.time.DateTime;
@@ -28,10 +27,7 @@ public class OKAPISearchCache
 		if( f.exists() )
 			f.delete();
 		
-		CacheEntry e = new CacheEntry();
-		e.timeStamp = new DateTime();
-		
-		FileHelper.serializeToFile(e, f.getAbsolutePath());
+		f.createNewFile();
 	}
 	
 	public static synchronized boolean isEmptySearch(Geocache g, String excludeUUID) throws ClassNotFoundException, IOException
@@ -52,8 +48,6 @@ public class OKAPISearchCache
 		File f = new File(searchToFileName(g, excludeUUID));
 		if( f.exists() )
 		{
-			CacheEntry e = FileHelper.deserializeFromFile(f.getAbsolutePath());
-			
 			int randomMonthCount = -1* ThreadLocalRandom.current().nextInt(4, 12 + 1);
 			int randomDayCount = -1* ThreadLocalRandom.current().nextInt(0, 31 + 1);
 			DateTime now = new DateTime();
@@ -61,7 +55,7 @@ public class OKAPISearchCache
 			now = now.plusDays( randomDayCount );
 			
 			// outdated?
-			if( now.isAfter( e.timeStamp ) )
+			if( now.isAfter( new DateTime( f.lastModified() ) ) )
 			{
 				f.delete();
 				return false;
@@ -71,15 +65,5 @@ public class OKAPISearchCache
 		}
 		
 		return false;
-	}
-	
-	
-	private static class CacheEntry implements Serializable
-	{
-		private static final long serialVersionUID = 7106170690451900376L;
-		
-
-		public DateTime timeStamp;
-	}
-	
+	}	
 }

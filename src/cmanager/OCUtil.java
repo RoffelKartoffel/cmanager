@@ -11,7 +11,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class OCUtil {
 	
-	static final ArrayList<Geocache> offlineCacheStore = new ArrayList<>();
+	static final ArrayList<Geocache> okapiCacheDetailsCache = new ArrayList<>();
 	
 	/**
 	 * 
@@ -66,7 +66,7 @@ public class OCUtil {
 						String ocCode = shadowList.getMatchingOCCode(gc.getCode());
 						if( ocCode != null )
 						{
-							Geocache oc = OKAPI.getCache(ocCode, offlineCacheStore);
+							Geocache oc = OKAPI.getCache(ocCode, okapiCacheDetailsCache);
 							OKAPI.completeCacheDetails(oc);
 							OKAPI.updateFoundStatus(user, oc);
 							// Found status can not be retrieved without user
@@ -83,7 +83,7 @@ public class OCUtil {
 						// Search for duplicate using the OKAPI
 						//
 						double searchRadius = gc.hasVolatileStart() ? 1 : 0.05 ;
-						ArrayList<Geocache> similar = OKAPI.getCachesAround(gc, searchRadius, offlineCacheStore, user, uuid);
+						ArrayList<Geocache> similar = OKAPI.getCachesAround(gc, searchRadius, okapiCacheDetailsCache, user, uuid);
 						boolean match = false;
 						for( Geocache oc : similar )
 							if( oc.isSimilar(gc) )

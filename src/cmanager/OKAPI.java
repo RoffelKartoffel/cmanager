@@ -42,13 +42,19 @@ public class OKAPI
 	
 
 	
-	public static ArrayList<Geocache> getCachesAround(Geocache g, double searchRadius, ArrayList<Geocache> offlineStore, OCUser user, String excludeUUID) throws Exception
+	public static ArrayList<Geocache> getCachesAround(Geocache g, double searchRadius, ArrayList<Geocache> okapiCacheDetailsCache, OCUser user, String excludeUUID) throws Exception
 	{
 		Coordinate c = g.getCoordinate();
-		return getCachesAround(c.getLat(), c.getLon(), searchRadius, offlineStore, user, excludeUUID);
+		return getCachesAround(c.getLat(), c.getLon(), searchRadius, okapiCacheDetailsCache, user, excludeUUID);
 	}
 	
-	public static ArrayList<Geocache> getCachesAround(Double lat, Double lon, Double searchRadius, ArrayList<Geocache> offlineStore, OCUser user, String excludeUUID) throws Exception
+	public static ArrayList<Geocache> getCachesAround(
+			Double lat, 
+			Double lon, 
+			Double searchRadius, 
+			ArrayList<Geocache> okapiCacheDetailsCache, 
+			OCUser user, 
+			String excludeUUID) throws Exception
 	{
 		ArrayList<Geocache> caches = new ArrayList<Geocache>();
 		
@@ -82,7 +88,7 @@ public class OKAPI
 					if( ee.is("string") )
 						try {
 							String code = ee.getUnescapedBody();
-							Geocache g = getCache(code, offlineStore);
+							Geocache g = getCache(code, okapiCacheDetailsCache);
 							caches.add(g);
 						}
 						catch(MalFormedException ex)
@@ -94,13 +100,13 @@ public class OKAPI
 	}
 	
 	
-	public static Geocache getCache(String code, ArrayList<Geocache> offlineStore) throws Exception 
+	public static Geocache getCache(String code, ArrayList<Geocache> okapiCacheDetailsCache) throws Exception 
 	{
-		synchronized( offlineStore )
+		synchronized( okapiCacheDetailsCache )
 		{
-			int index = Collections.binarySearch(offlineStore, code); 
+			int index = Collections.binarySearch(okapiCacheDetailsCache, code); 
 			if(index >= 0 )
-				return offlineStore.get(index);
+				return okapiCacheDetailsCache.get(index);
 		}
 		
 		String http = HTTP.get("https://www.opencaching.de/okapi/services/caches/geocache"+
@@ -158,10 +164,10 @@ public class OKAPI
 				g.setArchived(true);
 			}
 			
-		synchronized( offlineStore )
+		synchronized( okapiCacheDetailsCache )
 		{
-			offlineStore.add(g);
-			Collections.sort(offlineStore, new Comparator<Geocache>() {
+			okapiCacheDetailsCache.add(g);
+			Collections.sort(okapiCacheDetailsCache, new Comparator<Geocache>() {
 				public int compare(Geocache o1, Geocache o2) {
 					return o1.getCode().compareTo( o2.getCode() );
 				}

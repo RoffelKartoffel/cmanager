@@ -1,12 +1,7 @@
 package cmanager;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.net.URL;
-import java.nio.channels.Channels;
-import java.nio.channels.ReadableByteChannel;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -15,16 +10,9 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
-import org.joda.time.DateTime;
-
 public class OCUtil {
 	
 	static final ArrayList<Geocache> offlineCacheStore = new ArrayList<>();
-	
-	
-	private final static String SHADOWLIST_FOLDER = Main.CACHE_FOLDER + "OC.shadowlist";
-	private final static String SHADOWLIST_PATH = SHADOWLIST_FOLDER + "/gc2oc.gz";
-	
 	
 	/**
 	 * 
@@ -42,9 +30,9 @@ public class OCUtil {
 			final OCUser user, 
 			final String uuid) throws Throwable
 	{
-		// update local copy of shadow list
-		updateShadowList();
-		
+		// update local copy of shadow list and load it
+		OCShadowList.updateShadowList();
+		final HashMap<String, String> shadowList = OCShadowList.loadShadowList();
 		
 		// Number of found duplicates
 		final AtomicInteger count = new AtomicInteger(0);
@@ -76,6 +64,27 @@ public class OCUtil {
 						if( OKAPISearchCache.isEmptySearch(gc, uuid) )
 							return null;
 						
+						//
+						// Search shadow list for a duplicate
+						//
+						String ocCode = shadowList.get(gc.getCode());
+						if( ocCode != null )
+						{
+							Geocache oc = OKAPI.getCache(ocCode, offlineCacheStore);
+							OKAPI.updateFoundStatus(user, oc);
+							// Found status can not be retrieved without user
+							// so we have a match when there is no user or the user has not found
+							// the cache
+							if( user == null || !oc.getIsFound() )
+							{
+								oi.match(gc, oc);
+								return null;
+							}
+						}
+						
+						// 
+						// Search for duplicate using the OKAPI
+						//
 						double searchRadius = gc.hasVolatileStart() ? 1 : 0.05 ;
 						ArrayList<Geocache> similar = OKAPI.getCachesAround(gc, searchRadius, offlineCacheStore, user, uuid);
 						boolean match = false;
@@ -112,31 +121,4 @@ public class OCUtil {
 	    void setProgress(Integer count, Integer max);
 	    void match(Geocache gc, Geocache oc);
 	}
-	
-	
-	private static void updateShadowList() throws IOException
-	{
-		// delete list if it is older than 1 month
-		File file = new File(SHADOWLIST_PATH);
-		if( file.exists() )
-		{
-			DateTime fileTime = new DateTime( file.lastModified() );
-			DateTime now = new DateTime();
-			fileTime = fileTime.plusMonths( 1 );
-			if( fileTime.isAfter( now ) )
-				return;
-				
-			file.delete();
-		}
-		
-		new File(SHADOWLIST_FOLDER).mkdirs();
-		
-		// download list
-		URL url = new URL("https://www.opencaching.de/api/gc2oc.php");
-		ReadableByteChannel rbc = Channels.newChannel(url.openStream());
-		FileOutputStream fos = new FileOutputStream(SHADOWLIST_PATH);
-		fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
-		fos.close();
-	}
-	
 }

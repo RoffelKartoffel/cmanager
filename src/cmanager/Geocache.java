@@ -106,6 +106,8 @@ public class Geocache implements Serializable, Comparable<String>
 	
 	private Boolean gcPremium = null;
 	private Integer favPoints = null;
+	
+	private Boolean isFound = null;
 
 	private ArrayList<GeocacheAttribute> attributes = new ArrayList<>();
 	private ArrayList<GeocacheLog> logs = new ArrayList<GeocacheLog>();
@@ -433,6 +435,13 @@ public class Geocache implements Serializable, Comparable<String>
 	public void setListing_short(String listing_short) {
 		this.listing_short = listing_short;
 	}
+	public Boolean getIsFound(){
+		return isFound;
+	}
+	public void setIsFound(Boolean isFound){
+		this.isFound = isFound;
+	}
+	
 	@Override
 	public int compareTo(String s) {
 		return code.compareTo( s );

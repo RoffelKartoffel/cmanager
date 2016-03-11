@@ -9,6 +9,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.io.Serializable;
+import java.util.zip.GZIPInputStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -49,10 +50,27 @@ public class FileHelper
 	
 	public static void processFiles(String path, FileHelper.InputAction ia) throws Throwable
 	{
-		if( path.toLowerCase().endsWith(".zip") )
+		String lcPath = path.toLowerCase();
+		if( lcPath.endsWith(".zip") )
 			processZipFile(path, ia);
+		else if( lcPath.endsWith(".gz") )
+			processGZipFile(path, ia);
 		else
 			processFile(path, ia);
+	}
+	
+	private static void processGZipFile(String path, FileHelper.InputAction ia) throws Throwable
+	{
+		processGZipFile( new FileInputStream(path), ia );
+	}
+	
+	private static void processGZipFile(InputStream is, FileHelper.InputAction ia) throws Throwable
+	{
+		//get the gzip file content
+		GZIPInputStream gzis = new GZIPInputStream(is);
+		ia.process(gzis);
+    	gzis.close();
+    	
 	}
 	
 	private static void processZipFile(String path, FileHelper.InputAction ia) throws Throwable

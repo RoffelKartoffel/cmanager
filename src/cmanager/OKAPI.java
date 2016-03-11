@@ -94,8 +94,6 @@ public class OKAPI
 	}
 	
 	
-	
-	
 	public static Geocache getCache(String code, ArrayList<Geocache> offlineStore) throws Exception 
 	{
 		synchronized( offlineStore )
@@ -110,7 +108,6 @@ public class OKAPI
 			"&format=xmlmap2" + 
 			"&cache_code=" + code +
 			"&fields=code|name|location|type|gc_code|difficulty|terrain|status" );
-	
 	
 		String name = null; 
 		Coordinate coordinate = null;
@@ -172,6 +169,34 @@ public class OKAPI
 		}
 		
 		return g;		
+	}
+	
+	public static void updateFoundStatus(OCUser user, Geocache oc) throws MalFormedException, IOException
+	{
+		if( user == null )
+			return;
+		
+		String url = "https://www.opencaching.de/okapi/services/caches/geocache"+
+				"?consumer_key="+ CONSUMER_API_KEY +
+				"&format=xmlmap2" + 
+				"&cache_code=" + oc.getCode() +
+				"&fields=is_found";
+		
+		OAuth10aService service = getOAuthService();
+		OAuthRequest request = new OAuthRequest(Verb.GET, url, service);
+		service.signRequest(user.getOkapiToken(), request); // the access token from step 4
+		Response response = request.send();
+		String http = response.getBody();
+		
+		Boolean isFound = null;
+		
+		XMLElement root = XMLParser.parse(http);
+		for(XMLElement e : root.getChild("object").getChildren() )
+		{
+			if( e.attrIs("key", "is_found") )
+				isFound = e.getBodyB();
+		}
+		oc.setIsFound(isFound);
 	}
 	
 	public static Geocache completeCacheDetails(Geocache g) throws Exception 

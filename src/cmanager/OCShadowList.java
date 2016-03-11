@@ -104,7 +104,7 @@ public class OCShadowList
 		if( f.exists() )
 			return;
 		
-		String url = "http://www.opencaching.de/api/gc2oc.php" + 
+		String url = "https://www.opencaching.de/api/gc2oc.php" + 
 					"?report=1" +
 					"&ocwp=" + oc.getCode() + 
 					"&gcwp=" + gc.getCode() +

@@ -99,10 +99,6 @@ public class OCShadowList
 		if( contains(gc.getCode()))
 			return;
 		
-		// only post archived caches
-		if( gc.getArchived() == null || !gc.getArchived() )
-			return;
-		
 		// do not repost local findings
 		File f = new File(SHADOWLIST_POSTED_FOLDER + "/" + gc.getCode());
 		if( f.exists() )

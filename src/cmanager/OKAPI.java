@@ -207,7 +207,6 @@ public class OKAPI
 				"&cache_code=" + g.getCode() +
 				"&fields=" + URLEncoder.encode("size2|short_description|description|owner|hint2", "UTF-8") );
 		
-		
 		String size = null; 
 		String shortDescription = null;
 		String description = null;

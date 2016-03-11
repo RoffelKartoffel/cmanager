@@ -11,8 +11,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -111,11 +109,17 @@ public class CopyLogDialog extends JFrame {
 							public void run() 
 							{
 								try {
-									OKAPI.postLog(OCUser.getOCUser(), oc, log);
 									button.setVisible(false);
+									// contribute to shadow list
+									// FIXME: list should be loaded somewhere globally
+									OCShadowList.loadShadowList().postToShadowList(gc, oc);;
+									// copy the log
+									OKAPI.postLog(OCUser.getOCUser(), oc, log);
+									// remember that we copied the log so the user can not 
+									// double post it by accident
 									logsCopied.add(log);
-								} catch (UnsupportedEncodingException | MalFormedException e) {
-									ExceptionPanel.showErrorDialog(e);
+								} catch (Throwable t) {
+									ExceptionPanel.showErrorDialog(t);
 								}
 							}
 						}, THIS);

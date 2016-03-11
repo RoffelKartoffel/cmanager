@@ -18,7 +18,8 @@ import cmanager.FileHelper.InputAction;
 public class OCShadowList
 {
 	private final static String SHADOWLIST_FOLDER = Main.CACHE_FOLDER + "OC.shadowlist";
-	private final static String SHADOWLIST_PATH = SHADOWLIST_FOLDER + "/gc2oc.gz"; 
+	private final static String SHADOWLIST_PATH = SHADOWLIST_FOLDER + "/gc2oc.gz";
+	private final static String SHADOWLIST_POSTED_FOLDER = Main.CACHE_FOLDER + "OC.shadowlist.posted";
 
 	public static void updateShadowList() throws IOException
 	{
@@ -85,5 +86,39 @@ public class OCShadowList
 	public String getMatchingOCCode(String gcCode)
 	{
 		return shadowList.get(gcCode);
+	}
+	
+	public boolean contains(String gcCode)
+	{
+		return shadowList.get(gcCode) != null;
+	}
+	
+	public void postToShadowList(Geocache gc, Geocache oc) throws Exception
+	{
+		// do not repost items which are already upstream
+		if( contains(gc.getCode()))
+			return;
+		
+		// only post archived caches
+		if( gc.getArchived() == null || !gc.getArchived() )
+			return;
+		
+		// do not repost local findings
+		File f = new File(SHADOWLIST_POSTED_FOLDER + "/" + gc.getCode());
+		if( f.exists() )
+			return;
+		
+		String url = "http://www.opencaching.de/api/gc2oc.php" + 
+					"?report=1" +
+					"&ocwp=" + oc.getCode() + 
+					"&gcwp=" + gc.getCode() +
+					"&source=" + Main.APP_NAME + "+" + Main.VERSION;
+		
+		// post
+		HTTP.get(url);
+		
+		// remember our post
+		new File(SHADOWLIST_POSTED_FOLDER).mkdirs();
+		f.createNewFile();
 	}
 }

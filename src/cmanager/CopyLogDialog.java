@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -36,7 +37,11 @@ public class CopyLogDialog extends JFrame {
 	/**
 	 * Create the dialog.
 	 */
-	public CopyLogDialog(final Geocache gc, final Geocache oc, final ArrayList<GeocacheLog> logsCopied) 
+	public CopyLogDialog(
+			final Geocache gc, 
+			final Geocache oc, 
+			final ArrayList<GeocacheLog> logsCopied,
+			final OCShadowList shadowList) 
 	{
 		setResizable(true);
 		
@@ -111,8 +116,7 @@ public class CopyLogDialog extends JFrame {
 								try {
 									button.setVisible(false);
 									// contribute to shadow list
-									// FIXME: list should be loaded somewhere globally
-									OCShadowList.loadShadowList().postToShadowList(gc, oc);;
+									shadowList.postToShadowList(gc, oc);;
 									// copy the log
 									OKAPI.postLog(OCUser.getOCUser(), oc, log);
 									// remember that we copied the log so the user can not 

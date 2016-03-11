@@ -27,12 +27,9 @@ public class OCUtil {
 			final CacheListModel clm, 
 			final OutputInterface oi, 
 			final OCUser user, 
-			final String uuid) throws Throwable
+			final String uuid,
+			final OCShadowList shadowList) throws Throwable
 	{
-		// update local copy of shadow list and load it
-		OCShadowList.updateShadowList();
-		final OCShadowList shadowList = OCShadowList.loadShadowList();
-		
 		// Number of found duplicates
 		final AtomicInteger count = new AtomicInteger(0);
 		// Thread pool which establishes 10 concurrent connection at max

@@ -48,6 +48,7 @@ public class DuplicateDialog extends JFrame {
 	private Thread backgroundThread = null;
 	
 	private ArrayList<GeocacheLog> logsCopied = new ArrayList<>();
+	private OCShadowList shadowList = null;
 
 	/**
 	 * Create the dialog.
@@ -183,7 +184,7 @@ public class DuplicateDialog extends JFrame {
 				        	Geocache gc = (Geocache)parent.getUserObject();
 				        
 				        	try {
-					        	CopyLogDialog cld = new CopyLogDialog(gc, oc, logsCopied);
+					        	CopyLogDialog cld = new CopyLogDialog(gc, oc, logsCopied, shadowList);
 					        	cld.setLocationRelativeTo(THIS);
 					        	FrameHelper.showModalFrame(cld, THIS);
 				        	}
@@ -249,6 +250,10 @@ public class DuplicateDialog extends JFrame {
 			@Override
 			public void run() {
 				try {
+					// update local copy of shadow list and load it
+					OCShadowList.updateShadowList();
+					shadowList = OCShadowList.loadShadowList();
+					
 					OCUtil.findOnOc(stopBackgroundThread, clm, new OCUtil.OutputInterface() 
 					{	
 						public void setProgress(Integer count, Integer max) {
@@ -274,7 +279,7 @@ public class DuplicateDialog extends JFrame {
 							}
 							lastNode.add(new DefaultMutableTreeNode( oc ));
 						}
-					}, user, uuid);
+					}, user, uuid, shadowList);
 					switchCards();
 					
 					if( stopBackgroundThread.get() )

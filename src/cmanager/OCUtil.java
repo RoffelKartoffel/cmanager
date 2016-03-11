@@ -13,14 +13,30 @@ public class OCUtil {
 	
 	static final ArrayList<Geocache> offlineCacheStore = new ArrayList<>();
 	
-	
-	public static void findOnOc(final AtomicBoolean stopBackgroundThread, final CacheListModel clm, final OutputInterface oi, final OCUser user, final String uuid) throws Throwable
+	/**
+	 * 
+	 * @param stopBackgroundThread Processing is interrupted if this boolean is set true
+	 * @param clm The model supplying the caches to checke
+	 * @param oi Callback functions
+	 * @param user OCUser object for OKAPI authentication
+	 * @param uuid The uuid of the OC user to exclude caches already found by this user
+	 * @throws Throwable
+	 */
+	public static void findOnOc(
+			final AtomicBoolean stopBackgroundThread, 
+			final CacheListModel clm, 
+			final OutputInterface oi, 
+			final OCUser user, 
+			final String uuid) throws Throwable
 	{
+		// Number of found duplicates
 		final AtomicInteger count = new AtomicInteger(0);
-		
+		// Thread pool which establishes 10 concurrent connection at max
 		final ExecutorService service = Executors.newFixedThreadPool( 10 );
+		// Variable to hold an exception throwable if one is thrown by a task
 		final AtomicReference<Throwable> throwable = new AtomicReference<Throwable>(null);
 		
+		// Create a task for each cache and submit it to the thread pool.
 		for(final Geocache gc : clm.getList() )
 		{
 			if( throwable.get() != null )
@@ -29,7 +45,8 @@ public class OCUtil {
 			if( stopBackgroundThread.get() )
 				break;
 			
-			Callable<Void> callable = new Callable<Void>() {
+			Callable<Void> callable = new Callable<Void>() 
+			{
 				public Void call() 
 				{
 					if( stopBackgroundThread.get() )

@@ -648,8 +648,6 @@ public class MainWindow extends JFrame {
 	private void findOnOC(OCUser user, String uuid)
 	{
 		DuplicateDialog dd = new DuplicateDialog( CacheListController.getTopViewCacheController(desktopPane).getModel(), user, uuid);
-//		dd.setModalityType(ModalityType.APPLICATION_MODAL);
-//		dd.setVisible(true);
 		
 		FrameHelper.showModalFrame(dd, THIS);
 		

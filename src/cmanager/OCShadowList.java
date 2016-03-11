@@ -19,7 +19,7 @@ public class OCShadowList
 {
 	private final static String SHADOWLIST_FOLDER = Main.CACHE_FOLDER + "OC.shadowlist";
 	private final static String SHADOWLIST_PATH = SHADOWLIST_FOLDER + "/gc2oc.gz"; 
-	
+
 	public static void updateShadowList() throws IOException
 	{
 		// delete list if it is older than 1 month
@@ -45,7 +45,7 @@ public class OCShadowList
 		fos.close();
 	}
 
-	public static HashMap<String, String> loadShadowList() throws Throwable
+	public static OCShadowList loadShadowList() throws Throwable
 	{
 		final HashMap<String, String> shadowList = new HashMap<>();
 		FileHelper.processFiles(SHADOWLIST_PATH, new InputAction() 
@@ -67,7 +67,23 @@ public class OCShadowList
 				}
 			}
 		});
-		return shadowList;
+		return new OCShadowList(shadowList);
 	}
-
+	
+	
+	//
+	//	Member functions
+	//
+	
+	private HashMap<String, String> shadowList;
+	
+	private OCShadowList(HashMap<String, String> shadowList)
+	{
+		this.shadowList = shadowList;
+	}
+	
+	public String getMatchingOCCode(String gcCode)
+	{
+		return shadowList.get(gcCode);
+	}
 }

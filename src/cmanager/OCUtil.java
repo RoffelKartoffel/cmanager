@@ -1,7 +1,6 @@
 package cmanager;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -32,7 +31,7 @@ public class OCUtil {
 	{
 		// update local copy of shadow list and load it
 		OCShadowList.updateShadowList();
-		final HashMap<String, String> shadowList = OCShadowList.loadShadowList();
+		final OCShadowList shadowList = OCShadowList.loadShadowList();
 		
 		// Number of found duplicates
 		final AtomicInteger count = new AtomicInteger(0);
@@ -67,7 +66,7 @@ public class OCUtil {
 						//
 						// Search shadow list for a duplicate
 						//
-						String ocCode = shadowList.get(gc.getCode());
+						String ocCode = shadowList.getMatchingOCCode(gc.getCode());
 						if( ocCode != null )
 						{
 							Geocache oc = OKAPI.getCache(ocCode, offlineCacheStore);

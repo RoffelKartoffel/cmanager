@@ -1,5 +1,11 @@
 package cmanager;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.net.URL;
+import java.nio.channels.Channels;
+import java.nio.channels.ReadableByteChannel;
 import java.util.ArrayList;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
@@ -9,14 +15,21 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
+import org.joda.time.DateTime;
+
 public class OCUtil {
 	
 	static final ArrayList<Geocache> offlineCacheStore = new ArrayList<>();
 	
+	
+	private final static String SHADOWLIST_FOLDER = Main.CACHE_FOLDER + "OC.shadowlist";
+	private final static String SHADOWLIST_PATH = SHADOWLIST_FOLDER + "/gc2oc.gz";
+	
+	
 	/**
 	 * 
 	 * @param stopBackgroundThread Processing is interrupted if this boolean is set true
-	 * @param clm The model supplying the caches to checke
+	 * @param clm The model supplying the caches to check
 	 * @param oi Callback functions
 	 * @param user OCUser object for OKAPI authentication
 	 * @param uuid The uuid of the OC user to exclude caches already found by this user
@@ -29,6 +42,10 @@ public class OCUtil {
 			final OCUser user, 
 			final String uuid) throws Throwable
 	{
+		// update local copy of shadow list
+		updateShadowList();
+		
+		
 		// Number of found duplicates
 		final AtomicInteger count = new AtomicInteger(0);
 		// Thread pool which establishes 10 concurrent connection at max
@@ -94,6 +111,32 @@ public class OCUtil {
 	public interface OutputInterface {
 	    void setProgress(Integer count, Integer max);
 	    void match(Geocache gc, Geocache oc);
+	}
+	
+	
+	private static void updateShadowList() throws IOException
+	{
+		// delete list if it is older than 1 month
+		File file = new File(SHADOWLIST_PATH);
+		if( file.exists() )
+		{
+			DateTime fileTime = new DateTime( file.lastModified() );
+			DateTime now = new DateTime();
+			fileTime = fileTime.plusMonths( 1 );
+			if( fileTime.isAfter( now ) )
+				return;
+				
+			file.delete();
+		}
+		
+		new File(SHADOWLIST_FOLDER).mkdirs();
+		
+		// download list
+		URL url = new URL("https://www.opencaching.de/api/gc2oc.php");
+		ReadableByteChannel rbc = Channels.newChannel(url.openStream());
+		FileOutputStream fos = new FileOutputStream(SHADOWLIST_PATH);
+		fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
+		fos.close();
 	}
 	
 }

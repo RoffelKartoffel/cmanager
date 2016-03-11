@@ -70,6 +70,7 @@ public class OCUtil {
 						if( ocCode != null )
 						{
 							Geocache oc = OKAPI.getCache(ocCode, offlineCacheStore);
+							OKAPI.completeCacheDetails(oc);
 							OKAPI.updateFoundStatus(user, oc);
 							// Found status can not be retrieved without user
 							// so we have a match when there is no user or the user has not found

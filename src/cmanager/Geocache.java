@@ -136,6 +136,15 @@ public class Geocache implements Serializable, Comparable<String>
 				|| (g.code_gc != null && g.code_gc.equals(this.code) ) )
 					return 1;
 		
+		// If a non premium member downloads her/his founds via geotoad,
+		// premium caches are mislocated at 0.0/0.0 which falsely matches
+		// many OC dummies in the ocean.
+		if( coordinate.equals(new Coordinate(0.0, 0.0)) 
+				&& g.getCoordinate().equals(new Coordinate(0.0, 0.0)) )
+		{
+			return 0;
+		}
+		
 		double dividend = 0;
 		double divisor = 0;
 		

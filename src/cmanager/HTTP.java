@@ -9,7 +9,7 @@ import java.net.URL;
 
 public class HTTP {
 
-	private final static String USER_AGENT =  Main.APP_NAME + " " + Main.VERSION;
+	private final static String USER_AGENT =  Main.APP_NAME + " " + Version.VERSION;
 
 
 	public static String get(String url) throws Exception

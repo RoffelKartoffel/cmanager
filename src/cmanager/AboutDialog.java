@@ -52,7 +52,7 @@ public class AboutDialog extends JDialog {
 			contentPanel.add(lblAppname, gbc_lblAppname);
 		}
 		{
-			JLabel lblVersion = new JLabel(Main.VERSION);
+			JLabel lblVersion = new JLabel(Version.VERSION);
 			lblVersion.setFont(new Font("Dialog", Font.PLAIN, 12));
 			GridBagConstraints gbc_lblVersion = new GridBagConstraints();
 			gbc_lblVersion.insets = new Insets(0, 0, 5, 0);

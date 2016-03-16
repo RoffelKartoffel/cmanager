@@ -15,7 +15,6 @@ import com.github.scribejava.core.model.OAuth1RequestToken;
 import com.github.scribejava.core.model.OAuthRequest;
 import com.github.scribejava.core.model.Response;
 import com.github.scribejava.core.model.Verb;
-import com.github.scribejava.core.model.Verifier;
 import com.github.scribejava.core.oauth.OAuth10aService;
 
 public class OKAPI 
@@ -269,9 +268,8 @@ public class OKAPI
 			return null;
 		
 		// Step Four: Get the access Token
-		Verifier v = new Verifier(pin);
-		OAuth1AccessToken accessToken = service.getAccessToken(requestToken, v); // the requestToken you had from step 2
-		
+		OAuth1AccessToken accessToken = service.getAccessToken(requestToken, pin); // the requestToken you had from step 2
+
 		return accessToken;
 	}
 	

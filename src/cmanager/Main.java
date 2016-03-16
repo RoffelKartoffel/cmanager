@@ -16,11 +16,10 @@ import javax.swing.JOptionPane;
 public class Main 
 {
 	public static final String APP_NAME = "cmanager";
-	public static final String VERSION = "0.2.33";
-	
+
 	public static final String CACHE_FOLDER = System.getProperty("user.home") + "/." + Main.APP_NAME + "/cache/";
 	
-	private static final String JAR_NAME = "cm.jar";
+	private static final String JAR_NAME = "cm-" + Version.VERSION + ".jar";
 	private static final String PARAM_HEAP_RESIZED = "resized";
 	
 //	private static final String OC_TEST_CACHE = "OC827D";
@@ -41,7 +40,7 @@ public class Main
 		
 		MainWindow frame = new MainWindow();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setTitle(APP_NAME + " " + VERSION);
+		frame.setTitle(APP_NAME + " " + Version.VERSION);
 		frame.setVisible(true);
 
 		

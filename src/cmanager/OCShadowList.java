@@ -108,7 +108,7 @@ public class OCShadowList
 					"?report=1" +
 					"&ocwp=" + oc.getCode() + 
 					"&gcwp=" + gc.getCode() +
-					"&source=" + Main.APP_NAME + "+" + Main.VERSION;
+					"&source=" + Main.APP_NAME + "+" + Version.VERSION;
 		
 		// post
 		HTTP.get(url);

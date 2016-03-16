@@ -1,0 +1,9 @@
+.gradle
+build
+bin
+src/cmanager/OKAPIKeys.java
+src/cmanager/Version.java
+/oc_okapi.properties
+.settings
+.classpath
+.project

@@ -39,6 +39,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import java.awt.Font;
+import java.awt.Color;
 
 public class MainWindow extends JFrame {
 
@@ -420,7 +421,43 @@ public class MainWindow extends JFrame {
 		contentPane.add(panelSouth, BorderLayout.SOUTH);
 		
 		ExceptionPanel panelException = ExceptionPanel.getPanel();
-		panelSouth.add(panelException, BorderLayout.CENTER);	
+		panelSouth.add(panelException, BorderLayout.NORTH);	
+		
+		JPanel panelUpdate = new JPanel();
+		panelSouth.add(panelUpdate, BorderLayout.SOUTH);
+		
+		final JButton btnUpdate = new JButton("");
+		btnUpdate.setVisible(false);
+		btnUpdate.setBorderPainted(false);
+		btnUpdate.setOpaque(false);
+		btnUpdate.setContentAreaFilled(false);
+		btnUpdate.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) 
+			{
+					Main.openUrl("https://github.com/RoffelKartoffel/cmanager/releases");
+			}
+		});
+		panelUpdate.add(btnUpdate);
+
+		SwingUtilities.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				// Display update message if there is a nother version available
+				if( Updates.updateAvailable_block() )
+				{
+					setText( "Version " + Updates.getNewVersion() + " of " + 
+							Main.APP_NAME + " is available. Click here for updates!" );
+					btnUpdate.setVisible(true);
+				}
+			}
+			
+			private void setText(String text){
+				btnUpdate.setText(
+						"<HTML><FONT color=\"#008000\"><U>"+ text 
+						+ "</U></FONT></HTML>");
+			}
+		});
+		
 		
 		JPanel panelNorth = new JPanel();
 		contentPane.add(panelNorth, BorderLayout.NORTH);

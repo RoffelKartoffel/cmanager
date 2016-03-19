@@ -19,7 +19,7 @@ public class Updates
 				XMLElement child = root.getChild("feed").getChild("entry").getChild("title");
 				newVersion = child.getUnescapedBody();
 				
-				updateAvailable = newVersion.equals(Version.VERSION);
+				updateAvailable = !newVersion.equals(Version.VERSION);
 			}
 			catch(Throwable t){
 				// Errors might be due to missing internet connection.
@@ -30,7 +30,7 @@ public class Updates
 		return updateAvailable;
 	}
 	
-	public String getNewVersion(){
+	public static String getNewVersion(){
 		return newVersion;
 	}
 }

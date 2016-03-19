@@ -33,10 +33,17 @@ public class XMLParser
 		XMLElement root = new XMLElement();
 		do
 		{
+			removeDelimiter(element);
 			if( element.substring(0, 5).equals("<?xml") )
 			{
 				int index = element.indexOf("?>");
 				element.deleteUntil(index +2);
+			}
+			removeDelimiter(element);			
+			if( element.substring(0, 9).equals("<!DOCTYPE") )
+			{
+				int index = element.indexOf(">");
+				element.deleteUntil(index +1);
 			}
 			parse(element, root, callback);
 			removeDelimiter(element);

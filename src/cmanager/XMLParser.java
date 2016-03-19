@@ -457,5 +457,17 @@ public class XMLParser
 			return sb;
 		}
 		
+		
+		@SuppressWarnings("unused")
+		public String getHead(int max) throws IOException
+		{
+			max = max < LIMIT -1 ? max : LIMIT -1;
+			
+			br.mark(max);
+			max = br.read(cbuf, 0, max);
+			br.reset();
+			
+			return new String(cbuf, 0, max);
+		}
 	}
 }

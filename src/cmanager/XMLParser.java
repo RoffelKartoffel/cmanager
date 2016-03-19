@@ -91,15 +91,17 @@ public class XMLParser
 				return;		 
 			}
 			
+			// Tag is not closed => an attribute is following
 			int index = element.indexOf("=");
 			String attrName = element.substring(0, index);
 			element.deleteUntil(index+1);
 			
 			String attrVal = null;
-			if( element.charAt(0) == '"' )
+			char marking = element.charAt(0);
+			if( marking == '"' || marking == '\'' )
 			{
 				element.deleteChar();
-				index = element.indexOf("\"");
+				index = element.indexOf( String.valueOf(marking) );
 				attrVal = element.substring(0, index);
 				element.deleteUntil(index+1);
 			}

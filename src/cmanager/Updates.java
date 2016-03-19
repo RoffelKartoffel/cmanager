@@ -2,8 +2,8 @@ package cmanager;
 
 public class Updates 
 {
-
 	private static Boolean updateAvailable = null;
+	private static String newVersion = null; 
 	
 	public static synchronized boolean updateAvailable_block()
 	{
@@ -17,9 +17,9 @@ public class Updates
 				XMLElement root = XMLParser.parse(http);
 
 				XMLElement child = root.getChild("feed").getChild("entry").getChild("title");
-				String version = child.getUnescapedBody();
+				newVersion = child.getUnescapedBody();
 				
-				updateAvailable = version.equals(Version.VERSION);
+				updateAvailable = newVersion.equals(Version.VERSION);
 			}
 			catch(Throwable t){
 				// Errors might be due to missing internet connection.
@@ -28,5 +28,9 @@ public class Updates
 		}
 		
 		return updateAvailable;
+	}
+	
+	public String getNewVersion(){
+		return newVersion;
 	}
 }

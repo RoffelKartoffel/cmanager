@@ -39,7 +39,6 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import java.awt.Font;
-import java.awt.Color;
 
 public class MainWindow extends JFrame {
 

@@ -63,7 +63,8 @@ public class SettingsDialog extends JDialog {
 				
 				final String newHeapSize = txtHeapSize.getText();
 				final String oldHeapSize = Settings.getS(Settings.Key.HEAP_SIZE);
-				if( oldHeapSize != null && !oldHeapSize.equals(newHeapSize) )
+				if( (oldHeapSize != null && !oldHeapSize.equals(newHeapSize)) ||
+                                    (oldHeapSize == null && newHeapSize.length() > 0) )
 					changesWhichNeedRestart = true;
 				
 				Settings.set(Settings.Key.GC_USERNAME, txtNameGC.getText());

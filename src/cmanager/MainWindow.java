@@ -104,7 +104,7 @@ public class MainWindow extends JFrame {
 		mntmExit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) 
 			{
-				THIS.dispose();
+				THIS.dispatchEvent(new WindowEvent(THIS, WindowEvent.WINDOW_CLOSING));
 			}
 		});
 		

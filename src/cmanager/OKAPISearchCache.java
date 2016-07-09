@@ -41,7 +41,7 @@ public class OKAPISearchCache
         {
             new File(CACHE_FOLDER).mkdirs();
 
-            // if there are files in the legacy foler, move them
+            // if there are files in the legacy folder, move them
             // into the new folder
             for (File f : new File(LEGACY_CACHE_FOLDER).listFiles())
                 if (f.getName().startsWith("GC"))

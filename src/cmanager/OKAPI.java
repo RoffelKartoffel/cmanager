@@ -251,7 +251,7 @@ public class OKAPI
                 .build(new OKAPI_OAUTH());
 	}
 	
-	public static OAuth1AccessToken requestAuthorization()
+	public static OAuth1AccessToken requestAuthorization() throws IOException
 	{
 		// Step One: Create the OAuthService object
 		OAuth10aService service = getOAuthService();

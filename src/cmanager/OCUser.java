@@ -1,5 +1,7 @@
 package cmanager;
 
+import java.io.IOException;
+
 import com.github.scribejava.core.model.OAuth1AccessToken;
 
 public class OCUser 
@@ -40,7 +42,7 @@ public class OCUser
 		return okapiAccessToken;
 	}
 	
-	public void requestOkapiToken()
+	public void requestOkapiToken() throws IOException
 	{
 		okapiAccessToken = OKAPI.requestAuthorization();
 		if( okapiAccessToken != null )

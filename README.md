@@ -1,10 +1,18 @@
 # cmanager
 
-## License
+## License & Source Code
 
 cmanager is distributed under the [The GNU General Public License v3](http://www.gnu.org/licenses/gpl-3.0-standalone.html).
+The sources are available on GitHub ([link](https://github.com/RoffelKartoffel/cmanager)).
 
-## Build
+## Distribution / "Download"
+- Releases are published on GitHubs as ["Releases"](https://github.com/RoffelKartoffel/cmanager/releases)
+- If you are running ArchLinux as your OS you can refer to an [AUR version](https://aur.archlinux.org/packages/cmanager/) which is maintained by SammysHP
+
+
+
+
+## Building from Source
 
 ### Prerequisites
 

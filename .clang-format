@@ -1,0 +1,13 @@
+﻿---
+BasedOnStyle: LLVM
+AlignTrailingComments: 'true'
+BreakBeforeBraces: Allman
+BreakConstructorInitializersBeforeComma: 'true'
+ConstructorInitializerAllOnOneLineOrOnePerLine: 'false'
+PointerBindsToType: 'false'
+SpaceInEmptyParentheses: 'false'
+AllowShortFunctionsOnASingleLine: None
+MaxEmptyLinesToKeep: 2
+IndentWidth: 4
+
+...

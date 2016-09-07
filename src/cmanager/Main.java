@@ -28,6 +28,8 @@ public class Main
 	
 	public static void main(String[] args) 
 	{
+		nagToUpdateFromJava7();
+		
 		try {
 			resizeHeap(args);
 		} catch (Throwable t) {
@@ -48,6 +50,18 @@ public class Main
 		
 		
 		
+	}
+	
+	private static void nagToUpdateFromJava7()
+	{
+		if( System.getProperty("java.version").startsWith("1.7.") )
+		{
+			String message = "You are using the outdated Java version 1.7.\n" +
+					"Please update to Java 1.8 or later.";
+			
+		    JOptionPane.showMessageDialog(null, message, "Java version", JOptionPane.ERROR_MESSAGE);
+	    	System.exit(0);
+		}
 	}
 	
 	private static String getJarPath()

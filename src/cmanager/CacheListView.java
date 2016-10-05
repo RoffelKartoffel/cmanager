@@ -165,7 +165,7 @@ public class CacheListView extends JInternalFrame
 
                     if (e.getClickCount() == 1 &&
                         ((e.getModifiers() & InputEvent.CTRL_MASK) != 0))
-                        Main.openUrl(g.getURL());
+                        Main.openUrl(g.getUrlPretty());
                     else if (e.getClickCount() == 1)
                         panelCache.setCache(g);
                 }

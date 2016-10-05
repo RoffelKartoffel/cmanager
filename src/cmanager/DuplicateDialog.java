@@ -157,7 +157,7 @@ public class DuplicateDialog extends JFrame
                 if (userObj instanceof Geocache)
                 {
                     Geocache g = (Geocache)userObj;
-                    URL2Button(g.getURL());
+                    URL2Button(g.getUrlPretty());
                 }
             }
 

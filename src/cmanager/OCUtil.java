@@ -69,9 +69,9 @@ public class OCUtil
                             shadowList.getMatchingOCCode(gc.getCode());
                         if (ocCode != null)
                         {
-                            Geocache oc =
-                                OKAPI.getCache(ocCode, okapiCacheDetailsCache);
-                            OKAPI.completeCacheDetails(oc);
+                            Geocache oc = OKAPI.getCache(
+                                user, ocCode, okapiCacheDetailsCache);
+                            OKAPI.completeCacheDetails(user, oc);
                             OKAPI.updateFoundStatus(user, oc);
                             // Found status can not be retrieved without user
                             // so we have a match when there is no user or the
@@ -95,7 +95,7 @@ public class OCUtil
                         for (Geocache oc : similar)
                             if (oc.isSimilar(gc))
                             {
-                                OKAPI.completeCacheDetails(oc);
+                                OKAPI.completeCacheDetails(user, oc);
                                 oi.match(gc, oc);
                                 match = true;
                             }

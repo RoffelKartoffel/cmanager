@@ -1,28 +1,27 @@
 package cmanager;
-import java.awt.BorderLayout;
 
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
+import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.Font;
-
-import javax.swing.JButton;
-import javax.swing.JDialog;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.JTabbedPane;
+import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.Box;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
-import java.awt.GridBagConstraints;
+import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
-import java.awt.Insets;
-import javax.swing.SwingConstants;
-import java.awt.Component;
-import javax.swing.Box;
 import javax.swing.SpringLayout;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
 
 public class SettingsDialog extends JDialog
 {
@@ -38,7 +37,7 @@ public class SettingsDialog extends JDialog
     private JButton btnRequestNewToken;
     private JTextField txtNameGC;
     private JTextField txtHeapSize;
-
+    private JComboBox<String> ocSitesComboBox;
 
     /**
      * Create the frame.
@@ -69,6 +68,14 @@ public class SettingsDialog extends JDialog
                     (oldHeapSize == null && newHeapSize.length() > 0))
                     changesWhichNeedRestart = true;
 
+                final String oldOcSite = Settings.getS(Settings.Key.OC_SITE);
+                final String newOcSite = ocSitesComboBox.getItemAt(
+                    ocSitesComboBox.getSelectedIndex());
+
+                if (!oldOcSite.equals(newOcSite))
+                    changesWhichNeedRestart = true;
+
+                Settings.set(Settings.Key.OC_SITE, newOcSite);
                 Settings.set(Settings.Key.GC_USERNAME, txtNameGC.getText());
                 Settings.set(Settings.Key.HEAP_SIZE, newHeapSize);
 
@@ -112,9 +119,16 @@ public class SettingsDialog extends JDialog
 
         JPanel panelOC = new JPanel();
         panelOC.setBorder(new EmptyBorder(10, 10, 10, 10));
-        tabbedPane.addTab("opencaching.de", null, panelOC, null);
+        tabbedPane.addTab("Opencaching.eu", null, panelOC, null);
         SpringLayout sl_panelOC = new SpringLayout();
         panelOC.setLayout(sl_panelOC);
+
+        final String[] ocSites = {"oc.DE", "oc.ES", "oc.FR", "oc.IT", "oc.NL",
+                                  "oc.PL", "oc.RO", "oc.UK", "oc.US"};
+        ocSitesComboBox = new JComboBox<String>(ocSites);
+        ocSitesComboBox.setSelectedItem(Settings.getS(Settings.Key.OC_SITE));
+        ocSitesComboBox.setMaximumRowCount(ocSites.length);
+        panelOC.add(ocSitesComboBox);
 
         JLabel label = new JLabel("OKAPI Token:");
         sl_panelOC.putConstraint(SpringLayout.NORTH, label, 40,
@@ -140,7 +154,8 @@ public class SettingsDialog extends JDialog
             {
                 try
                 {
-                    OCUser.getOCUser().requestOkapiToken();
+                    OCUser.getOCUser().requestOkapiToken(
+                        Settings.getS(Settings.Key.OC_SITE));
                     displayOkapiTokenStatus();
                 }
                 catch (Throwable e)
@@ -150,7 +165,6 @@ public class SettingsDialog extends JDialog
             }
         });
         panelOC.add(btnRequestNewToken);
-
 
         JLabel lblNewLabel_3 = new JLabel("OC Username: ");
         sl_panelOC.putConstraint(SpringLayout.NORTH, lblNewLabel_3, 6,

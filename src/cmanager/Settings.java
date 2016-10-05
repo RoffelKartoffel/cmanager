@@ -26,7 +26,8 @@ public class Settings
 
         LOCATION_LIST,
 
-        CLC_LIST
+        CLC_LIST,
+        OC_SITE
     }
 
     public static String key(Key key)
@@ -49,7 +50,8 @@ public class Settings
             return "locationList";
         case CLC_LIST:
             return "clcList";
-
+        case OC_SITE:
+            return "ocSite";
         default:
             return null;
         }
@@ -62,8 +64,8 @@ public class Settings
         case GC_USERNAME:
         case FILE_CHOOSER_LOAD_GPX:
             return "";
-
-
+        case OC_SITE:
+            return "oc.DE";
         default:
             return null;
         }

@@ -5,20 +5,26 @@ import com.github.scribejava.core.model.OAuth1RequestToken;
 
 public class OKAPI_OAUTH extends DefaultApi10a
 {
+    private final String ocURL;
+
+    public OKAPI_OAUTH(final String ocURL)
+    {
+        this.ocURL = ocURL;
+    }
+
     @Override public String getAccessTokenEndpoint()
     {
-        return "https://www.opencaching.de/okapi/services/oauth/access_token";
+        return ocURL + "/okapi/services/oauth/access_token";
     }
 
     @Override public String getRequestTokenEndpoint()
     {
-        return "https://www.opencaching.de/okapi/services/oauth/request_token";
+        return ocURL + "/okapi/services/oauth/request_token";
     }
 
     @Override public String getAuthorizationUrl(OAuth1RequestToken requestToken)
     {
-        return String.format(
-            "https://www.opencaching.de/okapi/services/oauth/authorize?oauth_token=%s",
-            requestToken.getToken());
+        return String.format("%s/okapi/services/oauth/authorize?oauth_token=%s",
+                             ocURL, requestToken.getToken());
     }
 }

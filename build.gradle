@@ -26,7 +26,17 @@ task OcOkapiKeys(type: Copy) {
     }
     expand(
         oc_okapi_de_consumer_key: properties.getProperty('oc_okapi_de_consumer_key'),
-        oc_okapi_de_consumer_secret: properties.getProperty('oc_okapi_de_consumer_secret')
+        oc_okapi_de_consumer_secret: properties.getProperty('oc_okapi_de_consumer_secret'),
+        oc_okapi_nl_consumer_key: properties.getProperty('oc_okapi_nl_consumer_key'),
+        oc_okapi_nl_consumer_secret: properties.getProperty('oc_okapi_nl_consumer_secret'),
+        oc_okapi_pl_consumer_key: properties.getProperty('oc_okapi_pl_consumer_key'),
+        oc_okapi_pl_consumer_secret: properties.getProperty('oc_okapi_pl_consumer_secret'),
+        oc_okapi_ro_consumer_key: properties.getProperty('oc_okapi_ro_consumer_key'),
+        oc_okapi_ro_consumer_secret: properties.getProperty('oc_okapi_ro_consumer_secret'),
+        oc_okapi_uk_consumer_key: properties.getProperty('oc_okapi_uk_consumer_key'),
+        oc_okapi_uk_consumer_secret: properties.getProperty('oc_okapi_uk_consumer_secret'),
+        oc_okapi_us_consumer_key: properties.getProperty('oc_okapi_us_consumer_key'),
+        oc_okapi_us_consumer_secret: properties.getProperty('oc_okapi_us_consumer_secret')
     )
     into 'src/cmanager'
 }

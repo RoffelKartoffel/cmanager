@@ -1,7 +1,5 @@
 package cmanager;
 
-import java.io.IOException;
-
 import com.github.scribejava.core.model.OAuth1AccessToken;
 
 public class OCUser
@@ -15,16 +13,14 @@ public class OCUser
         return user;
     }
 
-
     //////////////////////////////////////
     //////////////////////////////////////
     /////// Member functions
     //////////////////////////////////////
     //////////////////////////////////////
 
-
     private OAuth1AccessToken okapiAccessToken = null;
-
+    private String ocSite = null;
 
     private OCUser()
     {
@@ -38,6 +34,8 @@ public class OCUser
         {
             okapiAccessToken = null;
         }
+
+        ocSite = Settings.getS(Settings.Key.OC_SITE);
     }
 
     public OAuth1AccessToken getOkapiToken()
@@ -45,9 +43,15 @@ public class OCUser
         return okapiAccessToken;
     }
 
-    public void requestOkapiToken() throws IOException
+    public String getOcSite()
     {
-        okapiAccessToken = OKAPI.requestAuthorization();
+        return ocSite;
+    }
+
+    public void requestOkapiToken(final String ocSite)
+    {
+        this.ocSite = ocSite;
+        okapiAccessToken = OKAPI.requestAuthorization(this.ocSite);
         if (okapiAccessToken != null)
         {
             Settings.set(Settings.Key.OKAPI_TOKEN, okapiAccessToken.getToken());

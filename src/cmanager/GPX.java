@@ -145,6 +145,7 @@ public class GPX
         String listing = null;
         String listingShort = null;
         String hint = null;
+        String url = null;
         Integer id = null;
         Boolean archived = null;
         Boolean available = null;
@@ -172,7 +173,8 @@ public class GPX
                 code = e.getUnescapedBody();
             else if (e.is("urlname"))
                 urlName = e.getUnescapedBody();
-
+            else if (e.is("url"))
+                url = e.getUnescapedBody();
             else if (e.is("groundspeak:cache"))
             {
                 groundspeak_cache = true;
@@ -309,6 +311,7 @@ public class GPX
         g.setListing(listing);
         g.setListing_short(listingShort);
         g.setHint(hint);
+        g.setUrl(url);
         g.setId(id);
         g.setArchived(archived);
         g.setAvailable(available);
@@ -440,6 +443,7 @@ public class GPX
         wpt.add(new XMLAttribute("lon", g.getCoordinate().getLon()));
 
         wpt.add(new XMLElement("name", g.getCode()));
+        wpt.add(new XMLElement("url", g.getUrl()));
         wpt.add(new XMLElement("urlname", g.getName()));
 
         XMLElement gspkCache = new XMLElement("groundspeak:cache");

@@ -548,7 +548,7 @@ public class CachePanel extends javax.swing.JPanel
 
     private void btnOnlineActionPerformed(java.awt.event.ActionEvent evt)
     { // GEN-FIRST:event_btnOnlineActionPerformed
-        Main.openUrl(g.getURL());
+        Main.openUrl(g.getUrlPretty());
     } // GEN-LAST:event_btnOnlineActionPerformed
 
     private void panelHeadingComponentResized(java.awt.event.ComponentEvent evt)

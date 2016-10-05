@@ -107,6 +107,7 @@ public class Geocache implements Serializable, Comparable<String>
     private String listing = null;
     private String listing_short = null;
     private String hint = null;
+    private String url = null;
 
     private Boolean archived = null;
     private Boolean available = null;
@@ -266,14 +267,16 @@ public class Geocache implements Serializable, Comparable<String>
         }
     }
 
-    public String getURL()
+    public String getUrlPretty()
     {
         if (isGC())
+        {
             return "https://www.geocaching.com/geocache/" + code;
-        if (isOC())
-            return "https://www.opencaching.de/" + code;
-
-        return null;
+        }
+        else
+        {
+            return url;
+        }
     }
 
     public String statusAsString()
@@ -497,6 +500,16 @@ public class Geocache implements Serializable, Comparable<String>
     public void setIsFound(Boolean isFound)
     {
         this.isFound = isFound;
+    }
+
+    public String getUrl()
+    {
+        return url;
+    }
+
+    public void setUrl(final String url)
+    {
+        this.url = url;
     }
 
     @Override public int compareTo(String s)

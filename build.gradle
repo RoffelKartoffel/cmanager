@@ -72,7 +72,3 @@ jar {
         configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
     }
 }
-
-task wrapper(type: Wrapper) {
-    gradleVersion = '2.12'
-}

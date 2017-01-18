@@ -29,7 +29,7 @@ Then edit `oc_okapi.properties` and insert your keys.
 
 ### Building with Gradle
 
-Run `gradlew build` from the root directory of the git repository.
+Run `gradle build` from the root directory of the git repository.
 
 ### Eclipse
 
@@ -37,14 +37,14 @@ With the release of Eclipse Mars it is possible to directly import Gradle projec
 Go to `File -> Import -> Gradle -> Gradle Project`, click `Next`, set the `Project root directory` by navigating to the root directory of the git repository
 and finally click `Finish`.
 
-If you have not run `gradlew build` yet, run the `build` task from the `Gradle Tasks` view and refresh the project afterwards, to create the generated source code files.
+If you have not run `gradle build` yet, run the `build` task from the `Gradle Tasks` view and refresh the project afterwards, to create the generated source code files.
 
 ### JAR
 
-To create a JAR file, run `gradlew jar`. The JAR file will be located in `build/libs`.
+To create a JAR file, run `gradle jar`. The JAR file will be located in `build/libs`.
 
 ## Usage
 
 ### Starting the application with Gradle
 
-Run `gradlew run` from the root directory of the git repository.
+Run `gradle run` from the root directory of the git repository.

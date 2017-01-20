@@ -60,7 +60,7 @@ dependencies {
     compile group: 'commons-codec', name: 'commons-codec', version: '1.10'
     compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.5'
     compile group: 'joda-time', name: 'joda-time', version: '2.9.7'
-    compile group: 'com.github.scribejava', name: 'scribejava-core', version: '3.4.0'
+    compile group: 'com.github.scribejava', name: 'scribejava-core', version: '4.0.0'
     compile group: 'org.openstreetmap.jmapviewer', name: 'jmapviewer', version: '2.0'
 }
 

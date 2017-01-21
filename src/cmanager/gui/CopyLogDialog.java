@@ -1,4 +1,4 @@
-package cmanager;
+package cmanager.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -17,6 +17,15 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import cmanager.ExceptionPanel;
+import cmanager.Geocache;
+import cmanager.GeocacheLog;
+import cmanager.OCShadowList;
+import cmanager.OCUser;
+import cmanager.Settings;
+import cmanager.network.OKAPI;
+
 import javax.swing.JSplitPane;
 import javax.swing.JScrollPane;
 

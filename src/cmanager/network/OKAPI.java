@@ -1,7 +1,6 @@
-package cmanager;
+package cmanager.network;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -17,6 +16,17 @@ import com.github.scribejava.core.model.OAuthRequest;
 import com.github.scribejava.core.model.Response;
 import com.github.scribejava.core.model.Verb;
 import com.github.scribejava.core.oauth.OAuth10aService;
+
+import cmanager.Coordinate;
+import cmanager.ExceptionPanel;
+import cmanager.Geocache;
+import cmanager.GeocacheLog;
+import cmanager.Main;
+import cmanager.MalFormedException;
+import cmanager.OCUser;
+import cmanager.OKAPI_OAUTH;
+import cmanager.XMLElement;
+import cmanager.XMLParser;
 
 public class OKAPI
 {
@@ -180,9 +190,10 @@ public class OKAPI
 
         return g;
     }
-    
-     public static void updateFoundStatus(OCUser user, Geocache oc)
-        throws MalFormedException, IOException, InterruptedException, ExecutionException
+
+    public static void updateFoundStatus(OCUser user, Geocache oc)
+        throws MalFormedException, IOException, InterruptedException,
+               ExecutionException
     {
         if (user == null)
             return;
@@ -191,7 +202,7 @@ public class OKAPI
                      + "?consumer_key=" + CONSUMER_API_KEY + "&format=xmlmap2"
                      + "&cache_code=" + oc.getCode() + "&fields=is_found";
         String http = authedHttpGet(user, url);
-        
+
         Boolean isFound = null;
         XMLElement root = XMLParser.parse(http);
         for (XMLElement e : root.getChild("object").getChildren())
@@ -250,7 +261,8 @@ public class OKAPI
             .build(new OKAPI_OAUTH());
     }
 
-    public static OAuth1AccessToken requestAuthorization() throws IOException, InterruptedException, ExecutionException
+    public static OAuth1AccessToken requestAuthorization()
+        throws IOException, InterruptedException, ExecutionException
     {
         // Step One: Create the OAuthService object
         OAuth10aService service = getOAuthService();
@@ -273,10 +285,11 @@ public class OKAPI
 
         return accessToken;
     }
-    
-    private static String authedHttpGet(final OCUser user, final String url) throws InterruptedException, ExecutionException, IOException
+
+    private static String authedHttpGet(final OCUser user, final String url)
+        throws InterruptedException, ExecutionException, IOException
     {
-    	OAuth10aService service = getOAuthService();
+        OAuth10aService service = getOAuthService();
         OAuthRequest request = new OAuthRequest(Verb.GET, url);
         service.signRequest(user.getOkapiToken(),
                             request); // the access token from step 4
@@ -285,7 +298,8 @@ public class OKAPI
     }
 
     public static String getUUID(OCUser user)
-        throws MalFormedException, IOException, InterruptedException, ExecutionException
+        throws MalFormedException, IOException, InterruptedException,
+               ExecutionException
     {
         String url = "https://www.opencaching.de/okapi/services/users/user"
                      + "?format=xmlmap2"
@@ -303,7 +317,8 @@ public class OKAPI
     }
 
     public static String getUsername(OCUser user)
-        throws MalFormedException, IOException, InterruptedException, ExecutionException
+        throws MalFormedException, IOException, InterruptedException,
+               ExecutionException
     {
         String url = "https://www.opencaching.de/okapi/services/users/user"
                      + "?format=xmlmap2"
@@ -321,7 +336,8 @@ public class OKAPI
     }
 
     public static void postLog(OCUser user, Geocache cache, GeocacheLog log)
-        throws MalFormedException, InterruptedException, ExecutionException, IOException
+        throws MalFormedException, InterruptedException, ExecutionException,
+               IOException
     {
         String url = "https://www.opencaching.de/okapi/services/logs/submit"
                      + "?format=xmlmap2"
@@ -334,14 +350,15 @@ public class OKAPI
 
         //		String http = authedHttpGet(user, url);
         //		object><boolean key="success">true</boolean><string
-        //key="message">Your cache log entry was posted
-        //successfully.</string><string
-        //key="log_uuid">e1d494fc-0ab4-48b0-b709-aa566f20dc4d</string></object>
+        // key="message">Your cache log entry was posted
+        // successfully.</string><string
+        // key="log_uuid">e1d494fc-0ab4-48b0-b709-aa566f20dc4d</string></object>
     }
 
 
     public static Coordinate getHomeCoordinates(OCUser user)
-        throws MalFormedException, IOException, InterruptedException, ExecutionException
+        throws MalFormedException, IOException, InterruptedException,
+               ExecutionException
     {
         String uuid = getUUID(user);
 

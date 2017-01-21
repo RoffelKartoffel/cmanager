@@ -6,12 +6,14 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import org.joda.time.DateTime;
 
+import cmanager.global.Constants;
+
 public class OKAPISearchCache
 {
 
-    private static final String LEGACY_CACHE_FOLDER = Main.CACHE_FOLDER;
+    private static final String LEGACY_CACHE_FOLDER = Constants.CACHE_FOLDER;
     private static final String CACHE_FOLDER =
-        Main.CACHE_FOLDER + "OC.OKAPI.emptySearches/";
+        Constants.CACHE_FOLDER + "OC.OKAPI.emptySearches/";
     private static boolean initDone = false;
 
     private static String searchToFileName(Geocache g, String excludeUUID)

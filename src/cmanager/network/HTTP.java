@@ -1,4 +1,7 @@
-package cmanager;
+package cmanager.network;
+
+import cmanager.global.Constants;
+import cmanager.global.Version;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -11,7 +14,7 @@ public class HTTP
 {
 
     private final static String USER_AGENT =
-        Main.APP_NAME + " " + Version.VERSION;
+        Constants.APP_NAME + " " + Version.VERSION;
 
 
     public static String get(String url) throws Exception
@@ -72,7 +75,7 @@ public class HTTP
     //		String url = "https://selfsolve.apple.com/wcResults.do";
     //		URL obj = new URL(url);
     //		HttpsURLConnection con = (HttpsURLConnection)
-    //obj.openConnection();
+    // obj.openConnection();
     //
     //		//add reuqest header
     //		con.setRequestMethod("POST");
@@ -85,7 +88,7 @@ public class HTTP
     //		// Send post request
     //		con.setDoOutput(true);
     //		DataOutputStream wr = new
-    //DataOutputStream(con.getOutputStream());
+    // DataOutputStream(con.getOutputStream());
     //		wr.writeBytes(urlParameters);
     //		wr.flush();
     //		wr.close();

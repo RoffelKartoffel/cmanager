@@ -3,10 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package cmanager;
+package cmanager.gui;
 
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+
+import cmanager.GeocacheLog;
 
 /**
  *

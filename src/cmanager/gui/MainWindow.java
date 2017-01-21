@@ -1,4 +1,4 @@
-package cmanager;
+package cmanager.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -12,6 +12,26 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.MenuEvent;
 import javax.swing.filechooser.FileNameExtensionFilter;
+
+import cmanager.CacheListController;
+import cmanager.CacheListFilterCacheName;
+import cmanager.CacheListFilterDifficulty;
+import cmanager.CacheListFilterDistance;
+import cmanager.CacheListFilterNotFoundBy;
+import cmanager.CacheListFilterTerrain;
+import cmanager.ExceptionPanel;
+import cmanager.FileHelper;
+import cmanager.FrameHelper;
+import cmanager.Geocache;
+import cmanager.Location;
+import cmanager.LocationList;
+import cmanager.Main;
+import cmanager.OCUser;
+import cmanager.Settings;
+import cmanager.global.Constants;
+import cmanager.network.OKAPI;
+import cmanager.network.Updates;
+
 import javax.swing.JDesktopPane;
 import javax.swing.JFileChooser;
 import javax.swing.JMenuBar;
@@ -449,7 +469,7 @@ public class MainWindow extends JFrame
                 mnList.setEnabled(visible);
                 mnFilter.setEnabled(visible);
                 //				mntmDeleteSelectedCaches.setEnabled(
-                //visible );
+                // visible );
                 mnWindows.setEnabled(visible);
             }
         });
@@ -487,7 +507,7 @@ public class MainWindow extends JFrame
                 if (Updates.updateAvailable_block())
                 {
                     setText("Version " + Updates.getNewVersion() + " of " +
-                            Main.APP_NAME +
+                            Constants.APP_NAME +
                             " is available. Click here for updates!");
                     btnUpdate.setVisible(true);
                 }
@@ -730,7 +750,7 @@ public class MainWindow extends JFrame
     public static void actionWithWaitDialog(final Runnable task,
                                             Component parent)
     {
-        final WaitDLG wait = new WaitDLG();
+        final WaitDialog wait = new WaitDialog();
         ;
         wait.setModalityType(ModalityType.APPLICATION_MODAL);
         wait.setLocationRelativeTo(parent);

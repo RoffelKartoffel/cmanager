@@ -1,4 +1,4 @@
-package cmanager;
+package cmanager.gui;
 
 import java.awt.BorderLayout;
 
@@ -10,7 +10,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
 
-public class WaitDLG extends JDialog
+public class WaitDialog extends JDialog
 {
 
     /**
@@ -23,7 +23,7 @@ public class WaitDLG extends JDialog
     /**
      * Create the dialog.
      */
-    public WaitDLG()
+    public WaitDialog()
     {
         setBounds(100, 100, 450, 100);
         setUndecorated(true);

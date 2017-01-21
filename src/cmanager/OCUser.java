@@ -5,6 +5,8 @@ import java.util.concurrent.ExecutionException;
 
 import com.github.scribejava.core.model.OAuth1AccessToken;
 
+import cmanager.network.OKAPI;
+
 public class OCUser
 {
     private static OCUser user = null;
@@ -46,7 +48,8 @@ public class OCUser
         return okapiAccessToken;
     }
 
-    public void requestOkapiToken() throws IOException, InterruptedException, ExecutionException
+    public void requestOkapiToken()
+        throws IOException, InterruptedException, ExecutionException
     {
         okapiAccessToken = OKAPI.requestAuthorization();
         if (okapiAccessToken != null)

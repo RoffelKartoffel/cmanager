@@ -1,4 +1,4 @@
-package cmanager;
+package cmanager.gui;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -7,6 +7,10 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import cmanager.global.Constants;
+import cmanager.global.Version;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.GridBagLayout;
@@ -30,7 +34,7 @@ public class AboutDialog extends JDialog
      */
     public AboutDialog()
     {
-        setTitle("About " + Main.APP_NAME);
+        setTitle("About " + Constants.APP_NAME);
 
         setBounds(100, 100, 450, 300);
         getContentPane().setLayout(new BorderLayout());
@@ -44,7 +48,7 @@ public class AboutDialog extends JDialog
             new double[] {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
         contentPanel.setLayout(gbl_contentPanel);
         {
-            JLabel lblAppname = new JLabel(Main.APP_NAME);
+            JLabel lblAppname = new JLabel(Constants.APP_NAME);
             lblAppname.setFont(new Font("Dialog", Font.BOLD, 15));
             GridBagConstraints gbc_lblAppname = new GridBagConstraints();
             gbc_lblAppname.insets = new Insets(0, 0, 5, 0);

@@ -1,4 +1,8 @@
-package cmanager;
+package cmanager.network;
+
+import cmanager.XMLElement;
+import cmanager.XMLParser;
+import cmanager.global.Version;
 
 public class Updates
 {

@@ -1,4 +1,4 @@
-package cmanager;
+package cmanager.network;
 
 public class OKAPIKeys {
     public static String get_CONSUMER_API_KEY() {

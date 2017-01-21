@@ -1,4 +1,4 @@
-package cmanager;
+package cmanager.gui;
 
 import javax.swing.JComponent;
 import javax.swing.JInternalFrame;
@@ -18,6 +18,14 @@ import org.openstreetmap.gui.jmapviewer.DefaultMapController;
 import org.openstreetmap.gui.jmapviewer.JMapViewer;
 import org.openstreetmap.gui.jmapviewer.MapMarkerDot;
 import org.openstreetmap.gui.jmapviewer.interfaces.MapMarker;
+
+import cmanager.CacheListController;
+import cmanager.CacheListFilterModel;
+import cmanager.CacheListModel;
+import cmanager.Geocache;
+import cmanager.Main;
+import cmanager.PersitentTileCache;
+import cmanager.global.Constants;
 
 import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
@@ -87,7 +95,7 @@ public class CacheListView extends JInternalFrame
             });
         table.setAutoCreateRowSorter(true);
         //		TableRowSorter<TableModel> sorter = new
-        //TableRowSorter<>(table.getModel());
+        // TableRowSorter<>(table.getModel());
         //		table.setRowSorter(sorter);
 
         DefaultTableCellRenderer centerRenderer =
@@ -134,7 +142,7 @@ public class CacheListView extends JInternalFrame
 
 
         mapViewer = new CustomJMapViewer(
-            new PersitentTileCache(Main.CACHE_FOLDER + "maps.osm/"));
+            new PersitentTileCache(Constants.CACHE_FOLDER + "maps.osm/"));
         mapViewer.setFocusable(true);
         panelMap.add(mapViewer, BorderLayout.CENTER);
 

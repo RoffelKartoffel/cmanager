@@ -17,7 +17,7 @@ public abstract class CacheListFilterModel extends CacheListFilterPanel
 
         //		for( Geocache g : originalList )
         //			if( (!inverted && isGood(g)) || (inverted &&
-        //!isGood(g)) )
+        //! isGood(g)) )
         //				list.add(g);
 
         int listSize = originalList.size();

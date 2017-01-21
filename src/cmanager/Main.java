@@ -11,14 +11,13 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import cmanager.global.Constants;
+import cmanager.global.Version;
+import cmanager.gui.MainWindow;
+
 
 public class Main
 {
-    public static final String APP_NAME = "cmanager";
-
-    public static final String CACHE_FOLDER =
-        System.getProperty("user.home") + "/." + Main.APP_NAME + "/cache/";
-
     private static final String JAR_NAME = "cm-" + Version.VERSION + ".jar";
     private static final String PARAM_HEAP_RESIZED = "resized";
 
@@ -43,7 +42,7 @@ public class Main
 
         MainWindow frame = new MainWindow();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setTitle(APP_NAME + " " + Version.VERSION);
+        frame.setTitle(Constants.APP_NAME + " " + Version.VERSION);
         frame.setVisible(true);
 
 

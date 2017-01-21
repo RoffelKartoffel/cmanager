@@ -1,8 +1,17 @@
-package cmanager;
+package cmanager.gui;
+
 import java.awt.BorderLayout;
 
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import cmanager.ExceptionPanel;
+import cmanager.Main;
+import cmanager.OCUser;
+import cmanager.Settings;
+import cmanager.global.Constants;
+import cmanager.network.OKAPI;
+
 import java.awt.FlowLayout;
 import java.awt.Font;
 
@@ -76,9 +85,11 @@ public class SettingsDialog extends JDialog
                 {
                     String message =
                         "You have made changes which need cmanager to restart in order be applied.\n"
-                        + "Do you want to restart " + Main.APP_NAME + " now?";
+                        + "Do you want to restart " + Constants.APP_NAME +
+                        " now?";
                     int dialogResult = JOptionPane.showConfirmDialog(
-                        THIS, message, "Restart " + Main.APP_NAME + " now?",
+                        THIS, message,
+                        "Restart " + Constants.APP_NAME + " now?",
                         JOptionPane.YES_NO_OPTION);
                     if (dialogResult == JOptionPane.YES_OPTION)
                     {

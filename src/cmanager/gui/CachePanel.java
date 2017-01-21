@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package cmanager;
+package cmanager.gui;
 
 
 import java.awt.Color;
@@ -14,6 +14,10 @@ import java.awt.event.ComponentEvent;
 
 import javax.swing.JLabel;
 import javax.swing.JViewport;
+
+import cmanager.Geocache;
+import cmanager.GeocacheLog;
+import cmanager.Main;
 
 /**
  *

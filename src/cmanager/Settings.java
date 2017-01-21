@@ -8,11 +8,13 @@ import java.util.prefs.Preferences;
 
 import org.apache.commons.codec.binary.Base64;
 
+import cmanager.global.Constants;
+
 public class Settings
 {
 
     private static Preferences prefs =
-        Preferences.userRoot().node(Main.APP_NAME);
+        Preferences.userRoot().node(Constants.APP_NAME);
 
     public enum Key {
         HEAP_SIZE,

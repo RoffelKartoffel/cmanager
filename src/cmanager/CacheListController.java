@@ -21,6 +21,7 @@ import javax.swing.event.InternalFrameEvent;
 import javax.swing.table.TableColumn;
 
 import cmanager.CacheListModel.CLMTableModel;
+import cmanager.gui.CacheListView;
 
 
 public class CacheListController

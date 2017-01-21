@@ -14,15 +14,18 @@ import java.util.HashMap;
 import org.joda.time.DateTime;
 
 import cmanager.FileHelper.InputAction;
+import cmanager.global.Constants;
+import cmanager.global.Version;
+import cmanager.network.HTTP;
 
 public class OCShadowList
 {
     private final static String SHADOWLIST_FOLDER =
-        Main.CACHE_FOLDER + "OC.shadowlist";
+        Constants.CACHE_FOLDER + "OC.shadowlist";
     private final static String SHADOWLIST_PATH =
         SHADOWLIST_FOLDER + "/gc2oc.gz";
     private final static String SHADOWLIST_POSTED_FOLDER =
-        Main.CACHE_FOLDER + "OC.shadowlist.posted";
+        Constants.CACHE_FOLDER + "OC.shadowlist.posted";
 
     public static void updateShadowList() throws IOException
     {
@@ -109,7 +112,7 @@ public class OCShadowList
         String url = "https://www.opencaching.de/api/gc2oc.php"
                      + "?report=1"
                      + "&ocwp=" + oc.getCode() + "&gcwp=" + gc.getCode() +
-                     "&source=" + Main.APP_NAME + "+" + Version.VERSION;
+                     "&source=" + Constants.APP_NAME + "+" + Version.VERSION;
 
         // post
         HTTP.get(url);

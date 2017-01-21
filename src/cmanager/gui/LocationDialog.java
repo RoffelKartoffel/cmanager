@@ -1,4 +1,4 @@
-package cmanager;
+package cmanager.gui;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -16,6 +16,15 @@ import javax.swing.border.LineBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
+
+import cmanager.Coordinate;
+import cmanager.ExceptionPanel;
+import cmanager.Geocache;
+import cmanager.Location;
+import cmanager.LocationList;
+import cmanager.OCUser;
+import cmanager.ThreadStore;
+import cmanager.network.OKAPI;
 
 import java.awt.Color;
 import java.awt.GridBagLayout;

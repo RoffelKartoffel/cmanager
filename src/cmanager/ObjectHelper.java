@@ -39,7 +39,7 @@ public class ObjectHelper
         return !(o1 == null || o2 == null || !o1.equals(o2));
     }
 
-    static <T> T getBest(T o1, T o2)
+    public static <T> T getBest(T o1, T o2)
     {
         return areEqual(o1, o2) ? o1 : o2;
     }

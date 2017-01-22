@@ -22,9 +22,9 @@ import org.openstreetmap.gui.jmapviewer.interfaces.MapMarker;
 import cmanager.CacheListController;
 import cmanager.CacheListFilterModel;
 import cmanager.CacheListModel;
-import cmanager.Geocache;
 import cmanager.Main;
 import cmanager.PersitentTileCache;
+import cmanager.geo.Geocache;
 import cmanager.global.Constants;
 
 import javax.swing.SwingUtilities;

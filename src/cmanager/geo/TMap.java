@@ -1,6 +1,8 @@
-package cmanager;
+package cmanager.geo;
 
 import java.util.ArrayList;
+
+import cmanager.ExceptionPanel;
 
 public class TMap
 {

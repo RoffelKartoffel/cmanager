@@ -1,5 +1,6 @@
 package cmanager;
 
+import cmanager.geo.Geocache;
 
 public class CacheListFilterCacheName extends CacheListFilterModel
 {

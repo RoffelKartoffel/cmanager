@@ -17,6 +17,11 @@ import org.joda.time.format.ISODateTimeFormat;
 
 import cmanager.XMLElement.XMLAttribute;
 import cmanager.XMLParser.XMLParserCallbackI;
+import cmanager.geo.Coordinate;
+import cmanager.geo.Geocache;
+import cmanager.geo.GeocacheAttribute;
+import cmanager.geo.GeocacheLog;
+import cmanager.geo.Waypoint;
 import cmanager.global.Constants;
 import cmanager.global.Version;
 

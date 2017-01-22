@@ -1,8 +1,10 @@
-package cmanager;
+package cmanager.geo;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+
+import cmanager.geo.Coordinate;
 
 public class Test_Coordinate
 {

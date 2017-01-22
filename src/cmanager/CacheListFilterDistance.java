@@ -1,5 +1,8 @@
 package cmanager;
 
+import cmanager.geo.Geocache;
+import cmanager.geo.Location;
+
 public class CacheListFilterDistance extends CacheListFilterModel
 {
 

@@ -1,5 +1,7 @@
 package cmanager;
 
+import cmanager.geo.Geocache;
+
 public class CacheListFilterTerrain extends CacheListFilterModel
 {
     private static final long serialVersionUID = -6582495781375197847L;

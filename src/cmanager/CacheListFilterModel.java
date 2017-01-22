@@ -2,6 +2,8 @@ package cmanager;
 
 import java.util.ArrayList;
 
+import cmanager.geo.Geocache;
+
 public abstract class CacheListFilterModel extends CacheListFilterPanel
 {
     private static final long serialVersionUID = 6947085305393841410L;

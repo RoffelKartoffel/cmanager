@@ -15,13 +15,13 @@ import javax.swing.tree.TreeSelectionModel;
 import cmanager.CacheListModel;
 import cmanager.ExceptionPanel;
 import cmanager.FrameHelper;
-import cmanager.Geocache;
-import cmanager.GeocacheLog;
 import cmanager.Main;
 import cmanager.OCShadowList;
 import cmanager.OCUser;
 import cmanager.OCUtil;
 import cmanager.Settings;
+import cmanager.geo.Geocache;
+import cmanager.geo.GeocacheLog;
 
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;

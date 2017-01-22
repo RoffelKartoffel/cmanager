@@ -8,7 +8,7 @@ package cmanager.gui;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 
-import cmanager.GeocacheLog;
+import cmanager.geo.GeocacheLog;
 
 /**
  *

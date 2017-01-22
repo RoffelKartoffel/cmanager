@@ -1,7 +1,9 @@
-package cmanager;
+package cmanager.geo;
 
 import java.io.IOException;
 import java.util.ArrayList;
+
+import cmanager.Settings;
 
 public class LocationList
 {

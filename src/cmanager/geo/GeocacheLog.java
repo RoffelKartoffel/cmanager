@@ -1,4 +1,4 @@
-package cmanager;
+package cmanager.geo;
 
 
 import java.io.Serializable;

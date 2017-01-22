@@ -6,6 +6,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import org.joda.time.DateTime;
 
+import cmanager.geo.Geocache;
 import cmanager.global.Constants;
 
 public class OKAPISearchCache

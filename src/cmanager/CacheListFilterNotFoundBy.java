@@ -2,6 +2,9 @@ package cmanager;
 
 import java.util.ArrayList;
 
+import cmanager.geo.Geocache;
+import cmanager.geo.GeocacheLog;
+
 public class CacheListFilterNotFoundBy extends CacheListFilterModel
 {
     private static final long serialVersionUID = 5585453135104325357L;

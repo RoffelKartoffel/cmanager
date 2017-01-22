@@ -19,11 +19,11 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import cmanager.ExceptionPanel;
-import cmanager.Geocache;
-import cmanager.GeocacheLog;
 import cmanager.OCShadowList;
 import cmanager.OCUser;
 import cmanager.Settings;
+import cmanager.geo.Geocache;
+import cmanager.geo.GeocacheLog;
 import cmanager.network.OKAPI;
 
 import javax.swing.JSplitPane;

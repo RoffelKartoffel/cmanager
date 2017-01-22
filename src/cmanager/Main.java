@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import cmanager.geo.Geocache;
 import cmanager.global.Constants;
 import cmanager.global.Version;
 import cmanager.gui.MainWindow;

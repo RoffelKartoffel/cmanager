@@ -1,4 +1,4 @@
-package cmanager;
+package cmanager.geo;
 
 public class Location extends Coordinate
 {

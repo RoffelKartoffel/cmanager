@@ -10,6 +10,11 @@ import javax.swing.table.AbstractTableModel;
 
 import org.joda.time.DateTime;
 
+import cmanager.geo.Geocache;
+import cmanager.geo.GeocacheLog;
+import cmanager.geo.Location;
+import cmanager.geo.Waypoint;
+
 public class CacheListModel
 {
     private ArrayList<Geocache> list = new ArrayList<Geocache>();

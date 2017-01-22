@@ -1,10 +1,12 @@
-package cmanager;
+package cmanager.geo;
 
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
 import org.joda.time.DateTime;
+
+import cmanager.ObjectHelper;
 
 
 public class Geocache implements Serializable, Comparable<String>

@@ -13,8 +13,6 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeSelectionModel;
 
 import cmanager.CacheListModel;
-import cmanager.ExceptionPanel;
-import cmanager.FrameHelper;
 import cmanager.Main;
 import cmanager.OCShadowList;
 import cmanager.OCUser;

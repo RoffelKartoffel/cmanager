@@ -15,6 +15,8 @@ import org.openstreetmap.gui.jmapviewer.interfaces.ICoordinate;
 import org.openstreetmap.gui.jmapviewer.interfaces.TileCache;
 import org.openstreetmap.gui.jmapviewer.interfaces.TileSource;
 
+import cmanager.gui.ExceptionPanel;
+
 public class PersitentTileCache implements TileCache
 {
     String path;

@@ -1,4 +1,4 @@
-package cmanager;
+package cmanager.gui;
 
 import javax.swing.JPanel;
 import javax.swing.JOptionPane;

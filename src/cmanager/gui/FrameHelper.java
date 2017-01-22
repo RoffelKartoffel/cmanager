@@ -1,4 +1,4 @@
-package cmanager;
+package cmanager.gui;
 
 import java.util.ArrayList;
 

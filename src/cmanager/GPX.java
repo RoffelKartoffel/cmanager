@@ -24,6 +24,7 @@ import cmanager.geo.GeocacheLog;
 import cmanager.geo.Waypoint;
 import cmanager.global.Constants;
 import cmanager.global.Version;
+import cmanager.gui.ExceptionPanel;
 
 public class GPX
 {

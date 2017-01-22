@@ -17,16 +17,15 @@ import com.github.scribejava.core.model.Response;
 import com.github.scribejava.core.model.Verb;
 import com.github.scribejava.core.oauth.OAuth10aService;
 
-import cmanager.ExceptionPanel;
 import cmanager.Main;
 import cmanager.MalFormedException;
 import cmanager.OCUser;
-import cmanager.OKAPI_OAUTH;
 import cmanager.XMLElement;
 import cmanager.XMLParser;
 import cmanager.geo.Coordinate;
 import cmanager.geo.Geocache;
 import cmanager.geo.GeocacheLog;
+import cmanager.gui.ExceptionPanel;
 
 public class OKAPI
 {

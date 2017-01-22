@@ -5,7 +5,6 @@ import java.awt.BorderLayout;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import cmanager.ExceptionPanel;
 import cmanager.Main;
 import cmanager.OCUser;
 import cmanager.Settings;

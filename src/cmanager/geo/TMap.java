@@ -2,7 +2,7 @@ package cmanager.geo;
 
 import java.util.ArrayList;
 
-import cmanager.ExceptionPanel;
+import cmanager.gui.ExceptionPanel;
 
 public class TMap
 {

@@ -17,7 +17,6 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
-import cmanager.ExceptionPanel;
 import cmanager.OCUser;
 import cmanager.ThreadStore;
 import cmanager.geo.Coordinate;

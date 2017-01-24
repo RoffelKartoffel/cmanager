@@ -58,7 +58,7 @@ public class CachePanel extends javax.swing.JPanel
             lblType.setText(g.getTypeAsNice());
             lblDifficulty.setText(g.getDifficulty().toString());
             lblTerrain.setText(g.getTerrain().toString());
-            lblContainer.setText(g.getContainerAsGC());
+            lblContainer.setText(g.getContainer().asGC());
 
             String listing = g.getListing_short();
             if (listing != null && !listing.equals(""))

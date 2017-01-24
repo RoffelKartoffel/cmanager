@@ -67,43 +67,13 @@ public class Geocache implements Serializable, Comparable<String>
     }
 
 
-    public static final TMap CONTAINER = new TMap();
-    static
-    {
-        CONTAINER.add("None");
-        CONTAINER.add("Nano");
-        CONTAINER.add("Micro");
-        CONTAINER.add("Small");
-        CONTAINER.add("Regular");
-        CONTAINER.add("Large");
-        CONTAINER.add("Xlarge");
-        CONTAINER.add("Other");
-        CONTAINER.add("Virtual");
-        CONTAINER.add("Not chosen", "not_chosen");
-    }
-    public String getContainerAsGC()
-    {
-        if (container == null)
-            return null;
-        String s = CONTAINER.get(container, 0);
-        return s;
-    }
-    public void setContainer(String container)
-    {
-        if (container == null)
-            return;
-        container = container.toLowerCase();
-        this.container = CONTAINER.getLC(container);
-    }
-
-
     private String code;
     private String name;
     private Coordinate coordinate;
     private Double difficulty;
     private Double terrain;
     private int type;
-    private Integer container;
+    private GeocacheContainerType container;
     private String owner = null;
     private String code_gc = null; // linked cache on gc
     private String listing = null;
@@ -478,10 +448,16 @@ public class Geocache implements Serializable, Comparable<String>
         this.listing = listing;
     }
 
-    public int getContainer()
+    public GeocacheContainerType getContainer()
     {
-        return container;
+        return this.container;
     }
+
+    public void setContainer(String container)
+    {
+        this.container = new GeocacheContainerType(container);
+    }
+
     public String getListing_short()
     {
         return listing_short;

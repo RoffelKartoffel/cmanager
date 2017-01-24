@@ -475,7 +475,7 @@ public class GPX
         gspkCache.add(new XMLElement("groundspeak:type", g.getTypeAsGC()));
         gspkCache.add(new XMLElement("groundspeak:owner", g.getOwner()));
         gspkCache.add(
-            new XMLElement("groundspeak:container", g.getContainerAsGC()));
+            new XMLElement("groundspeak:container", g.getContainer().asGC()));
         gspkCache.add(
             new XMLElement("groundspeak:long_description", g.getListing()));
         gspkCache.add(new XMLElement("groundspeak:short_description",

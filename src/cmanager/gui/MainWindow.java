@@ -47,12 +47,14 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.List;
 import java.awt.event.ActionEvent;
 import java.awt.Toolkit;
 
 import javax.swing.JSeparator;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
+import javax.swing.SwingWorker;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JButton;
@@ -498,11 +500,17 @@ public class MainWindow extends JFrame
         });
         panelUpdate.add(btnUpdate);
 
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override public void run()
+        new SwingWorker<Void, Boolean>() {
+            @Override protected Void doInBackground() throws Exception
+            {
+                publish(Updates.updateAvailable_block());
+                return null;
+            }
+
+            @Override protected void process(List<Boolean> chunks)
             {
                 // Display update message if there is a nother version available
-                if (Updates.updateAvailable_block())
+                if (chunks.get(0))
                 {
                     setText("Version " + Updates.getNewVersion() + " of " +
                             Constants.APP_NAME +
@@ -516,7 +524,7 @@ public class MainWindow extends JFrame
                 btnUpdate.setText("<HTML><FONT color=\"#008000\"><U>" + text +
                                   "</U></FONT></HTML>");
             }
-        });
+        }.execute();
 
 
         JPanel panelNorth = new JPanel();

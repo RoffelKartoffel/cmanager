@@ -55,7 +55,7 @@ public class CachePanel extends javax.swing.JPanel
             lblName.setText(g.getName());
             lblCode.setText(g.getCode());
             lblOwner.setText(g.getOwner());
-            lblType.setText(g.getTypeAsNice());
+            lblType.setText(g.getType().asNiceType());
             lblDifficulty.setText(g.getDifficulty().toString());
             lblTerrain.setText(g.getTerrain().toString());
             lblContainer.setText(g.getContainer().asGC());

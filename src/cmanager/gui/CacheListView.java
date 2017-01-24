@@ -25,6 +25,7 @@ import cmanager.CacheListModel;
 import cmanager.Main;
 import cmanager.PersitentTileCache;
 import cmanager.geo.Geocache;
+import cmanager.geo.GeocacheType;
 import cmanager.global.Constants;
 
 import javax.swing.SwingUtilities;
@@ -453,11 +454,11 @@ public class CacheListView extends JInternalFrame
 
             setName("");
 
-            if (g.getType() == Geocache.getTradiType())
+            if (g.getType() == GeocacheType.getTradiType())
                 setColor(new Color(0x009900));
-            else if (g.getType() == Geocache.getMultiType())
+            else if (g.getType() == GeocacheType.getMultiType())
                 setColor(new Color(0xFFCC00));
-            else if (g.getType() == Geocache.getMysteryType())
+            else if (g.getType() == GeocacheType.getMysteryType())
                 setColor(new Color(0x0066FF));
             else
                 setColor(Color.GRAY);

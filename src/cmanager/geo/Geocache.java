@@ -13,66 +13,12 @@ public class Geocache implements Serializable, Comparable<String>
 {
     private static final long serialVersionUID = 6173771530979347662L;
 
-
-    public static final TMap TYPE = new TMap();
-    static
-    {
-        //  pretty name 	-- 	GC 			-- OC
-        TYPE.add("Tradi", "Traditional Cache", "Traditional");
-        TYPE.add("Drive-In", null, "Drive-In");
-        TYPE.add("Moving", null, "Moving");
-        TYPE.add("Other", null, "Other");
-        TYPE.add("Math/Physics", null, "Math/Physics");
-        TYPE.add("Multi", "Multi-cache", "Multi");
-        TYPE.add("Mystery", "Unknown Cache", "Quiz");
-
-        TYPE.add("Virtual", "Virtual Cache", "Virtual");
-        TYPE.add("Webcam", "Webcam Cache", null);
-        TYPE.add("Earth", "Earthcache", null);
-        TYPE.add("Reverse", null, "Locationless (Reverse) Cache");
-
-        TYPE.add("L.Box", "Letterbox Hybrid", null);
-        TYPE.add("Event", "Event Cache", "Event");
-        TYPE.add("Mega-Event", "Mega-Event Cache", null);
-        TYPE.add("Giga-Event", "Giga-Event Cache", null);
-        TYPE.add("CITO", "Cache In Trash Out Event", null);
-        TYPE.add("Wherigo", "Wherigo Cache", null);
-        TYPE.add("GPS AE", "GPS Adventures Exhibit", null);
-    }
-
-    public String getTypeAsNice()
-    {
-        return TYPE.get(type, 0);
-    }
-    public String getTypeAsGC()
-    {
-        String gc = TYPE.get(type, 1);
-        return gc != null ? gc : TYPE.get(type, 2);
-    }
-    private static int stringToType(String s)
-    {
-        return TYPE.getLC(s);
-    }
-    public static int getTradiType()
-    {
-        return TYPE.get("Tradi");
-    }
-    public static int getMultiType()
-    {
-        return TYPE.get("Multi");
-    }
-    public static int getMysteryType()
-    {
-        return TYPE.get("Mystery");
-    }
-
-
     private String code;
     private String name;
     private Coordinate coordinate;
     private Double difficulty;
     private Double terrain;
-    private int type;
+    private GeocacheType type;
     private GeocacheContainerType container;
     private String owner = null;
     private String code_gc = null; // linked cache on gc
@@ -107,14 +53,14 @@ public class Geocache implements Serializable, Comparable<String>
         this.coordinate = coordinate;
         this.difficulty = difficulty;
         this.terrain = terrain;
-        this.type = stringToType(type);
+        this.type = new GeocacheType(type);
     }
 
     public String toString()
     {
         return difficulty.toString() + "/" + terrain.toString() + " " + code +
-            " (" + getTypeAsNice() + ") -- " + coordinate.toString() + " -- " +
-            name;
+            " (" + type.asNiceType() + ") -- " + coordinate.toString() +
+            " -- " + name;
     }
 
     public double calculateSimilarity(Geocache g)
@@ -186,7 +132,7 @@ public class Geocache implements Serializable, Comparable<String>
 
     public boolean hasVolatileStart()
     {
-        return this.type == getMysteryType();
+        return this.type.equals(GeocacheType.getMysteryType());
     }
 
     public void update(Geocache g)
@@ -423,7 +369,7 @@ public class Geocache implements Serializable, Comparable<String>
         return terrain;
     }
 
-    public int getType()
+    public GeocacheType getType()
     {
         return type;
     }

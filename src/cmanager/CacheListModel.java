@@ -346,7 +346,7 @@ public class CacheListModel
             case 1:
                 return g.getName();
             case 2:
-                return g.getTypeAsNice();
+                return g.getType().asNiceType();
             case 3:
                 return g.getDifficulty();
             case 4:

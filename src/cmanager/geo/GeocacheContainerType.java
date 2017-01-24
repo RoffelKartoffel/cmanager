@@ -2,7 +2,7 @@ package cmanager.geo;
 
 public class GeocacheContainerType
 {
-    public static final TMap CONTAINER = new TMap();
+    private static final TMap CONTAINER = new TMap();
     static
     {
         CONTAINER.add("None");

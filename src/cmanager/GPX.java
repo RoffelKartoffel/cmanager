@@ -472,7 +472,8 @@ public class GPX
         gspkCache.add(
             new XMLElement("groundspeak:difficulty", g.getDifficulty()));
         gspkCache.add(new XMLElement("groundspeak:terrain", g.getTerrain()));
-        gspkCache.add(new XMLElement("groundspeak:type", g.getTypeAsGC()));
+        gspkCache.add(
+            new XMLElement("groundspeak:type", g.getType().asGCType()));
         gspkCache.add(new XMLElement("groundspeak:owner", g.getOwner()));
         gspkCache.add(
             new XMLElement("groundspeak:container", g.getContainer().asGC()));

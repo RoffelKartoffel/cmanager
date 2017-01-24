@@ -2,7 +2,7 @@ package cmanager.geo;
 
 public class GeocacheType
 {
-    private static final TMap TYPE = new TMap();
+    private static final TypeMap TYPE = new TypeMap();
     static
     {
         //  pretty name 	-- 	GC 			-- OC
@@ -53,7 +53,7 @@ public class GeocacheType
 
     public GeocacheType(String type)
     {
-        this.type = TYPE.getLC(type);
+        this.type = TYPE.getLowercase(type);
     }
 
     public String asNiceType()

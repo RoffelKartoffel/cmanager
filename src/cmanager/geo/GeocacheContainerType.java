@@ -2,7 +2,7 @@ package cmanager.geo;
 
 public class GeocacheContainerType
 {
-    private static final TMap CONTAINER = new TMap();
+    private static final TypeMap CONTAINER = new TypeMap();
     static
     {
         CONTAINER.add("None");
@@ -30,7 +30,7 @@ public class GeocacheContainerType
         if (container == null)
             return;
         container = container.toLowerCase();
-        this.container = CONTAINER.getLC(container);
+        this.container = CONTAINER.getLowercase(container);
     }
 
     public String asGC()

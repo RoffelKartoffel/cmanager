@@ -14,7 +14,7 @@ public class GeocacheLog implements Serializable
     private static final long serialVersionUID = -2611937420437874774L;
 
 
-    public static final TMap TYPE = new TMap();
+    public static final TypeMap TYPE = new TypeMap();
     static
     {
         TYPE.add("Found it");
@@ -43,7 +43,7 @@ public class GeocacheLog implements Serializable
     public void setType(String type)
     {
         type = type.toLowerCase();
-        this.type = TYPE.getLC(type);
+        this.type = TYPE.getLowercase(type);
     }
 
     public String getTypeStr()

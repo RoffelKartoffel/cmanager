@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import cmanager.gui.ExceptionPanel;
 
-public class TMap
+public class TypeMap
 {
 
     private ArrayList<ArrayList<String>> map = new ArrayList<>();
@@ -17,7 +17,7 @@ public class TMap
         map.add(list);
     }
 
-    public Integer getLC(String key)
+    public Integer getLowercase(String key)
     {
         key = key.toLowerCase();
 

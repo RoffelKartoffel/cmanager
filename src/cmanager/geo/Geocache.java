@@ -172,7 +172,7 @@ public class Geocache implements Serializable, Comparable<String>
             dividend++;
 
         divisor++;
-        if (coordinate.distanceSphere(g.getCoordinate()) < 0.001)
+        if (coordinate.distanceHaversine(g.getCoordinate()) < 0.001)
             dividend++;
 
         divisor++;

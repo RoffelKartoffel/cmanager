@@ -41,20 +41,30 @@ public class Coordinate implements Serializable
         return new Double(lat).toString() + ", " + new Double(lon).toString();
     }
 
-    public double distanceSphere(Coordinate c2)
+    public double distanceHaversine(Coordinate other)
     {
-        // http://www.kompf.de/gps/distcalc.html
-        // mit dist: Entfernung in km
+        // "haversine" distance
+        // http://www.movable-type.co.uk/scripts/latlong.html
 
-        double lat1 = (lat + c2.lat) / 2 * Math.PI / 360;
-        double dx = 111.3 * Math.cos(lat1) * (lon - c2.lon);
-        double dy = 111.3 * (lat - c2.lat);
-        return Math.sqrt(dx * dx + dy * dy);
+        final double radianFactor = 2 * Math.PI / 360;
+
+        final double φ1 = lat * radianFactor;
+        final double φ2 = other.lat * radianFactor;
+        final double Δφ = (other.lat - lat) * radianFactor;
+        final double Δλ = (other.lon - lon) * radianFactor;
+
+        final double a =
+            Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
+            Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
+        final double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+        final double R = 6371e3; // metres
+        return R * c;
     }
 
-    public double distanceSphereRounded(Coordinate c2)
+    public double distanceHaversineRounded(Coordinate c2)
     {
-        return round(distanceSphere(c2), 3);
+        return round(distanceHaversine(c2), 3);
     }
 
     public static double round(double value, int places)
@@ -66,15 +76,4 @@ public class Coordinate implements Serializable
         bd = bd.setScale(places, RoundingMode.HALF_UP);
         return bd.doubleValue();
     }
-
-    //	public double distance(Coordinate c2)
-    //	{
-    //		// quick version
-    //		// http://www.kompf.de/gps/distcalc.html
-    //
-    //		final double dx = 71.5 * (lon - c2.lon);
-    //		final double dy = 111.3 * (lat - c2.lat);
-    //		double distance = Math.sqrt(dx * dx + dy * dy);
-    //		return distance;
-    //	}
 }

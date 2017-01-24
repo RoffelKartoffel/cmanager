@@ -360,7 +360,8 @@ public class CacheListModel
                 return owner != null ? owner : "";
             case 8:
                 return relativeLocation != null
-                    ? g.getCoordinate().distanceSphereRounded(relativeLocation)
+                    ? g.getCoordinate().distanceHaversineRounded(
+                          relativeLocation)
                     : "";
             case 9:
                 DateTime date = g.getMostRecentFoundLog(

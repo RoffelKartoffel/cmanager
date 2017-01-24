@@ -111,7 +111,7 @@ public class CopyLogDialog extends JFrame
 
                 final JButton button =
                     new JButton("Copy log to opencaching.de");
-                if (gc.claculateSimilarity(oc) != 1)
+                if (gc.calculateSimilarity(oc) != 1)
                     button.setBackground(Color.RED);
                 button.addActionListener(new ActionListener() {
 

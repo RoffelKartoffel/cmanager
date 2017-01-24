@@ -124,8 +124,6 @@ public class Geocache implements Serializable, Comparable<String>
     private ArrayList<Waypoint> wps = new ArrayList<Waypoint>();
 
 
-    // public Geocache(String code, String name, Coordinate coordinate, Double
-    // difficulty, Double terrain, Type type) throws NullPointerException
     public Geocache(String code, String name, Coordinate coordinate,
                     Double difficulty, Double terrain, String type)
         throws NullPointerException
@@ -149,7 +147,7 @@ public class Geocache implements Serializable, Comparable<String>
             name;
     }
 
-    public double claculateSimilarity(Geocache g)
+    public double calculateSimilarity(Geocache g)
     {
         if ((this.code_gc != null && this.code_gc.equals(g.code)) ||
             (g.code_gc != null && g.code_gc.equals(this.code)))
@@ -213,7 +211,7 @@ public class Geocache implements Serializable, Comparable<String>
 
     public boolean isSimilar(Geocache g)
     {
-        return claculateSimilarity(g) >= 0.8;
+        return calculateSimilarity(g) >= 0.8;
     }
 
     public boolean hasVolatileStart()

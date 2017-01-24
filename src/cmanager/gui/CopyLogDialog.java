@@ -22,6 +22,7 @@ import cmanager.OCShadowList;
 import cmanager.OCUser;
 import cmanager.Settings;
 import cmanager.geo.Geocache;
+import cmanager.geo.GeocacheComparator;
 import cmanager.geo.GeocacheLog;
 import cmanager.network.OKAPI;
 
@@ -111,7 +112,7 @@ public class CopyLogDialog extends JFrame
 
                 final JButton button =
                     new JButton("Copy log to opencaching.de");
-                if (gc.calculateSimilarity(oc) != 1)
+                if (GeocacheComparator.calculateSimilarity(gc, oc) != 1)
                     button.setBackground(Color.RED);
                 button.addActionListener(new ActionListener() {
 

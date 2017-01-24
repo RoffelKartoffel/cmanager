@@ -10,6 +10,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
 import cmanager.geo.Geocache;
+import cmanager.geo.GeocacheComparator;
 import cmanager.network.OKAPI;
 
 public class OCUtil
@@ -96,7 +97,7 @@ public class OCUtil
                             uuid);
                         boolean match = false;
                         for (Geocache oc : similar)
-                            if (oc.isSimilar(gc))
+                            if (GeocacheComparator.similar(oc, gc))
                             {
                                 OKAPI.completeCacheDetails(oc);
                                 oi.match(gc, oc);

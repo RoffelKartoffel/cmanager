@@ -1,7 +1,11 @@
 package cmanager.geo;
 
-public class GeocacheContainerType
+import java.io.Serializable;
+
+public class GeocacheContainerType implements Serializable
 {
+    private static final long serialVersionUID = 8950220886791511378L;
+
     private static final TypeMap CONTAINER = new TypeMap();
     static
     {

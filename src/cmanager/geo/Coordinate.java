@@ -3,16 +3,44 @@ package cmanager.geo;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Coordinate implements Serializable
 {
     private static final long serialVersionUID = -2526305963690482539L;
+
+    public class UnparsableException extends Exception
+    {
+        private static final long serialVersionUID = -3199033370349089535L;
+    }
+
 
     private double lat, lon;
 
     public Coordinate(String lat, String lon)
     {
         this(new Double(lat), new Double(lon));
+    }
+
+    public Coordinate(String input) throws UnparsableException
+    {
+        Pattern pattern = Pattern.compile(
+            "N\\s*(\\d+)[\\s|°]\\s*((?:\\d+\\.\\d+)|(?:\\d+))'*\\s*E\\s*(\\d+)[\\s|°]\\s*((?:\\d+\\.\\d+)|(?:\\d+))'*\\s*");
+        final Matcher matcher = pattern.matcher(input);
+
+        if (!matcher.find())
+        {
+            throw new UnparsableException();
+        }
+
+        lat = new Double(matcher.group(1)) + new Double(matcher.group(2)) / 60;
+        lon = new Double(matcher.group(3)) + new Double(matcher.group(4)) / 60;
+
+        if (matcher.find())
+        {
+            throw new UnparsableException();
+        }
     }
 
     public Coordinate(double lat, double lon)

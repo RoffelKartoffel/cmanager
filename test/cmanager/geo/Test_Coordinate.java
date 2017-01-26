@@ -3,6 +3,7 @@ package cmanager.geo;
 import static org.junit.Assert.*;
 import org.junit.Test;
 import cmanager.geo.Coordinate;
+import cmanager.geo.Coordinate.UnparsableException;
 
 public class Test_Coordinate
 {
@@ -33,5 +34,38 @@ public class Test_Coordinate
         Coordinate c1 = new Coordinate(53.09780, 8.74908);
         Coordinate c2 = new Coordinate(53.05735, 8.59148);
         assertEquals(c1.distanceHaversine(c2), 11448.0325, 0.0009);
+    }
+
+
+    private void parse(String string, double lat, double lon)
+    {
+        try
+        {
+            Coordinate c = new Coordinate(string);
+            assertEquals(c.getLat(), lat, 0.0);
+            assertEquals(c.getLon(), lon, 0.00009);
+        }
+        catch (UnparsableException e)
+        {
+            fail(e.getStackTrace().toString());
+        }
+    }
+
+    private void parse(String string)
+    {
+        parse(string, 53.1073, 8.12945);
+    }
+
+    @Test public void testParsing()
+    {
+        parse(" N 53° 06.438' E 008° 07.767' (WGS84)");
+        parse("  N53° 06.438' E 008° 07.767' (WGS84)");
+        parse("N 53°06.438' E 008° 07.767' (WGS84)");
+        parse("N 53 06.438' E 008° 07.767'");
+        parse("N 53 06.438 E 008° 07.767' (WGS84)");
+        parse("N 53 06.438 E 008 07.767' (WGS84)");
+        parse("N 53 06.438E008 07.767' (WGS84)");
+        parse("N 53 06E008 07' (WGS84)", 53.1, 8.1166);
+        parse("    N 53° 06.438' E 008° 07.767' ");
     }
 }

@@ -43,8 +43,16 @@ public class GeocacheComparator
         if (g1.getOwner() != null)
         {
             divisor++;
-            if (g1.getOwner().equals(g2.getOwner()))
+            final String owner1 = g1.getOwner();
+            final String owner2 = g2.getOwner();
+            if (owner1.equals(owner2))
+            {
                 dividend++;
+            }
+            else if (owner1.contains(owner2) || owner2.contains(owner1))
+            {
+                dividend += 2.0 / 3.0;
+            }
         }
 
         if (g1.getContainer() != null)

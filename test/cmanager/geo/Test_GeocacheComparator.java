@@ -82,6 +82,13 @@ public class Test_GeocacheComparator
                 "N 51° 26.334' E 007° 28.077'", 2.0, 2.0, "Tradi", "Wir_4",
                 "Small", true, false);
 
+        addGood("GC58YWX", "Ein Nano an der Kreuzung klebt...",
+                "N 51° 24.661 E 007° 50.056", 3.0, 1.5, "Tradi", "Keks579",
+                "micro", true, false, //
+                "OC1120F", "Ein Nano an der Kreuzung klebt...",
+                "N 51° 24.684' E 007° 50.035'", 3.0, 1.5, "Tradi",
+                "Keks579_Unidos", "Micro", true, false);
+
         addGood("GC53AX3", "Piep Piep Piep", "N 51° 22.067 E 007° 29.565", 1.5,
                 1.5, "Tradi", "geyerwally", "micro", false, true, //
                 "OC111B6", "Piep Piep Piep", "N 51° 22.067' E 007° 29.565'",

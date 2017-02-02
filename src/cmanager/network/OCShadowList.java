@@ -1,4 +1,4 @@
-package cmanager;
+package cmanager.network;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -13,11 +13,11 @@ import java.util.HashMap;
 
 import org.joda.time.DateTime;
 
+import cmanager.FileHelper;
 import cmanager.FileHelper.InputAction;
 import cmanager.geo.Geocache;
 import cmanager.global.Constants;
 import cmanager.global.Version;
-import cmanager.network.HTTP;
 
 public class OCShadowList
 {

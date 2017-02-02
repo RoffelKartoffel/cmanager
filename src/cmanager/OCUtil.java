@@ -11,6 +11,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import cmanager.geo.Geocache;
 import cmanager.geo.GeocacheComparator;
+import cmanager.network.OCShadowList;
 import cmanager.network.OKAPI;
 
 public class OCUtil

@@ -14,12 +14,12 @@ import javax.swing.tree.TreeSelectionModel;
 
 import cmanager.CacheListModel;
 import cmanager.Main;
-import cmanager.OCShadowList;
 import cmanager.OCUser;
 import cmanager.OCUtil;
 import cmanager.Settings;
 import cmanager.geo.Geocache;
 import cmanager.geo.GeocacheLog;
+import cmanager.network.OCShadowList;
 
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;

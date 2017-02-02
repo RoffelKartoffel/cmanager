@@ -4,9 +4,16 @@ public class GeocacheComparator
 {
     public static double calculateSimilarity(Geocache g1, Geocache g2)
     {
-        if ((g1.getCodeGC() != null && g1.getCodeGC().equals(g2.getCode())) ||
-            (g2.getCodeGC() != null && g2.getCodeGC().equals(g1.getCode())))
-            return 1;
+        {
+            final String codeGc1 = g1.getCodeGC();
+            final String codeGc2 = g2.getCodeGC();
+            final String code1 = g1.getCode();
+            final String code2 = g2.getCode();
+
+            if ((codeGc1 != null && codeGc1.toUpperCase().equals(code2)) ||
+                (codeGc2 != null && codeGc2.toUpperCase().equals(code1)))
+                return 1;
+        }
 
         // If a non premium member downloads her/his founds via geotoad,
         // premium caches are mislocated at 0.0/0.0 which falsely matches

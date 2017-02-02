@@ -21,6 +21,19 @@ public class Test_GeocacheComparator
                          String owner2, String container2, Boolean archived2,
                          Boolean available2)
     {
+        addGood(code1, name1, coords1, d1, t1, type1, owner1, container1,
+                archived1, available1, code2, name2, coords2, d2, t2, type2,
+                owner2, container2, archived2, available2, null);
+    }
+
+    private void addGood(String code1, String name1, String coords1, Double d1,
+                         Double t1, String type1, String owner1,
+                         String container1, Boolean archived1,
+                         Boolean available1, String code2, String name2,
+                         String coords2, Double d2, Double t2, String type2,
+                         String owner2, String container2, Boolean archived2,
+                         Boolean available2, String code_gc)
+    {
         try
         {
             Geocache g1 = new Geocache(code1, name1, new Coordinate(coords1),
@@ -36,6 +49,7 @@ public class Test_GeocacheComparator
             g2.setContainer(container2);
             g2.setArchived(archived2);
             g2.setAvailable(available2);
+            g2.setCodeGC(code_gc);
 
             matching.add(new Geocache[] {g1, g2});
         }
@@ -101,6 +115,25 @@ public class Test_GeocacheComparator
                 "OC111B6", "Piep Piep Piep", "N 51° 22.067' E 007° 29.565'",
                 1.5, 1.5, "Tradi", "geyerwally", "Micro", false, true);
 
+        //        addGood("GC1P7V2", "Donald´s Badewanne", "N 51° 20.593 E 007°
+        //        31.486",
+        //                3.0, 1.5, "Unknown Cache", "Jerry_the_Dog", "small",
+        //                true,
+        //                false, //
+        //                "OC8F33", "Donald´s Badewanne", "N 51° 20.907' E 007°
+        //                31.788'",
+        //                4.0, 1.5, "Unknown Cache", "Jerry_the_Dog", "Small",
+        //                true,
+        //                false);
+
+        addGood("GC1P7V2", "Donald´s Badewanne", "N 51° 20.593 E 007° 31.486",
+                3.0, 1.5, "Unknown Cache", "Jerry_the_Dog", "small", true,
+                false, //
+                "OC8F33", "Donald´s Badewanne", "N 51° 20.907' E 007° 31.788'",
+                4.0, 1.5, "Unknown Cache", "Jerry_the_Dog", "Small", true,
+                false, "gc1p7v2");
+
+
         // Interesting tuples
 
         //        	OC1158E / GC4VRCT Händel oder Bruckner
@@ -122,17 +155,6 @@ public class Test_GeocacheComparator
 
 
         // Unmatched edge cases
-
-        //        addGood("GC1P7V2", "Donald´s Badewanne", "N 51° 20.593 E 007°
-        //        31.486",
-        //                3.0, 1.5, "Unknown Cache", "Jerry_the_Dog", "small",
-        //                true,
-        //                false, //
-        //                "OC8F33", "Donald´s Badewanne", "N 51° 20.907' E 007°
-        //                31.788'",
-        //                4.0, 1.5, "Unknown Cache", "Jerry_the_Dog", "Small",
-        //                true,
-        //                false);
 
         //        addGood("GCJWEN", "Die Bärenhöhle", "N 51° 47.700' E 006°
         //        06.914'", 3.0,

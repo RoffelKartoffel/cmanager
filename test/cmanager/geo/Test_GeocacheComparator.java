@@ -15,11 +15,11 @@ public class Test_GeocacheComparator
 
     private void addGood(String code1, String name1, String coords1, Double d1,
                          Double t1, String type1, String owner1,
-                         String container1, boolean archived1,
-                         boolean available1, String code2, String name2,
+                         String container1, Boolean archived1,
+                         Boolean available1, String code2, String name2,
                          String coords2, Double d2, Double t2, String type2,
-                         String owner2, String container2, boolean archived2,
-                         boolean available2)
+                         String owner2, String container2, Boolean archived2,
+                         Boolean available2)
     {
         try
         {
@@ -61,13 +61,6 @@ public class Test_GeocacheComparator
                 "OC6544", "TB-Hotel Nr. 333", "N 53° 08.245' E 008° 16.700'",
                 1.0, 1.5, "Tradi", "TravelMad", "Regular", false, true);
 
-        //        addGood("GCJWEN", "Die Bärenhöhle", "N 51° 47.700' E 006°
-        //        06.914'", 3.0,
-        //                4.0, "Tradi", "geoBONE", "micro", false, true, //
-        //                "OC001B", "Die Baerenhoehle", "N 51° 47.700' E 006°
-        //                06.914'",
-        //                3.0, 4.5, "Tradi", "geoBONE", "Micro", true, false);
-
         addGood("GC3314B", "Zeche Gottessegen - III - Stollen",
                 "N 51° 26.334 E 007° 27.874", 2.0, 2.0, "Tradi", "Wir_4",
                 "micro", true, false, //
@@ -82,6 +75,20 @@ public class Test_GeocacheComparator
                 "N 51° 26.334' E 007° 28.077'", 2.0, 2.0, "Tradi", "Wir_4",
                 "Small", true, false);
 
+        addGood("GC4675C", "Klaus Autowerkstatt (Kinder-Cache)",
+                "N 51° 18.767' E 007° 26.629'", 1.5, 2.0, "Tradi", "Atomaffe",
+                "small", true, false, //
+                "OCF83C", "Klaus Autowerkstatt (Kinder-Cache)",
+                "N 51° 18.767' E 007° 26.629'", 1.5, 2.0, "Tradi", "Atomaffe",
+                "Regular", true, false);
+
+        addGood("GC39105", "Ein “Schatz” aus der Antike",
+                "N 50° 56.410' E 006° 49.730'", 2.0, 1.0, "Unknown Cache",
+                "Rheingeister", "micro", false, true, //
+                "OCD85A", "Ein “Schatz” aus der Antike",
+                "N 50° 56.410' E 006° 49.710'", 2.0, 1.0, "Unknown Cache",
+                "Rheingeister", "Micro", false, true);
+
         addGood("GC58YWX", "Ein Nano an der Kreuzung klebt...",
                 "N 51° 24.661 E 007° 50.056", 3.0, 1.5, "Tradi", "Keks579",
                 "micro", true, false, //
@@ -93,6 +100,64 @@ public class Test_GeocacheComparator
                 1.5, "Tradi", "geyerwally", "micro", false, true, //
                 "OC111B6", "Piep Piep Piep", "N 51° 22.067' E 007° 29.565'",
                 1.5, 1.5, "Tradi", "geyerwally", "Micro", false, true);
+
+        // Interesting tuples
+
+        //        	OC1158E / GC4VRCT Händel oder Bruckner
+        //        	OC110D9 / GC58CJT Tu was Gutes...
+        //        	OC11577 / GC598KJ SPY
+        //        	OC948B / GC1ZRDV Reiglersbachsee
+        //        	OC174D / GCTBWH Crailsheim per Auto
+        //        	OC1467 / GCQJZP Helgoland Catamaran Quicky
+        //        	OC4551 / GC16Q2H Motte Keyenberg
+
+
+        // Template
+
+
+        //        addGood("", "", "",
+        //                0.0, 0.0, "", "", "", null, null, //
+        //                "", "", "",
+        //                0.0, 0.0, "", "", "", null, null);
+
+
+        // Unmatched edge cases
+
+        //        addGood("GC1P7V2", "Donald´s Badewanne", "N 51° 20.593 E 007°
+        //        31.486",
+        //                3.0, 1.5, "Unknown Cache", "Jerry_the_Dog", "small",
+        //                true,
+        //                false, //
+        //                "OC8F33", "Donald´s Badewanne", "N 51° 20.907' E 007°
+        //                31.788'",
+        //                4.0, 1.5, "Unknown Cache", "Jerry_the_Dog", "Small",
+        //                true,
+        //                false);
+
+        //        addGood("GCJWEN", "Die Bärenhöhle", "N 51° 47.700' E 006°
+        //        06.914'", 3.0,
+        //                4.0, "Tradi", "geoBONE", "micro", false, true, //
+        //                "OC001B", "Die Baerenhoehle", "N 51° 47.700' E 006°
+        //                06.914'",
+        //                3.0, 4.5, "Tradi", "geoBONE", "Micro", true, false);
+
+        //        addGood("GC5N4RW", "Schützenplatz ? !", "N 52° 30.020 E 009°
+        //        51.363",
+        //                3.0, 1.5, "Tradi", "TommyKFB", "micro", false, true,
+        //                //
+        //                "OC11BB9", "Schützenplatz ?!", "N 52° 30.020' E 009°
+        //                51.365'",
+        //                1.0, 1.0, "Tradi", "TommyKFB", "Micro", true, false);
+
+        //        addGood("GC33W4R", "Kleine Prinzessin in der Stemke", "N 51°
+        //        21.900' E 007° 22.650'",
+        //                1.5, 3.0, "Unknown Cache", "Quickcreek",
+        //                "regular",true, false, //
+        //                "OCE5D1", "Kleine Prinzessin in der Stemke", "N 51°
+        //                21.841' E 007° 22.601'",
+        //                1.0, 2.5, "Unknown Cache", "Quickcreek",
+        //                "Regular",false, true);
+
 
         for (Geocache[] tuple : matching)
         {

@@ -12,6 +12,8 @@ public class Test_GeocacheComparator
 {
 
     private ArrayList<Geocache[]> matching = new ArrayList<Geocache[]>();
+    private ArrayList<Geocache[]> not_matching = new ArrayList<Geocache[]>();
+
 
     private void addGood(String code1, String name1, String coords1, Double d1,
                          Double t1, String type1, String owner1,
@@ -21,9 +23,9 @@ public class Test_GeocacheComparator
                          String owner2, String container2, Boolean archived2,
                          Boolean available2)
     {
-        addGood(code1, name1, coords1, d1, t1, type1, owner1, container1,
-                archived1, available1, code2, name2, coords2, d2, t2, type2,
-                owner2, container2, archived2, available2, null);
+        add(matching, code1, name1, coords1, d1, t1, type1, owner1, container1,
+            archived1, available1, code2, name2, coords2, d2, t2, type2, owner2,
+            container2, archived2, available2, null);
     }
 
     private void addGood(String code1, String name1, String coords1, Double d1,
@@ -33,6 +35,46 @@ public class Test_GeocacheComparator
                          String coords2, Double d2, Double t2, String type2,
                          String owner2, String container2, Boolean archived2,
                          Boolean available2, String code_gc)
+    {
+        add(matching, code1, name1, coords1, d1, t1, type1, owner1, container1,
+            archived1, available1, code2, name2, coords2, d2, t2, type2, owner2,
+            container2, archived2, available2, code_gc);
+    }
+
+    private void addBad(String code1, String name1, String coords1, Double d1,
+                        Double t1, String type1, String owner1,
+                        String container1, Boolean archived1,
+                        Boolean available1, String code2, String name2,
+                        String coords2, Double d2, Double t2, String type2,
+                        String owner2, String container2, Boolean archived2,
+                        Boolean available2)
+    {
+        add(not_matching, code1, name1, coords1, d1, t1, type1, owner1,
+            container1, archived1, available1, code2, name2, coords2, d2, t2,
+            type2, owner2, container2, archived2, available2, null);
+    }
+
+    private void addBad(String code1, String name1, String coords1, Double d1,
+                        Double t1, String type1, String owner1,
+                        String container1, Boolean archived1,
+                        Boolean available1, String code2, String name2,
+                        String coords2, Double d2, Double t2, String type2,
+                        String owner2, String container2, Boolean archived2,
+                        Boolean available2, String code_gc)
+    {
+        add(not_matching, code1, name1, coords1, d1, t1, type1, owner1,
+            container1, archived1, available1, code2, name2, coords2, d2, t2,
+            type2, owner2, container2, archived2, available2, code_gc);
+    }
+
+
+    private void add(ArrayList<Geocache[]> list, String code1, String name1,
+                     String coords1, Double d1, Double t1, String type1,
+                     String owner1, String container1, Boolean archived1,
+                     Boolean available1, String code2, String name2,
+                     String coords2, Double d2, Double t2, String type2,
+                     String owner2, String container2, Boolean archived2,
+                     Boolean available2, String code_gc)
     {
         try
         {
@@ -51,7 +93,7 @@ public class Test_GeocacheComparator
             g2.setAvailable(available2);
             g2.setCodeGC(code_gc);
 
-            matching.add(new Geocache[] {g1, g2});
+            list.add(new Geocache[] {g1, g2});
         }
         catch (NullPointerException | UnparsableException e1)
         {
@@ -114,6 +156,8 @@ public class Test_GeocacheComparator
                 1.5, "Tradi", "geyerwally", "micro", false, true, //
                 "OC111B6", "Piep Piep Piep", "N 51° 22.067' E 007° 29.565'",
                 1.5, 1.5, "Tradi", "geyerwally", "Micro", false, true);
+
+        // voliatile start!
 
         //        addGood("GC1P7V2", "Donald´s Badewanne", "N 51° 20.593 E 007°
         //        31.486",
@@ -194,6 +238,60 @@ public class Test_GeocacheComparator
         for (Geocache[] tuple1 : matching)
         {
             for (Geocache[] tuple2 : matching)
+            {
+                if (tuple1 == tuple2)
+                {
+                    continue;
+                }
+
+                Geocache gc = tuple1[0];
+                Geocache oc = tuple2[1];
+                if (GeocacheComparator.similar(gc, oc))
+                {
+                    fail("Unexpected match: " + gc.toString() + " " +
+                         oc.toString());
+                }
+            }
+        }
+    }
+
+    @Test public void testNotMatching()
+    {
+        // Real life samples
+
+        addBad("GC6321G", "Konkurrenz belebt das Geschäft -GC-",
+               "N 53° 35.565 E 009° 55.200", 1.5, 3.5, "Multi", "rbx270",
+               "regular", false, true, //
+               "OC12599", "Konkurrenz belebt das Geschäft -OC-",
+               "N 53° 35.569' E 009° 55.207'", 1.5, 3.5, "Multi", "rbx270",
+               "Regular", false, true);
+
+
+        // generics
+
+        addBad("GC", "cache", "N 1° 11.111 E 2° 22.222", 1.0, 3.0, "Multi",
+               "author", "regular", false, true, //
+               "OC", "cache", "N 1° 11.111 E 2° 22.222", 2.0, 4.0, "Multi",
+               "author", "Regular", false, true);
+
+        addBad("GC", "cache", "N 1° 11.111 E 2° 22.222", 1.0, 1.0, "Multi",
+               "author", "regular", false, true, //
+               "OC", "cache", "N 1° 11.111 E 2° 22.222", 1.0, 1.0, "Multi",
+               "author", "Regular", false, true);
+
+        for (Geocache[] tuple : not_matching)
+        {
+            Geocache gc = tuple[0];
+            Geocache oc = tuple[1];
+            if (GeocacheComparator.similar(gc, oc))
+            {
+                fail("Match: " + gc.toString() + " " + oc.toString());
+            }
+        }
+
+        for (Geocache[] tuple1 : not_matching)
+        {
+            for (Geocache[] tuple2 : not_matching)
             {
                 if (tuple1 == tuple2)
                 {

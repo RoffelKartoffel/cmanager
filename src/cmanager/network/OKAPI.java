@@ -274,7 +274,7 @@ public class OKAPI
         Main.openUrl(authUrl);
 
         String pin = JOptionPane.showInputDialog(
-            null, "Please enter the PIN from opencaching.de");
+            null, "Please look at your browser and enter the PIN from opencaching.de");
         if (pin == null)
             return null;
 

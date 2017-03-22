@@ -36,6 +36,7 @@ public class GeocacheLog implements Serializable
 
         TYPE.add("Post Reviewer Note");
         TYPE.add("Publish Listing");
+        TYPE.add("Retract Listing");
         TYPE.add("Archive");
         TYPE.add("Unarchive");
     }

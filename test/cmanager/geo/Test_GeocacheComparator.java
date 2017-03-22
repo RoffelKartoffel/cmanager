@@ -274,7 +274,7 @@ public class Test_GeocacheComparator
                "OC", "cache", "N 1° 11.111 E 2° 22.222", 2.0, 4.0, "Multi",
                "author", "Regular", false, true);
 
-        addBad("GC", "cache", "N 1° 11.111 E 2° 22.222", 1.0, 1.0, "Multi",
+        addBad("GC", "cache", "N 1° 22.222 E 2° 22.222", 1.0, 1.0, "Tradi",
                "author", "regular", false, true, //
                "OC", "cache", "N 1° 11.111 E 2° 22.222", 1.0, 1.0, "Multi",
                "author", "Regular", false, true);
@@ -286,25 +286,6 @@ public class Test_GeocacheComparator
             if (GeocacheComparator.similar(gc, oc))
             {
                 fail("Match: " + gc.toString() + " " + oc.toString());
-            }
-        }
-
-        for (Geocache[] tuple1 : not_matching)
-        {
-            for (Geocache[] tuple2 : not_matching)
-            {
-                if (tuple1 == tuple2)
-                {
-                    continue;
-                }
-
-                Geocache gc = tuple1[0];
-                Geocache oc = tuple2[1];
-                if (GeocacheComparator.similar(gc, oc))
-                {
-                    fail("Unexpected match: " + gc.toString() + " " +
-                         oc.toString());
-                }
             }
         }
     }

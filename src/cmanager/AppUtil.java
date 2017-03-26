@@ -34,7 +34,7 @@ public class AppUtil
     private static void showInvalidJarPathMessage(String jarPath)
     {
         String message =
-            "Unable to start cmanager. Settings could not be applied.\n"
+            "Unable to restart cmanager. Settings could not be applied.\n"
             + "Expected path: " + jarPath;
         JOptionPane.showMessageDialog(null, message, "jar path",
                                       JOptionPane.ERROR_MESSAGE);

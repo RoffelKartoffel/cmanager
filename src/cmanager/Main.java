@@ -83,11 +83,23 @@ public class Main
         return jarPath;
     }
 
-    public static void runCopyAndExit() throws Exception
+    private static void showInvalidJarPathMessage(String jarPath)
+    {
+        String message =
+            "Unable to start cmanager. Settings could not be applied.\n"
+            + "Expected path: " + jarPath;
+        JOptionPane.showMessageDialog(null, message, "jar path",
+                                      JOptionPane.ERROR_MESSAGE);
+    }
+
+    public static void runCopyAndExit() throws IOException
     {
         String jarPath = getJarPath();
         if (!new File(jarPath).exists())
-            throw new Exception("Path of jar file could not be determined. ");
+        {
+            showInvalidJarPathMessage(jarPath);
+            return;
+        }
 
         //
         // Run new vm
@@ -109,7 +121,10 @@ public class Main
 
         String jarPath = getJarPath();
         if (!new File(jarPath).exists())
+        {
+            showInvalidJarPathMessage(jarPath);
             return;
+        }
 
         //
         // Read settings

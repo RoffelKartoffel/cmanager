@@ -5,7 +5,7 @@ mainClassName = 'cmanager.Main'
 project.ext.ocOkapiPropertiesFile = projectDir.getPath() + "${File.separator}oc_okapi.properties"
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
-version = '0.2.40'
+version = '0.2.41'
 
 sourceSets {
     main {

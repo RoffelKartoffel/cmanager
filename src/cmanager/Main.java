@@ -183,24 +183,6 @@ public class Main
     }
 
 
-    static void print(ArrayList<Geocache> gList)
-    {
-        for (Geocache g : gList)
-            System.out.println(g.toString());
-    }
-
-
-    static void print(XMLElement e, int level)
-    {
-        for (int i = 0; i < level; i++)
-            System.out.print(" ");
-        System.out.println(e.getName());
-
-        for (XMLElement e2 : e.getChildren())
-            print(e2, level + 1);
-    }
-
-
     public static void openUrl(String uri)
     {
         if (Desktop.isDesktopSupported())
@@ -219,21 +201,6 @@ public class Main
             Exception e =
                 new UnsupportedOperationException("Desktop unsupported.");
             ExceptionPanel.showErrorDialog(e);
-        }
-    }
-
-    /**
-     * This method guarantees that garbage collection is
-     * done unlike <code>{@link System#gc()}</code>
-     */
-    public static void gc()
-    {
-        Object obj = new Object();
-        WeakReference<Object> ref = new WeakReference<Object>(obj);
-        obj = null;
-        while (ref.get() != null)
-        {
-            System.gc();
         }
     }
 }

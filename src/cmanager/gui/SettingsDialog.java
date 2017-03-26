@@ -5,7 +5,7 @@ import java.awt.BorderLayout;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import cmanager.Main;
+import cmanager.AppUtil;
 import cmanager.OCUser;
 import cmanager.Settings;
 import cmanager.global.Constants;
@@ -94,7 +94,7 @@ public class SettingsDialog extends JDialog
                     {
                         try
                         {
-                            Main.runCopyAndExit();
+                            AppUtil.runCopyAndExit();
                         }
                         catch (Throwable t)
                         {

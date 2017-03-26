@@ -19,8 +19,8 @@ import cmanager.CacheListFilterDifficulty;
 import cmanager.CacheListFilterDistance;
 import cmanager.CacheListFilterNotFoundBy;
 import cmanager.CacheListFilterTerrain;
+import cmanager.DesktopUtil;
 import cmanager.FileHelper;
-import cmanager.Main;
 import cmanager.OCUser;
 import cmanager.Settings;
 import cmanager.geo.Geocache;
@@ -494,7 +494,7 @@ public class MainWindow extends JFrame
         btnUpdate.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e)
             {
-                Main.openUrl(
+                DesktopUtil.openUrl(
                     "https://github.com/RoffelKartoffel/cmanager/releases");
             }
         });

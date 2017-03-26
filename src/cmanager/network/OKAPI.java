@@ -17,7 +17,7 @@ import com.github.scribejava.core.model.Response;
 import com.github.scribejava.core.model.Verb;
 import com.github.scribejava.core.oauth.OAuth10aService;
 
-import cmanager.Main;
+import cmanager.DesktopUtil;
 import cmanager.MalFormedException;
 import cmanager.OCUser;
 import cmanager.XMLElement;
@@ -271,7 +271,7 @@ public class OKAPI
 
         // Step Three: Making the user validate your request token
         String authUrl = service.getAuthorizationUrl(requestToken);
-        Main.openUrl(authUrl);
+        DesktopUtil.openUrl(authUrl);
 
         String pin = JOptionPane.showInputDialog(
             null,

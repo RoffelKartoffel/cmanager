@@ -15,7 +15,7 @@ import java.awt.event.ComponentEvent;
 import javax.swing.JLabel;
 import javax.swing.JViewport;
 
-import cmanager.Main;
+import cmanager.DesktopUtil;
 import cmanager.geo.Geocache;
 import cmanager.geo.GeocacheLog;
 
@@ -552,7 +552,7 @@ public class CachePanel extends javax.swing.JPanel
 
     private void btnOnlineActionPerformed(java.awt.event.ActionEvent evt)
     { // GEN-FIRST:event_btnOnlineActionPerformed
-        Main.openUrl(g.getURL());
+        DesktopUtil.openUrl(g.getURL());
     } // GEN-LAST:event_btnOnlineActionPerformed
 
     private void panelHeadingComponentResized(java.awt.event.ComponentEvent evt)

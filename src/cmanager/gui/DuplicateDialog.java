@@ -13,7 +13,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeSelectionModel;
 
 import cmanager.CacheListModel;
-import cmanager.Main;
+import cmanager.DesktopUtil;
 import cmanager.OCUser;
 import cmanager.OCUtil;
 import cmanager.Settings;
@@ -111,7 +111,7 @@ public class DuplicateDialog extends JFrame
             public void actionPerformed(ActionEvent e)
             {
                 if (selectedURL != null)
-                    Main.openUrl(selectedURL);
+                    DesktopUtil.openUrl(selectedURL);
             }
         });
         panelUrl.add(btnURL);

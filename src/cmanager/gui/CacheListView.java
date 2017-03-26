@@ -22,7 +22,7 @@ import org.openstreetmap.gui.jmapviewer.interfaces.MapMarker;
 import cmanager.CacheListController;
 import cmanager.CacheListFilterModel;
 import cmanager.CacheListModel;
-import cmanager.Main;
+import cmanager.DesktopUtil;
 import cmanager.PersitentTileCache;
 import cmanager.geo.Geocache;
 import cmanager.geo.GeocacheType;
@@ -174,7 +174,7 @@ public class CacheListView extends JInternalFrame
 
                     if (e.getClickCount() == 1 &&
                         ((e.getModifiers() & InputEvent.CTRL_MASK) != 0))
-                        Main.openUrl(g.getURL());
+                        DesktopUtil.openUrl(g.getURL());
                     else if (e.getClickCount() == 1)
                         panelCache.setCache(g);
                 }

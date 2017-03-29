@@ -67,13 +67,6 @@ public class AppUtil
                 return;
         }
 
-        String jarPath = getJarPath();
-        if (!new File(jarPath).exists())
-        {
-            showInvalidJarPathMessage(jarPath);
-            return;
-        }
-
         //
         // Read settings
         //
@@ -91,6 +84,16 @@ public class AppUtil
             return;
         if (heapSizeI < 128)
             return;
+
+        //
+        // Query path
+        //
+        String jarPath = getJarPath();
+        if (!new File(jarPath).exists())
+        {
+            showInvalidJarPathMessage(jarPath);
+            return;
+        }
 
         //
         // Run new vm

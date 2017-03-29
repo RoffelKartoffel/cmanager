@@ -22,12 +22,25 @@ public class AppUtil
                                             .getLocation()
                                             .getPath());
 
-
         String jarPath = jarFile.getAbsolutePath();
+        if (new File(jarPath).exists())
+        {
+            return jarPath;
+        }
+
         if (jarPath.endsWith("."))
+        {
             jarPath = jarPath.substring(0, jarPath.length() - 1);
+            if (new File(jarPath).exists())
+            {
+                return jarPath;
+            }
+        }
+
         if (!jarPath.endsWith(JAR_NAME))
+        {
             jarPath += JAR_NAME;
+        }
         return jarPath;
     }
 

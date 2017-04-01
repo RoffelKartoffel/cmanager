@@ -8,7 +8,7 @@ import org.junit.Test;
 
 import cmanager.geo.Coordinate.UnparsableException;
 
-public class Test_GeocacheComparator
+public class GeocacheComparatorTest
 {
 
     private ArrayList<Geocache[]> matching = new ArrayList<Geocache[]>();

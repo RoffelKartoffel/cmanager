@@ -5,7 +5,7 @@ import org.junit.Test;
 import cmanager.geo.Coordinate;
 import cmanager.geo.Coordinate.UnparsableException;
 
-public class Test_Coordinate
+public class CoordinateTest
 {
 
     @Test public void test()

@@ -6,7 +6,7 @@ import cmanager.ObjectHelper;
 
 import static org.junit.Assert.*;
 
-public class Test_Geocache
+public class GeocacheTest
 {
     @Test public void testConstructor()
     {

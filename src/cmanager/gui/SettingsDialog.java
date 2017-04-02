@@ -6,10 +6,10 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import cmanager.AppUtil;
-import cmanager.OCUser;
 import cmanager.Settings;
+import cmanager.OKAPI.OCUser;
+import cmanager.OKAPI.OKAPI;
 import cmanager.global.Constants;
-import cmanager.network.OKAPI;
 
 import java.awt.FlowLayout;
 import java.awt.Font;

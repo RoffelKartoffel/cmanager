@@ -23,7 +23,7 @@ sourceSets {
 
 task OcOkapiKeys(type: Copy) {
     assert file(project.ocOkapiPropertiesFile).exists() : project.ocOkapiPropertiesFile + ' file missing. Please follow the instructions in README.md'
-    outputs.files 'src/cmanager/network/OKAPIKeys.java'
+    outputs.files 'src/cmanager/OKAPI/OKAPIKeys.java'
     Properties properties = new Properties()
     File propertiesFile = new File(project.ocOkapiPropertiesFile)
     properties.load(propertiesFile.newDataInputStream())
@@ -34,7 +34,7 @@ task OcOkapiKeys(type: Copy) {
         oc_okapi_de_consumer_key: properties.getProperty('oc_okapi_de_consumer_key'),
         oc_okapi_de_consumer_secret: properties.getProperty('oc_okapi_de_consumer_secret')
     )
-    into 'src/cmanager/network'
+    into 'src/cmanager/OKAPI'
 }
 
 task Version(type: Copy) {
@@ -51,7 +51,7 @@ task Version(type: Copy) {
 compileJava.dependsOn OcOkapiKeys, Version
 
 clean.doFirst {
-    delete 'src/cmanager/network/OKAPIKeys.java'
+    delete 'src/cmanager/OKAPI/OKAPIKeys.java'
     delete 'src/cmanager/global/Version.java'
 }
 

@@ -1,4 +1,4 @@
-package cmanager.network;
+package cmanager.OKAPI;
 
 import java.io.IOException;
 import java.net.URLEncoder;
@@ -19,13 +19,14 @@ import com.github.scribejava.core.oauth.OAuth10aService;
 
 import cmanager.DesktopUtil;
 import cmanager.MalFormedException;
-import cmanager.OCUser;
 import cmanager.XMLElement;
 import cmanager.XMLParser;
 import cmanager.geo.Coordinate;
 import cmanager.geo.Geocache;
 import cmanager.geo.GeocacheLog;
 import cmanager.gui.ExceptionPanel;
+import cmanager.network.HTTP;
+import cmanager.OKAPI.OKAPIKeys;
 
 public class OKAPI
 {

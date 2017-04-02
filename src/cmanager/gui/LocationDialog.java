@@ -17,13 +17,13 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
-import cmanager.OCUser;
 import cmanager.ThreadStore;
+import cmanager.OKAPI.OCUser;
+import cmanager.OKAPI.OKAPI;
 import cmanager.geo.Coordinate;
 import cmanager.geo.Geocache;
 import cmanager.geo.Location;
 import cmanager.geo.LocationList;
-import cmanager.network.OKAPI;
 
 import java.awt.Color;
 import java.awt.GridBagLayout;

@@ -1,7 +1,7 @@
 .gradle
 build
 bin
-src/cmanager/network/OKAPIKeys.java
+src/cmanager/OKAPI/OKAPIKeys.java
 src/cmanager/global/Version.java
 /oc_okapi.properties
 .settings

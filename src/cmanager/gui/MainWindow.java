@@ -21,13 +21,13 @@ import cmanager.CacheListFilterNotFoundBy;
 import cmanager.CacheListFilterTerrain;
 import cmanager.DesktopUtil;
 import cmanager.FileHelper;
-import cmanager.OCUser;
 import cmanager.Settings;
+import cmanager.OKAPI.OCUser;
+import cmanager.OKAPI.OKAPI;
 import cmanager.geo.Geocache;
 import cmanager.geo.Location;
 import cmanager.geo.LocationList;
 import cmanager.global.Constants;
-import cmanager.network.OKAPI;
 import cmanager.network.Updates;
 
 import javax.swing.JDesktopPane;

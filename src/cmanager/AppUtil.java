@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import javax.swing.JOptionPane;
 
+import cmanager.Settings.Settings;
 import cmanager.global.Version;
 
 public class AppUtil

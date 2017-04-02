@@ -1,4 +1,4 @@
-package cmanager;
+package cmanager.Settings;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -8,6 +8,7 @@ import java.util.prefs.Preferences;
 
 import org.apache.commons.codec.binary.Base64;
 
+import cmanager.FileHelper;
 import cmanager.global.Constants;
 
 public class Settings

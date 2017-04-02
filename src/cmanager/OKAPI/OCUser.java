@@ -5,7 +5,7 @@ import java.util.concurrent.ExecutionException;
 
 import com.github.scribejava.core.model.OAuth1AccessToken;
 
-import cmanager.Settings;
+import cmanager.Settings.Settings;
 
 public class OCUser
 {

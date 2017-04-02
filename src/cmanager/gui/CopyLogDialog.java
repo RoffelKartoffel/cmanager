@@ -18,9 +18,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import cmanager.Settings;
 import cmanager.OKAPI.OCUser;
 import cmanager.OKAPI.OKAPI;
+import cmanager.Settings.Settings;
 import cmanager.geo.Geocache;
 import cmanager.geo.GeocacheComparator;
 import cmanager.geo.GeocacheLog;

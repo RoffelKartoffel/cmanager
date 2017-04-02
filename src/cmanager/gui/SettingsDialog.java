@@ -6,9 +6,9 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import cmanager.AppUtil;
-import cmanager.Settings;
 import cmanager.OKAPI.OCUser;
 import cmanager.OKAPI.OKAPI;
+import cmanager.Settings.Settings;
 import cmanager.global.Constants;
 
 import java.awt.FlowLayout;

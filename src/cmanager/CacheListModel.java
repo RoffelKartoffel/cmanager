@@ -10,6 +10,7 @@ import javax.swing.table.AbstractTableModel;
 
 import org.joda.time.DateTime;
 
+import cmanager.Settings.Settings;
 import cmanager.geo.Geocache;
 import cmanager.geo.GeocacheLog;
 import cmanager.geo.Location;

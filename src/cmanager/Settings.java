@@ -24,7 +24,7 @@ public class Settings
         FILE_CHOOSER_LOAD_GPX,
 
         OKAPI_TOKEN,
-        OKAPI_SECRET,
+        OKAPI_TOKEN_SECRET,
 
         LOCATION_LIST,
 
@@ -44,9 +44,9 @@ public class Settings
         case FILE_CHOOSER_LOAD_GPX:
             return "fileChooserGpx";
         case OKAPI_TOKEN:
-            return "OKAPIToken";
-        case OKAPI_SECRET:
-            return "OKAPISecret";
+            return "okapiToken";
+        case OKAPI_TOKEN_SECRET:
+            return "okapiTokenSecret";
         case LOCATION_LIST:
             return "locationList";
         case CLC_LIST:

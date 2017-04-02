@@ -33,9 +33,9 @@ public class OCUser
     {
         try
         {
-            okapiAccessToken =
-                new OAuth1AccessToken(Settings.getS(Settings.Key.OKAPI_TOKEN),
-                                      Settings.getS(Settings.Key.OKAPI_SECRET));
+            okapiAccessToken = new OAuth1AccessToken(
+                Settings.getS(Settings.Key.OKAPI_TOKEN),
+                Settings.getS(Settings.Key.OKAPI_TOKEN_SECRET));
         }
         catch (IllegalArgumentException e)
         {
@@ -55,7 +55,7 @@ public class OCUser
         if (okapiAccessToken != null)
         {
             Settings.set(Settings.Key.OKAPI_TOKEN, okapiAccessToken.getToken());
-            Settings.set(Settings.Key.OKAPI_SECRET,
+            Settings.set(Settings.Key.OKAPI_TOKEN_SECRET,
                          okapiAccessToken.getTokenSecret());
         }
     }

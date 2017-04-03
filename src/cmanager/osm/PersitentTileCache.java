@@ -1,4 +1,4 @@
-package cmanager;
+package cmanager.osm;
 
 import java.io.File;
 import java.io.FileInputStream;

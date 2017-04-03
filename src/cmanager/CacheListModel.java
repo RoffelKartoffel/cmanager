@@ -15,6 +15,7 @@ import cmanager.geo.Geocache;
 import cmanager.geo.GeocacheLog;
 import cmanager.geo.Location;
 import cmanager.geo.Waypoint;
+import cmanager.gpx.GPX;
 
 public class CacheListModel
 {

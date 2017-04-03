@@ -1,4 +1,4 @@
-package cmanager;
+package cmanager.gpx;
 
 import java.io.BufferedWriter;
 import java.io.InputStream;
@@ -15,6 +15,7 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.ISODateTimeFormat;
 
+import cmanager.FileHelper;
 import cmanager.geo.Coordinate;
 import cmanager.geo.Geocache;
 import cmanager.geo.GeocacheAttribute;

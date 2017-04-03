@@ -1,4 +1,4 @@
-package cmanager;
+package cmanager.xml;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
@@ -10,28 +10,30 @@ import java.util.Iterator;
 
 import org.apache.commons.lang3.StringEscapeUtils;
 
-import cmanager.XMLElement.XMLAttribute;
+import cmanager.MalFormedException;
+import cmanager.ThreadStore;
+import cmanager.xml.Element.XMLAttribute;
 
-public class XMLParser
+public class Parser
 {
-    public static XMLElement parse(String element)
+    public static Element parse(String element)
         throws MalFormedException, IOException
     {
         return parse(new BufferAbstraction(element), null);
     }
 
-    public static XMLElement parse(InputStream is, XMLParserCallbackI callback)
+    public static Element parse(InputStream is, XMLParserCallbackI callback)
         throws MalFormedException, IOException
     {
         return parse(new BufferAbstraction(is), callback);
     }
 
 
-    private static XMLElement parse(BufferAbstraction element,
-                                    XMLParserCallbackI callback)
+    private static Element parse(BufferAbstraction element,
+                                 XMLParserCallbackI callback)
         throws MalFormedException, IOException
     {
-        XMLElement root = new XMLElement();
+        Element root = new Element();
         do
         {
             removeDelimiter(element);
@@ -53,7 +55,7 @@ public class XMLParser
         return root;
     }
 
-    private static void parse(BufferAbstraction element, XMLElement root,
+    private static void parse(BufferAbstraction element, Element root,
                               XMLParserCallbackI callback)
         throws MalFormedException, IOException
     {
@@ -63,7 +65,7 @@ public class XMLParser
         if (element.charAt(1) == '/')
             return;
 
-        XMLElement ele = new XMLElement();
+        Element ele = new Element();
 
         int nameEnd = endOfName(element);
         String elementName = element.substring(1, nameEnd);
@@ -200,22 +202,22 @@ public class XMLParser
     }
 
 
-    public static void xmlToBuffer(XMLElement root, BufferWriteAbstraction bwa)
+    public static void xmlToBuffer(Element root, BufferWriteAbstraction bwa)
         throws Throwable
     {
         shrinkXMLTree(root);
 
         bwa.append(
             "<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>\n");
-        for (XMLElement child : root.getChildren())
+        for (Element child : root.getChildren())
             xmlToBuffer(child, bwa, 0);
     }
 
-    private static void shrinkXMLTree(final XMLElement e) throws Throwable
+    private static void shrinkXMLTree(final Element e) throws Throwable
     {
         if (e.getChildren().size() < 100)
         {
-            for (XMLElement child : e.getChildren())
+            for (Element child : e.getChildren())
                 shrinkXMLTree(child);
         }
         else
@@ -258,10 +260,10 @@ public class XMLParser
         }
 
 
-        Iterator<XMLElement> it = e.getChildren().iterator();
+        Iterator<Element> it = e.getChildren().iterator();
         while (it.hasNext())
         {
-            XMLElement child = it.next();
+            Element child = it.next();
             if (child.getUnescapedBody() == null &&
                 child.getAttributes().size() == 0 &&
                 child.getChildren().size() == 0)
@@ -269,7 +271,7 @@ public class XMLParser
         }
     }
 
-    private static void xmlToBuffer(final XMLElement e,
+    private static void xmlToBuffer(final Element e,
                                     final BufferWriteAbstraction bwa,
                                     final int level) throws Throwable
     {
@@ -326,7 +328,7 @@ public class XMLParser
                                         new StringBuilder());
                                 for (int i = start; i < end; i++)
                                 {
-                                    XMLElement child = e.getChildren().get(i);
+                                    Element child = e.getChildren().get(i);
                                     xmlToBuffer(child, bwa_thread, level + 1);
 
                                     // Flush each n elements
@@ -364,7 +366,7 @@ public class XMLParser
             }
             else
             {
-                for (XMLElement child : e.getChildren())
+                for (Element child : e.getChildren())
                     xmlToBuffer(child, bwa, level + 1);
             }
             if (e.getUnescapedBody() != null)
@@ -387,9 +389,8 @@ public class XMLParser
     ///////////////////////////////
 
     public static interface XMLParserCallbackI {
-        public boolean elementLocatedCorrectly(XMLElement element,
-                                               XMLElement parent);
-        public boolean elementFinished(XMLElement element);
+        public boolean elementLocatedCorrectly(Element element, Element parent);
+        public boolean elementFinished(Element element);
     }
 
 

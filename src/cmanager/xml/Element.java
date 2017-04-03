@@ -1,45 +1,45 @@
-package cmanager;
+package cmanager.xml;
 
 import java.util.ArrayList;
 
 import org.apache.commons.lang3.StringEscapeUtils;
 
-public class XMLElement
+public class Element
 {
     private String elementName = null;
     private String body = null;
-    private ArrayList<XMLElement> children = new ArrayList<XMLElement>();
+    private ArrayList<Element> children = new ArrayList<Element>();
     private ArrayList<XMLAttribute> attributes = new ArrayList<XMLAttribute>();
 
 
-    public XMLElement()
+    public Element()
     {
     }
 
-    public XMLElement(String name)
+    public Element(String name)
     {
         setName(name);
     }
 
-    public XMLElement(String name, String body)
+    public Element(String name, String body)
     {
         setName(name);
         setBody(body);
     }
 
-    public XMLElement(String name, Double body)
+    public Element(String name, Double body)
     {
         setName(name);
         setBody(body != null ? body.toString() : null);
     }
 
-    public XMLElement(String name, Integer body)
+    public Element(String name, Integer body)
     {
         setName(name);
         setBody(body != null ? body.toString() : null);
     }
 
-    public XMLElement(String name, Boolean body)
+    public Element(String name, Boolean body)
     {
         setName(name);
         setBody(body != null ? body.toString() : null);
@@ -70,19 +70,19 @@ public class XMLElement
         return false;
     }
 
-    public void add(XMLElement child)
+    public void add(Element child)
     {
         children.add(child);
     }
 
-    public ArrayList<XMLElement> getChildren()
+    public ArrayList<Element> getChildren()
     {
         return children;
     }
 
-    public XMLElement getChild(String name)
+    public Element getChild(String name)
     {
-        for (XMLElement e : children)
+        for (Element e : children)
             if (e.is(name))
                 return e;
         return null;

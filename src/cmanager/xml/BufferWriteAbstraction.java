@@ -1,4 +1,4 @@
-package cmanager;
+package cmanager.xml;
 
 import java.io.BufferedWriter;
 import java.io.IOException;

@@ -1,8 +1,8 @@
 package cmanager.network;
 
-import cmanager.XMLElement;
-import cmanager.XMLParser;
 import cmanager.global.Version;
+import cmanager.xml.Element;
+import cmanager.xml.Parser;
 
 public class Updates
 {
@@ -19,9 +19,9 @@ public class Updates
                     "https://github.com/RoffelKartoffel/cmanager/releases.atom";
                 String http = HTTP.get(url);
 
-                XMLElement root = XMLParser.parse(http);
+                Element root = Parser.parse(http);
 
-                XMLElement child =
+                Element child =
                     root.getChild("feed").getChild("entry").getChild("title");
                 newVersion = child.getUnescapedBody();
 

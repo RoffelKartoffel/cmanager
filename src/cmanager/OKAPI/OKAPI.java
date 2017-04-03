@@ -19,13 +19,13 @@ import com.github.scribejava.core.oauth.OAuth10aService;
 
 import cmanager.DesktopUtil;
 import cmanager.MalFormedException;
-import cmanager.XMLElement;
-import cmanager.XMLParser;
 import cmanager.geo.Coordinate;
 import cmanager.geo.Geocache;
 import cmanager.geo.GeocacheLog;
 import cmanager.gui.ExceptionPanel;
 import cmanager.network.HTTP;
+import cmanager.xml.Element;
+import cmanager.xml.Parser;
 import cmanager.OKAPI.OKAPIKeys;
 
 public class OKAPI
@@ -44,8 +44,8 @@ public class OKAPI
             "&fields=uuid";
         String http = HTTP.get(url);
 
-        XMLElement root = XMLParser.parse(http);
-        for (XMLElement e : root.getChild("object").getChildren())
+        Element root = Parser.parse(http);
+        for (Element e : root.getChild("object").getChildren())
             if (e.attrIs("key", "uuid"))
                 return e.getUnescapedBody();
 
@@ -89,10 +89,10 @@ public class OKAPI
         else
             http = HTTP.get(url);
 
-        XMLElement root = XMLParser.parse(http);
-        for (XMLElement e : root.getChild("object").getChildren())
+        Element root = Parser.parse(http);
+        for (Element e : root.getChild("object").getChildren())
             if (e.attrIs("key", "results"))
-                for (XMLElement ee : e.getChildren())
+                for (Element ee : e.getChildren())
                     if (ee.is("string"))
                         try
                         {
@@ -134,8 +134,8 @@ public class OKAPI
         String code_gc = null;
         String status = null;
 
-        XMLElement root = XMLParser.parse(http);
-        for (XMLElement e : root.getChild("object").getChildren())
+        Element root = Parser.parse(http);
+        for (Element e : root.getChild("object").getChildren())
         {
             if (e.attrIs("key", "name"))
                 name = e.getUnescapedBody();
@@ -204,8 +204,8 @@ public class OKAPI
         String http = authedHttpGet(user, url);
 
         Boolean isFound = null;
-        XMLElement root = XMLParser.parse(http);
-        for (XMLElement e : root.getChild("object").getChildren())
+        Element root = Parser.parse(http);
+        for (Element e : root.getChild("object").getChildren())
         {
             if (e.attrIs("key", "is_found"))
                 isFound = e.getBodyB();
@@ -228,8 +228,8 @@ public class OKAPI
         String owner = null;
         String hint = null;
 
-        XMLElement root = XMLParser.parse(http);
-        for (XMLElement e : root.getChild("object").getChildren())
+        Element root = Parser.parse(http);
+        for (Element e : root.getChild("object").getChildren())
         {
             if (e.attrIs("key", "size2"))
                 size = e.getUnescapedBody();
@@ -240,7 +240,7 @@ public class OKAPI
             if (e.attrIs("key", "hint2"))
                 hint = e.getUnescapedBody();
             if (e.attrIs("key", "owner"))
-                for (XMLElement ee : e.getChildren())
+                for (Element ee : e.getChildren())
                     if (ee.attrIs("key", "username"))
                         owner = ee.getUnescapedBody();
         }
@@ -309,8 +309,8 @@ public class OKAPI
 
         // <object><string
         // key="uuid">0b34f954-ee48-11e4-89ed-525400e33611</string></object>
-        XMLElement root = XMLParser.parse(http);
-        for (XMLElement e : root.getChild("object").getChildren())
+        Element root = Parser.parse(http);
+        for (Element e : root.getChild("object").getChildren())
             if (e.attrIs("key", "uuid"))
                 return e.getUnescapedBody();
 
@@ -328,8 +328,8 @@ public class OKAPI
 
         // <object><string
         // key="uuid">0b34f954-ee48-11e4-89ed-525400e33611</string></object>
-        XMLElement root = XMLParser.parse(http);
-        for (XMLElement e : root.getChild("object").getChildren())
+        Element root = Parser.parse(http);
+        for (Element e : root.getChild("object").getChildren())
             if (e.attrIs("key", "username"))
                 return e.getUnescapedBody();
 
@@ -370,8 +370,8 @@ public class OKAPI
         String http = authedHttpGet(user, url);
 
         // <object><string key="home_location">53.047117|9.608</string></object>
-        XMLElement root = XMLParser.parse(http);
-        for (XMLElement e : root.getChild("object").getChildren())
+        Element root = Parser.parse(http);
+        for (Element e : root.getChild("object").getChildren())
             if (e.attrIs("key", "home_location"))
             {
                 String[] parts = e.getUnescapedBody().split("\\|");

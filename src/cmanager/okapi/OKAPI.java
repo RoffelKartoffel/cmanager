@@ -1,4 +1,4 @@
-package cmanager.OKAPI;
+package cmanager.okapi;
 
 import java.io.IOException;
 import java.net.URLEncoder;
@@ -23,10 +23,10 @@ import cmanager.geo.Geocache;
 import cmanager.geo.GeocacheLog;
 import cmanager.gui.ExceptionPanel;
 import cmanager.network.HTTP;
+import cmanager.okapi.OKAPIKeys;
 import cmanager.util.DesktopUtil;
 import cmanager.xml.Element;
 import cmanager.xml.Parser;
-import cmanager.OKAPI.OKAPIKeys;
 
 public class OKAPI
 {

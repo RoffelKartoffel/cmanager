@@ -13,12 +13,12 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeSelectionModel;
 
 import cmanager.CacheListModel;
-import cmanager.OKAPI.OCUser;
-import cmanager.OKAPI.OCUtil;
-import cmanager.Settings.Settings;
 import cmanager.geo.Geocache;
 import cmanager.geo.GeocacheLog;
 import cmanager.network.OCShadowList;
+import cmanager.okapi.OCUser;
+import cmanager.okapi.OCUtil;
+import cmanager.settings.Settings;
 import cmanager.util.DesktopUtil;
 
 import java.awt.event.ActionListener;

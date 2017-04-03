@@ -18,12 +18,12 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import cmanager.ThreadStore;
-import cmanager.OKAPI.OCUser;
-import cmanager.OKAPI.OKAPI;
 import cmanager.geo.Coordinate;
 import cmanager.geo.Geocache;
 import cmanager.geo.Location;
 import cmanager.geo.LocationList;
+import cmanager.okapi.OCUser;
+import cmanager.okapi.OKAPI;
 
 import java.awt.Color;
 import java.awt.GridBagLayout;

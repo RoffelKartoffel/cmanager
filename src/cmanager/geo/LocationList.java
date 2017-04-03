@@ -3,7 +3,7 @@ package cmanager.geo;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import cmanager.Settings.Settings;
+import cmanager.settings.Settings;
 
 public class LocationList
 {

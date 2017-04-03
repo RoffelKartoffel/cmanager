@@ -1,4 +1,4 @@
-package cmanager.OKAPI;
+package cmanager.okapi;
 
 import java.util.ArrayList;
 import java.util.concurrent.Callable;

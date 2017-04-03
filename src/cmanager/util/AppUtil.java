@@ -6,8 +6,8 @@ import java.io.IOException;
 import javax.swing.JOptionPane;
 
 import cmanager.Main;
-import cmanager.Settings.Settings;
 import cmanager.global.Version;
+import cmanager.settings.Settings;
 
 public class AppUtil
 {

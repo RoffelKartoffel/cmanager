@@ -5,10 +5,10 @@ import java.awt.BorderLayout;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import cmanager.OKAPI.OCUser;
-import cmanager.OKAPI.OKAPI;
-import cmanager.Settings.Settings;
 import cmanager.global.Constants;
+import cmanager.okapi.OCUser;
+import cmanager.okapi.OKAPI;
+import cmanager.settings.Settings;
 import cmanager.util.AppUtil;
 
 import java.awt.FlowLayout;

@@ -20,14 +20,14 @@ import cmanager.CacheListFilterDistance;
 import cmanager.CacheListFilterNotFoundBy;
 import cmanager.CacheListFilterTerrain;
 import cmanager.FileHelper;
-import cmanager.OKAPI.OCUser;
-import cmanager.OKAPI.OKAPI;
-import cmanager.Settings.Settings;
 import cmanager.geo.Geocache;
 import cmanager.geo.Location;
 import cmanager.geo.LocationList;
 import cmanager.global.Constants;
 import cmanager.network.Updates;
+import cmanager.okapi.OCUser;
+import cmanager.okapi.OKAPI;
+import cmanager.settings.Settings;
 import cmanager.util.DesktopUtil;
 
 import javax.swing.JDesktopPane;

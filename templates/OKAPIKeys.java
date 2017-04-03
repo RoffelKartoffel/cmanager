@@ -1,4 +1,4 @@
-package cmanager.OKAPI;
+package cmanager.okapi;
 
 public class OKAPIKeys {
     public static String get_CONSUMER_API_KEY() {

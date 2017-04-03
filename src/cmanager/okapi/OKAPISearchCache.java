@@ -1,4 +1,4 @@
-package cmanager.OKAPI;
+package cmanager.okapi;
 
 import java.io.File;
 import java.io.IOException;

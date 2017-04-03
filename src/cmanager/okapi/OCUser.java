@@ -1,11 +1,11 @@
-package cmanager.OKAPI;
+package cmanager.okapi;
 
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
 import com.github.scribejava.core.model.OAuth1AccessToken;
 
-import cmanager.Settings.Settings;
+import cmanager.settings.Settings;
 
 public class OCUser
 {

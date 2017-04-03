@@ -18,13 +18,13 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import cmanager.OKAPI.OCUser;
-import cmanager.OKAPI.OKAPI;
-import cmanager.Settings.Settings;
 import cmanager.geo.Geocache;
 import cmanager.geo.GeocacheComparator;
 import cmanager.geo.GeocacheLog;
 import cmanager.network.OCShadowList;
+import cmanager.okapi.OCUser;
+import cmanager.okapi.OKAPI;
+import cmanager.settings.Settings;
 
 import javax.swing.JSplitPane;
 import javax.swing.JScrollPane;

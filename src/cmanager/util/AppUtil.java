@@ -1,10 +1,11 @@
-package cmanager;
+package cmanager.util;
 
 import java.io.File;
 import java.io.IOException;
 
 import javax.swing.JOptionPane;
 
+import cmanager.Main;
 import cmanager.Settings.Settings;
 import cmanager.global.Version;
 

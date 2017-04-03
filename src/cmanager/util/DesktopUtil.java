@@ -1,4 +1,4 @@
-package cmanager;
+package cmanager.util;
 
 import java.awt.Desktop;
 import java.io.IOException;

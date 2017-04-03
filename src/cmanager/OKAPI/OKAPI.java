@@ -17,13 +17,13 @@ import com.github.scribejava.core.model.Response;
 import com.github.scribejava.core.model.Verb;
 import com.github.scribejava.core.oauth.OAuth10aService;
 
-import cmanager.DesktopUtil;
 import cmanager.MalFormedException;
 import cmanager.geo.Coordinate;
 import cmanager.geo.Geocache;
 import cmanager.geo.GeocacheLog;
 import cmanager.gui.ExceptionPanel;
 import cmanager.network.HTTP;
+import cmanager.util.DesktopUtil;
 import cmanager.xml.Element;
 import cmanager.xml.Parser;
 import cmanager.OKAPI.OKAPIKeys;

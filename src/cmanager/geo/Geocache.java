@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 import org.joda.time.DateTime;
 
-import cmanager.ObjectHelper;
+import cmanager.util.ObjectHelper;
 
 
 public class Geocache implements Serializable, Comparable<String>

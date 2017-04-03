@@ -22,11 +22,11 @@ import org.openstreetmap.gui.jmapviewer.interfaces.MapMarker;
 import cmanager.CacheListController;
 import cmanager.CacheListFilterModel;
 import cmanager.CacheListModel;
-import cmanager.DesktopUtil;
 import cmanager.PersitentTileCache;
 import cmanager.geo.Geocache;
 import cmanager.geo.GeocacheType;
 import cmanager.global.Constants;
+import cmanager.util.DesktopUtil;
 
 import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;

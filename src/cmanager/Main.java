@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 import cmanager.global.Constants;
 import cmanager.global.Version;
 import cmanager.gui.MainWindow;
+import cmanager.util.AppUtil;
 
 
 public class Main

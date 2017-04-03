@@ -15,9 +15,9 @@ import java.awt.event.ComponentEvent;
 import javax.swing.JLabel;
 import javax.swing.JViewport;
 
-import cmanager.DesktopUtil;
 import cmanager.geo.Geocache;
 import cmanager.geo.GeocacheLog;
+import cmanager.util.DesktopUtil;
 
 /**
  *

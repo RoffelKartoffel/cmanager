@@ -13,13 +13,13 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeSelectionModel;
 
 import cmanager.CacheListModel;
-import cmanager.DesktopUtil;
 import cmanager.OKAPI.OCUser;
 import cmanager.OKAPI.OCUtil;
 import cmanager.Settings.Settings;
 import cmanager.geo.Geocache;
 import cmanager.geo.GeocacheLog;
 import cmanager.network.OCShadowList;
+import cmanager.util.DesktopUtil;
 
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;

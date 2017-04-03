@@ -26,6 +26,7 @@ import cmanager.geo.Geocache;
 import cmanager.geo.Location;
 import cmanager.gui.CacheListView;
 import cmanager.gui.ExceptionPanel;
+import cmanager.util.ObjectHelper;
 
 
 public class CacheListController

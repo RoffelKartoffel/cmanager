@@ -19,7 +19,6 @@ import cmanager.CacheListFilterDifficulty;
 import cmanager.CacheListFilterDistance;
 import cmanager.CacheListFilterNotFoundBy;
 import cmanager.CacheListFilterTerrain;
-import cmanager.DesktopUtil;
 import cmanager.FileHelper;
 import cmanager.OKAPI.OCUser;
 import cmanager.OKAPI.OKAPI;
@@ -29,6 +28,7 @@ import cmanager.geo.Location;
 import cmanager.geo.LocationList;
 import cmanager.global.Constants;
 import cmanager.network.Updates;
+import cmanager.util.DesktopUtil;
 
 import javax.swing.JDesktopPane;
 import javax.swing.JFileChooser;

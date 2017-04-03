@@ -1,4 +1,4 @@
-package cmanager;
+package cmanager.util;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

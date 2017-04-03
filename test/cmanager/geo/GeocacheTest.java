@@ -2,7 +2,7 @@ package cmanager.geo;
 
 import org.junit.Test;
 
-import cmanager.ObjectHelper;
+import cmanager.util.ObjectHelper;
 
 import static org.junit.Assert.*;
 

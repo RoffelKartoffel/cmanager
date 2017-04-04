@@ -303,7 +303,7 @@ public class CacheListController
     public void store(Path pathToGPX) throws Throwable
     {
         this.path = pathToGPX;
-        model.store(pathToGPX.toString(), getName());
+        model.store(getName(), pathToGPX.toString());
 
         modifiedAndUnsafed = false;
         updateTitleAndCount();

@@ -32,9 +32,9 @@ import cmanager.xml.Parser.XMLParserCallbackI;
 
 public class GPX
 {
-    public static void fileToXmlToCachlist(InputStream is,
-                                           final ArrayList<Geocache> gList,
-                                           final ArrayList<Waypoint> wList)
+    public static void loadFromStream(InputStream is,
+                                      final ArrayList<Geocache> gList,
+                                      final ArrayList<Waypoint> wList)
         throws Throwable
     {
         final ExecutorService service = Executors.newFixedThreadPool(
@@ -332,51 +332,53 @@ public class GPX
         return g;
     }
 
-    public static void cachlistToBuffer(ArrayList<Geocache> list, String name,
-                                        OutputStream os) throws Throwable
+    public static void saveToFile(ArrayList<Geocache> list, String listName,
+                                  String pathToGPX) throws Throwable
     {
-
+        OutputStream os = FileHelper.openFileWrite(pathToGPX);
         ZipOutputStream zos = new ZipOutputStream(os);
-        //		zos.setLevel(9);
         zos.setLevel(7);
 
-        if (FileHelper.getFileExtension(name).equals("zip"))
-            name = name.substring(0, name.length() - 4);
+        if (FileHelper.getFileExtension(listName).equals("zip"))
+            listName = listName.substring(0, listName.length() - 4);
 
-        Integer number = 0;
-        int offset = 0;
+        Integer subListNumber = 0;
+        int baseIndex = 0;
         final int CACHES_PER_GPX = 1000;
+        final boolean useSingleFile = list.size() <= CACHES_PER_GPX;
         do
         {
-            ArrayList<Geocache> partial = new ArrayList<>();
+            ArrayList<Geocache> subList = new ArrayList<>();
 
-            for (int i = 0; i < CACHES_PER_GPX && i + offset < list.size(); i++)
-                partial.add(list.get(i + offset));
-            offset += CACHES_PER_GPX;
-            number += 1;
+            for (int index = 0;
+                 index < CACHES_PER_GPX && index + baseIndex < list.size();
+                 index++)
+                subList.add(list.get(index + baseIndex));
+            baseIndex += CACHES_PER_GPX;
+            subListNumber += 1;
 
-            String partialName = list.size() <= CACHES_PER_GPX
-                                     ? name
-                                     : name + "-" + number.toString();
-            partialName += ".gpx";
-            zos.putNextEntry(new ZipEntry(partialName));
+            String subListFileName =
+                useSingleFile ? listName
+                              : listName + "-" + subListNumber.toString();
+            subListFileName += ".gpx";
+            zos.putNextEntry(new ZipEntry(subListFileName));
 
-            Element root = cachlistToXML(partial, name);
+            Element root = cachlistToXML(subList, listName);
             BufferedWriter bw =
                 new BufferedWriter(new OutputStreamWriter(zos, "UTF-8"));
             Parser.xmlToBuffer(root, new BufferWriteAbstraction.BW(bw));
             bw.flush();
 
             zos.closeEntry();
-        } while (offset < list.size());
-
+        } while (baseIndex < list.size());
 
         zos.close();
+        os.close();
     }
 
 
-    public static Element cachlistToXML(final ArrayList<Geocache> list,
-                                        String name)
+    private static Element cachlistToXML(final ArrayList<Geocache> list,
+                                         String name)
     {
         Element root = new Element();
 

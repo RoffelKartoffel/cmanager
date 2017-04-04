@@ -1,7 +1,6 @@
 package cmanager;
 
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -202,7 +201,7 @@ public class CacheListModel
                 ArrayList<Geocache> gList = new ArrayList<>();
                 ArrayList<Waypoint> wList = new ArrayList<>();
 
-                GPX.fileToXmlToCachlist(is, gList, wList);
+                GPX.loadFromStream(is, gList, wList);
 
                 orphandWaypoints.addAll(wList);
                 for (Geocache g : list)
@@ -216,11 +215,9 @@ public class CacheListModel
         refilteringRequired = true;
     }
 
-    public void store(String pathToGPX, String name) throws Throwable
+    public void store(String listName, String pathToGPX) throws Throwable
     {
-        OutputStream os = FileHelper.openFileWrite(pathToGPX);
-        GPX.cachlistToBuffer(list, name, os);
-        os.close();
+        GPX.saveToFile(list, listName, pathToGPX);
     }
 
     private void recordUndoAction()

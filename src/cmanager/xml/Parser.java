@@ -1,7 +1,10 @@
 package cmanager.xml;
 
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.util.Iterator;
 
 import org.apache.commons.lang3.StringEscapeUtils;
@@ -198,15 +201,21 @@ public class Parser
     }
 
 
-    public static void xmlToBuffer(Element root, BufferWriteAbstraction bwa)
+    public static void xmlToBuffer(Element root, OutputStream os)
         throws Throwable
     {
         shrinkXMLTree(root);
+
+        BufferedWriter bw =
+            new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
+        BufferWriteAbstraction bwa = new BufferWriteAbstraction.BW(bw);
 
         bwa.append(
             "<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>\n");
         for (Element child : root.getChildren())
             xmlToBuffer(child, bwa, 0);
+
+        bw.flush();
     }
 
     private static void shrinkXMLTree(final Element e) throws Throwable

@@ -1,9 +1,7 @@
 package cmanager.gpx;
 
-import java.io.BufferedWriter;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -24,7 +22,6 @@ import cmanager.geo.Waypoint;
 import cmanager.global.Constants;
 import cmanager.global.Version;
 import cmanager.gui.ExceptionPanel;
-import cmanager.xml.BufferWriteAbstraction;
 import cmanager.xml.Element;
 import cmanager.xml.Parser;
 import cmanager.xml.Element.XMLAttribute;
@@ -364,10 +361,7 @@ public class GPX
             zos.putNextEntry(new ZipEntry(subListFileName));
 
             Element root = cachlistToXML(subList, listName);
-            BufferedWriter bw =
-                new BufferedWriter(new OutputStreamWriter(zos, "UTF-8"));
-            Parser.xmlToBuffer(root, new BufferWriteAbstraction.BW(bw));
-            bw.flush();
+            Parser.xmlToBuffer(root, zos);
 
             zos.closeEntry();
         } while (baseIndex < list.size());

@@ -3,7 +3,7 @@ package cmanager.xml;
 import java.io.BufferedWriter;
 import java.io.IOException;
 
-public abstract class BufferWriteAbstraction
+abstract class BufferWriteAbstraction
 {
     public abstract BufferWriteAbstraction append(String s) throws IOException;
     public abstract String toString();

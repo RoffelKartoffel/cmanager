@@ -1,11 +1,7 @@
 package cmanager.xml;
 
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.util.Iterator;
 
 import org.apache.commons.lang3.StringEscapeUtils;
@@ -19,17 +15,17 @@ public class Parser
     public static Element parse(String element)
         throws MalFormedException, IOException
     {
-        return parse(new BufferAbstraction(element), null);
+        return parse(new BufferReadAbstraction(element), null);
     }
 
     public static Element parse(InputStream is, XMLParserCallbackI callback)
         throws MalFormedException, IOException
     {
-        return parse(new BufferAbstraction(is), callback);
+        return parse(new BufferReadAbstraction(is), callback);
     }
 
 
-    private static Element parse(BufferAbstraction element,
+    private static Element parse(BufferReadAbstraction element,
                                  XMLParserCallbackI callback)
         throws MalFormedException, IOException
     {
@@ -55,7 +51,7 @@ public class Parser
         return root;
     }
 
-    private static void parse(BufferAbstraction element, Element root,
+    private static void parse(BufferReadAbstraction element, Element root,
                               XMLParserCallbackI callback)
         throws MalFormedException, IOException
     {
@@ -172,7 +168,7 @@ public class Parser
             sb.deleteCharAt(sb.length() - 1);
     }
 
-    static int endOfName(BufferAbstraction sb) throws IOException
+    static int endOfName(BufferReadAbstraction sb) throws IOException
     {
         int i = 0;
         while (!isDelimiter(sb.charAt(i)) && sb.charAt(i) != '>' &&
@@ -189,7 +185,7 @@ public class Parser
             return false;
     }
 
-    static void removeDelimiter(BufferAbstraction sb) throws IOException
+    static void removeDelimiter(BufferReadAbstraction sb) throws IOException
     {
         while (sb.available() && isDelimiter(sb.charAt(0)))
             sb.deleteChar();
@@ -391,127 +387,5 @@ public class Parser
     public static interface XMLParserCallbackI {
         public boolean elementLocatedCorrectly(Element element, Element parent);
         public boolean elementFinished(Element element);
-    }
-
-
-    ///////////////////////////////
-    // 	BufferAbstraction
-    ///////////////////////////////
-
-    private static class BufferAbstraction
-    {
-        private final int LIMIT = 1024 * 1024 * 10;
-        private char[] cbuf = new char[LIMIT];
-        private BufferedReader br;
-
-        public BufferAbstraction(InputStream is)
-            throws UnsupportedEncodingException
-        {
-            br = new BufferedReader(new InputStreamReader(is, "UTF-8"), LIMIT);
-        }
-
-        public BufferAbstraction(String s) throws UnsupportedEncodingException
-        {
-            br = new BufferedReader(new InputStreamReader(
-                new ByteArrayInputStream(s.getBytes("UTF-8")), "UTF-8"));
-        }
-
-
-        public char charAt(int index) throws IOException
-        {
-            br.mark(index + 1);
-            br.read(cbuf, 0, index + 1);
-            br.reset();
-
-            return cbuf[index];
-        }
-
-
-        public boolean available() throws IOException
-        {
-            return br.ready();
-        }
-
-        public void deleteChar() throws IOException
-        {
-            br.skip(1);
-        }
-
-
-        public void deleteUntil(int end) throws IOException
-        {
-            br.skip(end);
-        }
-
-
-        public String substring(int start, int end) throws IOException
-        {
-            br.mark(end + 1);
-            br.read(cbuf, 0, end + 1);
-            br.reset();
-
-            return new String(cbuf, start, end - start);
-        }
-
-
-        public int indexOf(String str) throws IOException
-        {
-            br.mark(LIMIT);
-            int offset = 0;
-            int size = 200;
-
-            while (true)
-            {
-                if (offset + size > LIMIT)
-                {
-                    br.reset();
-                    return -1;
-                }
-                int read = br.read(cbuf, offset, size);
-                offset += read;
-                size = size * 2;
-
-
-                final int len = str.length();
-                for (int j = 0; j < offset; j++)
-                    if (cbuf[j] == str.charAt(0))
-                    {
-                        boolean match = true;
-                        for (int i = 1; i < len && j + i < offset; i++)
-                            if (cbuf[j + i] != str.charAt(i))
-                                match = false;
-                        if (match)
-                        {
-                            br.reset();
-                            return j;
-                        }
-                    }
-            }
-        }
-
-        public StringBuilder toStringBuilder() throws IOException
-        {
-            StringBuilder sb = new StringBuilder();
-            char[] buffer = new char[1024 * 1024];
-            int readChars;
-            while ((readChars = br.read(buffer)) > 0)
-            {
-                sb.append(buffer, 0, readChars);
-            }
-            return sb;
-        }
-
-
-        @SuppressWarnings("unused")
-        public String getHead(int max) throws IOException
-        {
-            max = max < LIMIT - 1 ? max : LIMIT - 1;
-
-            br.mark(max);
-            max = br.read(cbuf, 0, max);
-            br.reset();
-
-            return new String(cbuf, 0, max);
-        }
     }
 }

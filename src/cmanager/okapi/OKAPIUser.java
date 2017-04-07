@@ -7,14 +7,14 @@ import com.github.scribejava.core.model.OAuth1AccessToken;
 
 import cmanager.settings.Settings;
 
-public class OCUser
+public class OKAPIUser
 {
-    private static OCUser user = null;
+    private static OKAPIUser user = null;
 
-    public static OCUser getOCUser()
+    public static OKAPIUser getOKAPIUser()
     {
         if (user == null)
-            user = new OCUser();
+            user = new OKAPIUser();
         return user;
     }
 
@@ -29,7 +29,7 @@ public class OCUser
     private OAuth1AccessToken okapiAccessToken = null;
 
 
-    private OCUser()
+    private OKAPIUser()
     {
         try
         {

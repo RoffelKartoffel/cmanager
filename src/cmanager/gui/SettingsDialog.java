@@ -6,7 +6,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import cmanager.global.Constants;
-import cmanager.okapi.OCUser;
+import cmanager.okapi.OKAPIUser;
 import cmanager.okapi.OKAPI;
 import cmanager.settings.Settings;
 import cmanager.util.ForkUtil;
@@ -150,7 +150,7 @@ public class SettingsDialog extends JDialog
             {
                 try
                 {
-                    OCUser.getOCUser().requestOkapiToken();
+                    OKAPIUser.getOKAPIUser().requestOkapiToken();
                     displayOkapiTokenStatus();
                 }
                 catch (Throwable e)
@@ -295,7 +295,7 @@ public class SettingsDialog extends JDialog
         lblOkapiToken.setFont(f.deriveFont(f.getStyle() | Font.ITALIC));
         btnRequestNewToken.setVisible(true);
 
-        OCUser user = OCUser.getOCUser();
+        OKAPIUser user = OKAPIUser.getOKAPIUser();
         try
         {
             if (user.getOkapiToken() != null && OKAPI.getUUID(user) != null)

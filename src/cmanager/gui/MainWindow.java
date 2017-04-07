@@ -25,7 +25,7 @@ import cmanager.geo.Location;
 import cmanager.geo.LocationList;
 import cmanager.global.Constants;
 import cmanager.network.Updates;
-import cmanager.okapi.OCUser;
+import cmanager.okapi.OKAPIUser;
 import cmanager.okapi.OKAPI;
 import cmanager.settings.Settings;
 import cmanager.util.DesktopUtil;
@@ -198,11 +198,11 @@ public class MainWindow extends JFrame
             {
                 try
                 {
-                    OCUser user = null;
+                    OKAPIUser user = null;
                     String uuid = null;
                     try
                     {
-                        user = OCUser.getOCUser();
+                        user = OKAPIUser.getOKAPIUser();
                         uuid = OKAPI.getUUID(user);
                     }
                     catch (Exception ex)
@@ -784,7 +784,7 @@ public class MainWindow extends JFrame
         wait.repaint();
     }
 
-    private void findOnOC(OCUser user, String uuid)
+    private void findOnOC(OKAPIUser user, String uuid)
     {
         DuplicateDialog dd = new DuplicateDialog(
             CacheListController.getTopViewCacheController(desktopPane)

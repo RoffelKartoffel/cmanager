@@ -22,7 +22,7 @@ import cmanager.geo.Geocache;
 import cmanager.geo.GeocacheComparator;
 import cmanager.geo.GeocacheLog;
 import cmanager.network.OCShadowList;
-import cmanager.okapi.OCUser;
+import cmanager.okapi.OKAPIUser;
 import cmanager.okapi.OKAPI;
 import cmanager.settings.Settings;
 
@@ -128,7 +128,8 @@ public class CopyLogDialog extends JFrame
                                     shadowList.postToShadowList(gc, oc);
                                     ;
                                     // copy the log
-                                    OKAPI.postLog(OCUser.getOCUser(), oc, log);
+                                    OKAPI.postLog(OKAPIUser.getOKAPIUser(), oc,
+                                                  log);
                                     // remember that we copied the log so the
                                     // user can not
                                     // double post it by accident

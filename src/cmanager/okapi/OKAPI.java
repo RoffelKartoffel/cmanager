@@ -54,7 +54,7 @@ public class OKAPI
 
 
     public static ArrayList<Geocache>
-    getCachesAround(OCUser user, String excludeUUID, Geocache g,
+    getCachesAround(OKAPIUser user, String excludeUUID, Geocache g,
                     double searchRadius,
                     ArrayList<Geocache> okapiCacheDetailsCache) throws Exception
     {
@@ -64,7 +64,7 @@ public class OKAPI
     }
 
     public static ArrayList<Geocache>
-    getCachesAround(OCUser user, String excludeUUID, Double lat, Double lon,
+    getCachesAround(OKAPIUser user, String excludeUUID, Double lat, Double lon,
                     Double searchRadius,
                     ArrayList<Geocache> okapiCacheDetailsCache) throws Exception
     {
@@ -191,7 +191,7 @@ public class OKAPI
         return g;
     }
 
-    public static void updateFoundStatus(OCUser user, Geocache oc)
+    public static void updateFoundStatus(OKAPIUser user, Geocache oc)
         throws MalFormedException, IOException, InterruptedException,
                ExecutionException
     {
@@ -287,7 +287,7 @@ public class OKAPI
         return accessToken;
     }
 
-    private static String authedHttpGet(final OCUser user, final String url)
+    private static String authedHttpGet(final OKAPIUser user, final String url)
         throws InterruptedException, ExecutionException, IOException
     {
         OAuth10aService service = getOAuthService();
@@ -298,7 +298,7 @@ public class OKAPI
         return response.getBody();
     }
 
-    public static String getUUID(OCUser user)
+    public static String getUUID(OKAPIUser user)
         throws MalFormedException, IOException, InterruptedException,
                ExecutionException
     {
@@ -317,7 +317,7 @@ public class OKAPI
         return null;
     }
 
-    public static String getUsername(OCUser user)
+    public static String getUsername(OKAPIUser user)
         throws MalFormedException, IOException, InterruptedException,
                ExecutionException
     {
@@ -336,7 +336,7 @@ public class OKAPI
         return null;
     }
 
-    public static void postLog(OCUser user, Geocache cache, GeocacheLog log)
+    public static void postLog(OKAPIUser user, Geocache cache, GeocacheLog log)
         throws MalFormedException, InterruptedException, ExecutionException,
                IOException
     {
@@ -357,7 +357,7 @@ public class OKAPI
     }
 
 
-    public static Coordinate getHomeCoordinates(OCUser user)
+    public static Coordinate getHomeCoordinates(OKAPIUser user)
         throws MalFormedException, IOException, InterruptedException,
                ExecutionException
     {

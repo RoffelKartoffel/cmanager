@@ -22,7 +22,7 @@ import cmanager.geo.Coordinate;
 import cmanager.geo.Geocache;
 import cmanager.geo.Location;
 import cmanager.geo.LocationList;
-import cmanager.okapi.OCUser;
+import cmanager.okapi.OKAPIUser;
 import cmanager.okapi.OKAPI;
 
 import java.awt.Color;
@@ -287,7 +287,7 @@ public class LocationDialog extends JDialog
         btnRetrieve.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e)
             {
-                OCUser user = OCUser.getOCUser();
+                OKAPIUser user = OKAPIUser.getOKAPIUser();
                 try
                 {
                     Coordinate c = OKAPI.getHomeCoordinates(user);
@@ -335,7 +335,7 @@ public class LocationDialog extends JDialog
         ts.addAndRun(new Thread(new Runnable() {
             public void run()
             {
-                OCUser user = OCUser.getOCUser();
+                OKAPIUser user = OKAPIUser.getOKAPIUser();
                 try
                 {
                     if (user.getOkapiToken() != null &&

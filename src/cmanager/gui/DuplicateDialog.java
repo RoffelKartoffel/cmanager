@@ -16,7 +16,7 @@ import cmanager.CacheListModel;
 import cmanager.geo.Geocache;
 import cmanager.geo.GeocacheLog;
 import cmanager.network.OCShadowList;
-import cmanager.okapi.OCUser;
+import cmanager.okapi.OKAPIUser;
 import cmanager.okapi.OCUtil;
 import cmanager.settings.Settings;
 import cmanager.util.DesktopUtil;
@@ -63,7 +63,7 @@ public class DuplicateDialog extends JFrame
     /**
      * Create the dialog.
      */
-    public DuplicateDialog(final CacheListModel clm, final OCUser user,
+    public DuplicateDialog(final CacheListModel clm, final OKAPIUser user,
                            final String uuid)
     {
         setResizable(true);

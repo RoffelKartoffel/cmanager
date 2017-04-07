@@ -32,7 +32,7 @@ public class OCUtil
      */
     public static void findOnOc(final AtomicBoolean stopBackgroundThread,
                                 final CacheListModel clm,
-                                final OutputInterface oi, final OCUser user,
+                                final OutputInterface oi, final OKAPIUser user,
                                 final String uuid,
                                 final OCShadowList shadowList) throws Throwable
     {

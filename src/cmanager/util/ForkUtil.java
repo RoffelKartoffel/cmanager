@@ -53,7 +53,8 @@ public class ForkUtil
         System.exit(0);
     }
 
-    public static void resizeHeapAndRestart(String[] args) throws IOException
+    public static void forkWithRezeidHeapAndExit(String[] args)
+        throws IOException
     {
         for (int i = 0; i < args.length; i++)
         {

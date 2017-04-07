@@ -21,23 +21,17 @@ public class Main
 
         try
         {
-            ForkUtil.resizeHeapAndRestart(args);
+            ForkUtil.forkWithRezeidHeapAndExit(args);
         }
         catch (Throwable t)
         {
             t.printStackTrace();
         }
 
-
-        ////// release //////
-
         MainWindow frame = new MainWindow();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setTitle(Constants.APP_NAME + " " + Version.VERSION);
         frame.setVisible(true);
-
-
-        /////////////////////
     }
 
     private static void nagToUpdateFromJava7()

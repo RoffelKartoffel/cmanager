@@ -15,9 +15,9 @@ import javax.swing.tree.TreeSelectionModel;
 import cmanager.CacheListModel;
 import cmanager.geo.Geocache;
 import cmanager.geo.GeocacheLog;
-import cmanager.network.OCShadowList;
+import cmanager.oc.OCShadowList;
+import cmanager.oc.OCUtil;
 import cmanager.okapi.OKAPIUser;
-import cmanager.okapi.OCUtil;
 import cmanager.settings.Settings;
 import cmanager.util.DesktopUtil;
 

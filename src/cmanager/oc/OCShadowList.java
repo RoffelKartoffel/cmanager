@@ -1,4 +1,4 @@
-package cmanager.network;
+package cmanager.oc;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -18,6 +18,7 @@ import cmanager.FileHelper.InputAction;
 import cmanager.geo.Geocache;
 import cmanager.global.Constants;
 import cmanager.global.Version;
+import cmanager.network.HTTP;
 
 public class OCShadowList
 {

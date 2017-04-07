@@ -1,4 +1,4 @@
-package cmanager.okapi;
+package cmanager.oc;
 
 import java.util.ArrayList;
 import java.util.concurrent.Callable;
@@ -12,7 +12,9 @@ import java.util.concurrent.atomic.AtomicReference;
 import cmanager.CacheListModel;
 import cmanager.geo.Geocache;
 import cmanager.geo.GeocacheComparator;
-import cmanager.network.OCShadowList;
+import cmanager.okapi.OKAPI;
+import cmanager.okapi.OKAPISearchCache;
+import cmanager.okapi.OKAPIUser;
 
 public class OCUtil
 {

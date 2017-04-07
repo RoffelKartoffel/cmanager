@@ -21,7 +21,7 @@ import javax.swing.border.EmptyBorder;
 import cmanager.geo.Geocache;
 import cmanager.geo.GeocacheComparator;
 import cmanager.geo.GeocacheLog;
-import cmanager.network.OCShadowList;
+import cmanager.oc.OCShadowList;
 import cmanager.okapi.OKAPIUser;
 import cmanager.okapi.OKAPI;
 import cmanager.settings.Settings;

@@ -13,7 +13,6 @@ import cmanager.CacheListModel;
 import cmanager.geo.Geocache;
 import cmanager.geo.GeocacheComparator;
 import cmanager.okapi.OKAPI;
-import cmanager.okapi.SearchCache;
 import cmanager.okapi.User;
 
 public class Util

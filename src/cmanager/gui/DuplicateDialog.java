@@ -15,8 +15,8 @@ import javax.swing.tree.TreeSelectionModel;
 import cmanager.CacheListModel;
 import cmanager.geo.Geocache;
 import cmanager.geo.GeocacheLog;
-import cmanager.oc.OCShadowList;
-import cmanager.oc.OCUtil;
+import cmanager.oc.ShadowList;
+import cmanager.oc.Util;
 import cmanager.okapi.User;
 import cmanager.settings.Settings;
 import cmanager.util.DesktopUtil;
@@ -58,7 +58,7 @@ public class DuplicateDialog extends JFrame
     private Thread backgroundThread = null;
 
     private ArrayList<GeocacheLog> logsCopied = new ArrayList<>();
-    private OCShadowList shadowList = null;
+    private ShadowList shadowList = null;
 
     /**
      * Create the dialog.
@@ -272,12 +272,11 @@ public class DuplicateDialog extends JFrame
                 try
                 {
                     // update local copy of shadow list and load it
-                    OCShadowList.updateShadowList();
-                    shadowList = OCShadowList.loadShadowList();
+                    ShadowList.updateShadowList();
+                    shadowList = ShadowList.loadShadowList();
 
-                    OCUtil.findOnOc(
-                        stopBackgroundThread,
-                        clm, new OCUtil.OutputInterface() {
+                    Util.findOnOc(
+                        stopBackgroundThread, clm, new Util.OutputInterface() {
                             public void setProgress(Integer count, Integer max)
                             {
                                 progressBar.setMaximum(max);

@@ -21,7 +21,7 @@ import javax.swing.border.EmptyBorder;
 import cmanager.geo.Geocache;
 import cmanager.geo.GeocacheComparator;
 import cmanager.geo.GeocacheLog;
-import cmanager.oc.OCShadowList;
+import cmanager.oc.ShadowList;
 import cmanager.okapi.User;
 import cmanager.okapi.OKAPI;
 import cmanager.settings.Settings;
@@ -48,7 +48,7 @@ public class CopyLogDialog extends JFrame
      */
     public CopyLogDialog(final Geocache gc, final Geocache oc,
                          final ArrayList<GeocacheLog> logsCopied,
-                         final OCShadowList shadowList)
+                         final ShadowList shadowList)
     {
         setResizable(true);
 

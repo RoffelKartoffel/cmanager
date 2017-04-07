@@ -16,7 +16,7 @@ import cmanager.okapi.OKAPI;
 import cmanager.okapi.SearchCache;
 import cmanager.okapi.User;
 
-public class OCUtil
+public class Util
 {
 
     static final ArrayList<Geocache> okapiCacheDetailsCache = new ArrayList<>();
@@ -35,8 +35,8 @@ public class OCUtil
     public static void findOnOc(final AtomicBoolean stopBackgroundThread,
                                 final CacheListModel clm,
                                 final OutputInterface oi, final User user,
-                                final String uuid,
-                                final OCShadowList shadowList) throws Throwable
+                                final String uuid, final ShadowList shadowList)
+        throws Throwable
     {
         // Number of found duplicates
         final AtomicInteger count = new AtomicInteger(0);

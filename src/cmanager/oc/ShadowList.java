@@ -20,7 +20,7 @@ import cmanager.global.Constants;
 import cmanager.global.Version;
 import cmanager.network.HTTP;
 
-public class OCShadowList
+public class ShadowList
 {
     private final static String SHADOWLIST_FOLDER =
         Constants.CACHE_FOLDER + "OC.shadowlist";
@@ -54,7 +54,7 @@ public class OCShadowList
         fos.close();
     }
 
-    public static OCShadowList loadShadowList() throws Throwable
+    public static ShadowList loadShadowList() throws Throwable
     {
         final HashMap<String, String> shadowList = new HashMap<>();
         FileHelper.processFiles(SHADOWLIST_PATH, new InputAction() {
@@ -75,7 +75,7 @@ public class OCShadowList
                 }
             }
         });
-        return new OCShadowList(shadowList);
+        return new ShadowList(shadowList);
     }
 
 
@@ -85,7 +85,7 @@ public class OCShadowList
 
     private HashMap<String, String> shadowList;
 
-    private OCShadowList(HashMap<String, String> shadowList)
+    private ShadowList(HashMap<String, String> shadowList)
     {
         this.shadowList = shadowList;
     }

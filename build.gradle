@@ -68,6 +68,7 @@ dependencies {
     compile group: 'joda-time', name: 'joda-time', version: '2.9.7'
     compile group: 'com.github.scribejava', name: 'scribejava-core', version: '4.0.0'
     compile group: 'org.openstreetmap.jmapviewer', name: 'jmapviewer', version: '2.0'
+    compile group: 'com.google.code.gson', name: 'gson', version: '2.8.0'
 
     testCompile 'junit:junit:4.12'
 }

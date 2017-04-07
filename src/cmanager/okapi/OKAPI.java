@@ -9,6 +9,8 @@ import java.util.concurrent.ExecutionException;
 
 import javax.swing.JOptionPane;
 
+import com.google.gson.Gson;
+
 import com.github.scribejava.core.builder.ServiceBuilder;
 import com.github.scribejava.core.model.OAuth1AccessToken;
 import com.github.scribejava.core.model.OAuth1RequestToken;
@@ -23,6 +25,8 @@ import cmanager.geo.Geocache;
 import cmanager.geo.GeocacheLog;
 import cmanager.gui.ExceptionPanel;
 import cmanager.network.HTTP;
+import cmanager.network.UnexpectedStatusCode;
+import cmanager.okapi.responses.ErrorDocument;
 import cmanager.util.DesktopUtil;
 import cmanager.xml.Element;
 import cmanager.xml.Parser;
@@ -40,14 +44,31 @@ public class OKAPI
             + "?consumer_key=" + CONSUMER_API_KEY + "&format=xmlmap2"
             + "&username=" + URLEncoder.encode(username, "UTF-8") +
             "&fields=uuid";
-        String http = HTTP.get(url);
+        try
+        {
+            String http = HTTP.get(url);
 
-        Element root = Parser.parse(http);
-        for (Element e : root.getChild("object").getChildren())
-            if (e.attrIs("key", "uuid"))
-                return e.getUnescapedBody();
+            Element root = Parser.parse(http);
+            for (Element e : root.getChild("object").getChildren())
+                if (e.attrIs("key", "uuid"))
+                    return e.getUnescapedBody();
 
-        return null;
+            return null;
+        }
+        catch (UnexpectedStatusCode e)
+        {
+            if (e.is400BadRequest())
+            {
+                ErrorDocument okapiError =
+                    new Gson().fromJson(e.getBody(), ErrorDocument.class);
+                if (okapiError.getParameter().equals("username"))
+                {
+                    return null;
+                }
+            }
+
+            throw e;
+        }
     }
 
 

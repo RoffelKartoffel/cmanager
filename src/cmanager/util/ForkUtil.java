@@ -113,9 +113,9 @@ public class ForkUtil
         //
         // Run new vm
         //
-        ProcessBuilder pb =
-            new ProcessBuilder("java", "-Xmx" + heapSizeI.toString() + "m",
-                               "-jar", jarPath, JAR_NAME, PARAM_HEAP_RESIZED);
+        ProcessBuilder pb = new ProcessBuilder().inheritIO().command(
+            "java", "-Xmx" + heapSizeI.toString() + "m", "-jar", jarPath,
+            JAR_NAME, PARAM_HEAP_RESIZED);
         Process p = pb.start();
         int retval = -1;
         try

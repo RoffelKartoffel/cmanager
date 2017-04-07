@@ -13,7 +13,7 @@ public class OKAPISearchCache
 {
 
     private static final String LEGACY_CACHE_FOLDER = Constants.CACHE_FOLDER;
-    private static final String CACHE_FOLDER =
+    private static final String OKAPI_CACHE_FOLDER =
         Constants.CACHE_FOLDER + "OC.OKAPI.emptySearches/";
     private static boolean initDone = false;
 
@@ -21,7 +21,7 @@ public class OKAPISearchCache
     {
         String name =
             g.getCode() + (excludeUUID == null ? "" : " " + excludeUUID);
-        return CACHE_FOLDER + name;
+        return OKAPI_CACHE_FOLDER + name;
     }
 
 
@@ -42,13 +42,13 @@ public class OKAPISearchCache
     {
         if (!initDone)
         {
-            new File(CACHE_FOLDER).mkdirs();
+            new File(OKAPI_CACHE_FOLDER).mkdirs();
 
             // if there are files in the legacy foler, move them
             // into the new folder
             for (File f : new File(LEGACY_CACHE_FOLDER).listFiles())
                 if (f.getName().startsWith("GC"))
-                    f.renameTo(new File(CACHE_FOLDER + f.getName()));
+                    f.renameTo(new File(OKAPI_CACHE_FOLDER + f.getName()));
 
             initDone = true;
         }

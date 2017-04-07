@@ -4,6 +4,7 @@ import cmanager.global.Constants;
 import cmanager.global.Version;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.ConnectException;
 import java.net.HttpURLConnection;
@@ -38,7 +39,8 @@ public class HTTP
     }
 
     // HTTP GET request
-    private static String get_(String url) throws Exception
+    private static String get_(String url)
+        throws UnexpectedStatusCode, IOException
     {
         URL obj = new URL(url);
         HttpURLConnection con = (HttpURLConnection)obj.openConnection();
@@ -49,22 +51,29 @@ public class HTTP
         // add request header
         con.setRequestProperty("User-Agent", USER_AGENT);
 
-        Integer responseCode = con.getResponseCode();
-        if (responseCode != 200)
-            throw new Exception("Unexpected response " +
-                                responseCode.toString());
+        BufferedReader in;
+        try
+        {
+            in = new BufferedReader(
+                new InputStreamReader(con.getInputStream(), "UTF8"));
+        }
+        catch (IOException e)
+        {
+            in = new BufferedReader(
+                new InputStreamReader(con.getErrorStream(), "UTF8"));
+        }
 
-
-        BufferedReader in = new BufferedReader(
-            new InputStreamReader(con.getInputStream(), "UTF8"));
         String inputLine;
         StringBuffer response = new StringBuffer();
-
         while ((inputLine = in.readLine()) != null)
         {
             response.append(inputLine);
         }
         in.close();
+
+        int statusCode = con.getResponseCode();
+        if (statusCode != 200)
+            throw new UnexpectedStatusCode(statusCode, response.toString());
 
         return response.toString();
     }

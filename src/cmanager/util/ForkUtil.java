@@ -6,12 +6,10 @@ import java.io.IOException;
 import javax.swing.JOptionPane;
 
 import cmanager.Main;
-import cmanager.global.Version;
 import cmanager.settings.Settings;
 
 public class ForkUtil
 {
-    private static final String JAR_NAME = "cm-" + Version.VERSION + ".jar";
     private static final String PARAM_HEAP_RESIZED = "resized";
 
     private static String getJarPath()
@@ -25,24 +23,6 @@ public class ForkUtil
                                             .getPath());
 
         String jarPath = jarFile.getAbsolutePath();
-        if (new File(jarPath).exists())
-        {
-            return jarPath;
-        }
-
-        if (jarPath.endsWith("."))
-        {
-            jarPath = jarPath.substring(0, jarPath.length() - 1);
-            if (new File(jarPath).exists())
-            {
-                return jarPath;
-            }
-        }
-
-        if (!jarPath.endsWith(JAR_NAME))
-        {
-            jarPath += JAR_NAME;
-        }
         return jarPath;
     }
 
@@ -67,8 +47,7 @@ public class ForkUtil
         //
         // Run new vm
         //
-        ProcessBuilder pb =
-            new ProcessBuilder("java", "-jar", jarPath, JAR_NAME);
+        ProcessBuilder pb = new ProcessBuilder("java", "-jar", jarPath);
         pb.start();
 
         System.exit(0);
@@ -115,7 +94,7 @@ public class ForkUtil
         //
         ProcessBuilder pb = new ProcessBuilder().inheritIO().command(
             "java", "-Xmx" + heapSizeI.toString() + "m", "-jar", jarPath,
-            JAR_NAME, PARAM_HEAP_RESIZED);
+            PARAM_HEAP_RESIZED);
         Process p = pb.start();
         int retval = -1;
         try

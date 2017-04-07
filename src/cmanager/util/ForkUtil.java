@@ -92,9 +92,10 @@ public class ForkUtil
         //
         // Run new vm
         //
+        final String originalArguments = String.join(" ", args);
         ProcessBuilder pb = new ProcessBuilder().inheritIO().command(
             "java", "-Xmx" + heapSizeI.toString() + "m", "-jar", jarPath,
-            PARAM_HEAP_RESIZED);
+            PARAM_HEAP_RESIZED, originalArguments);
         Process p = pb.start();
         int retval = -1;
         try

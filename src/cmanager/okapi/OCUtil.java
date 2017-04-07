@@ -93,9 +93,9 @@ public class OCUtil
                         // Search for duplicate using the OKAPI
                         //
                         double searchRadius = gc.hasVolatileStart() ? 1 : 0.05;
-                        ArrayList<Geocache> similar = OKAPI.getCachesAround(
-                            gc, searchRadius, okapiCacheDetailsCache, user,
-                            uuid);
+                        ArrayList<Geocache> similar =
+                            OKAPI.getCachesAround(user, uuid, gc, searchRadius,
+                                                  okapiCacheDetailsCache);
                         boolean match = false;
                         for (Geocache oc : similar)
                             if (GeocacheComparator.similar(oc, gc))

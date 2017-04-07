@@ -54,23 +54,23 @@ public class OKAPI
 
 
     public static ArrayList<Geocache>
-    getCachesAround(Geocache g, double searchRadius,
-                    ArrayList<Geocache> okapiCacheDetailsCache, OCUser user,
-                    String excludeUUID) throws Exception
+    getCachesAround(OCUser user, String excludeUUID, Geocache g,
+                    double searchRadius,
+                    ArrayList<Geocache> okapiCacheDetailsCache) throws Exception
     {
         Coordinate c = g.getCoordinate();
-        return getCachesAround(c.getLat(), c.getLon(), searchRadius,
-                               okapiCacheDetailsCache, user, excludeUUID);
+        return getCachesAround(user, excludeUUID, c.getLat(), c.getLon(),
+                               searchRadius, okapiCacheDetailsCache);
     }
 
     public static ArrayList<Geocache>
-    getCachesAround(Double lat, Double lon, Double searchRadius,
-                    ArrayList<Geocache> okapiCacheDetailsCache, OCUser user,
-                    String excludeUUID) throws Exception
+    getCachesAround(OCUser user, String excludeUUID, Double lat, Double lon,
+                    Double searchRadius,
+                    ArrayList<Geocache> okapiCacheDetailsCache) throws Exception
     {
         ArrayList<Geocache> caches = new ArrayList<Geocache>();
 
-        boolean useOAuth = excludeUUID != null;
+        boolean useOAuth = user != null && excludeUUID != null;
         String url =
             "https://www.opencaching.de/okapi/services/caches/search/nearest"
             + "?consumer_key=" + CONSUMER_API_KEY + "&format=xmlmap2"

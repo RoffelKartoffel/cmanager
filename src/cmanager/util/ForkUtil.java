@@ -9,7 +9,7 @@ import cmanager.Main;
 import cmanager.global.Version;
 import cmanager.settings.Settings;
 
-public class AppUtil
+public class ForkUtil
 {
     private static final String JAR_NAME = "cm-" + Version.VERSION + ".jar";
     private static final String PARAM_HEAP_RESIZED = "resized";

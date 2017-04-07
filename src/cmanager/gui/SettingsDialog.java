@@ -9,7 +9,7 @@ import cmanager.global.Constants;
 import cmanager.okapi.OCUser;
 import cmanager.okapi.OKAPI;
 import cmanager.settings.Settings;
-import cmanager.util.AppUtil;
+import cmanager.util.ForkUtil;
 
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -94,7 +94,7 @@ public class SettingsDialog extends JDialog
                     {
                         try
                         {
-                            AppUtil.runCopyAndExit();
+                            ForkUtil.runCopyAndExit();
                         }
                         catch (Throwable t)
                         {

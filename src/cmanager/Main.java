@@ -7,7 +7,7 @@ import javax.swing.JOptionPane;
 import cmanager.global.Constants;
 import cmanager.global.Version;
 import cmanager.gui.MainWindow;
-import cmanager.util.AppUtil;
+import cmanager.util.ForkUtil;
 
 
 public class Main
@@ -21,7 +21,7 @@ public class Main
 
         try
         {
-            AppUtil.resizeHeapAndRestart(args);
+            ForkUtil.resizeHeapAndRestart(args);
         }
         catch (Throwable t)
         {

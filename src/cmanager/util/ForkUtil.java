@@ -10,7 +10,7 @@ import cmanager.settings.Settings;
 
 public class ForkUtil
 {
-    private static final String PARAM_HEAP_RESIZED = "resized";
+    private static final String PARAM_HEAP_RESIZED = "--memory-already-resized";
 
     private static String getJarPath()
     {

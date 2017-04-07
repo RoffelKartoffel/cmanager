@@ -1,6 +1,6 @@
 package cmanager.okapi;
 
-public class OKAPIKeys {
+public class Keys {
     public static String get_CONSUMER_API_KEY() {
         return "${oc_okapi_de_consumer_key}";
     }

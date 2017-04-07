@@ -23,17 +23,15 @@ import cmanager.geo.Geocache;
 import cmanager.geo.GeocacheLog;
 import cmanager.gui.ExceptionPanel;
 import cmanager.network.HTTP;
-import cmanager.okapi.OKAPIKeys;
 import cmanager.util.DesktopUtil;
 import cmanager.xml.Element;
 import cmanager.xml.Parser;
 
 public class OKAPI
 {
-    private final static String CONSUMER_API_KEY =
-        OKAPIKeys.get_CONSUMER_API_KEY();
+    private final static String CONSUMER_API_KEY = Keys.get_CONSUMER_API_KEY();
     private final static String CONSUMER_SECRET_KEY =
-        OKAPIKeys.get_CONSUMER_SECRET_KEY();
+        Keys.get_CONSUMER_SECRET_KEY();
 
     public static String usernameToUUID(String username) throws Exception
     {
@@ -54,7 +52,7 @@ public class OKAPI
 
 
     public static ArrayList<Geocache>
-    getCachesAround(OKAPIUser user, String excludeUUID, Geocache g,
+    getCachesAround(User user, String excludeUUID, Geocache g,
                     double searchRadius,
                     ArrayList<Geocache> okapiCacheDetailsCache) throws Exception
     {
@@ -64,7 +62,7 @@ public class OKAPI
     }
 
     public static ArrayList<Geocache>
-    getCachesAround(OKAPIUser user, String excludeUUID, Double lat, Double lon,
+    getCachesAround(User user, String excludeUUID, Double lat, Double lon,
                     Double searchRadius,
                     ArrayList<Geocache> okapiCacheDetailsCache) throws Exception
     {
@@ -191,7 +189,7 @@ public class OKAPI
         return g;
     }
 
-    public static void updateFoundStatus(OKAPIUser user, Geocache oc)
+    public static void updateFoundStatus(User user, Geocache oc)
         throws MalFormedException, IOException, InterruptedException,
                ExecutionException
     {
@@ -258,7 +256,7 @@ public class OKAPI
         return new ServiceBuilder()
             .apiKey(CONSUMER_API_KEY)
             .apiSecret(CONSUMER_SECRET_KEY)
-            .build(new OKAPI_OAUTH());
+            .build(new OAUTH());
     }
 
     public static OAuth1AccessToken requestAuthorization()
@@ -287,7 +285,7 @@ public class OKAPI
         return accessToken;
     }
 
-    private static String authedHttpGet(final OKAPIUser user, final String url)
+    private static String authedHttpGet(final User user, final String url)
         throws InterruptedException, ExecutionException, IOException
     {
         OAuth10aService service = getOAuthService();
@@ -298,7 +296,7 @@ public class OKAPI
         return response.getBody();
     }
 
-    public static String getUUID(OKAPIUser user)
+    public static String getUUID(User user)
         throws MalFormedException, IOException, InterruptedException,
                ExecutionException
     {
@@ -317,7 +315,7 @@ public class OKAPI
         return null;
     }
 
-    public static String getUsername(OKAPIUser user)
+    public static String getUsername(User user)
         throws MalFormedException, IOException, InterruptedException,
                ExecutionException
     {
@@ -336,7 +334,7 @@ public class OKAPI
         return null;
     }
 
-    public static void postLog(OKAPIUser user, Geocache cache, GeocacheLog log)
+    public static void postLog(User user, Geocache cache, GeocacheLog log)
         throws MalFormedException, InterruptedException, ExecutionException,
                IOException
     {
@@ -357,7 +355,7 @@ public class OKAPI
     }
 
 
-    public static Coordinate getHomeCoordinates(OKAPIUser user)
+    public static Coordinate getHomeCoordinates(User user)
         throws MalFormedException, IOException, InterruptedException,
                ExecutionException
     {

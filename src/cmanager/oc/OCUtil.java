@@ -13,8 +13,8 @@ import cmanager.CacheListModel;
 import cmanager.geo.Geocache;
 import cmanager.geo.GeocacheComparator;
 import cmanager.okapi.OKAPI;
-import cmanager.okapi.OKAPISearchCache;
-import cmanager.okapi.OKAPIUser;
+import cmanager.okapi.SearchCache;
+import cmanager.okapi.User;
 
 public class OCUtil
 {
@@ -34,7 +34,7 @@ public class OCUtil
      */
     public static void findOnOc(final AtomicBoolean stopBackgroundThread,
                                 final CacheListModel clm,
-                                final OutputInterface oi, final OKAPIUser user,
+                                final OutputInterface oi, final User user,
                                 final String uuid,
                                 final OCShadowList shadowList) throws Throwable
     {
@@ -66,7 +66,7 @@ public class OCUtil
                         oi.setProgress(count.get(), clm.getList().size());
                         count.getAndIncrement();
 
-                        if (OKAPISearchCache.isEmptySearch(gc, uuid))
+                        if (SearchCache.isEmptySearch(gc, uuid))
                             return null;
 
                         //
@@ -108,7 +108,7 @@ public class OCUtil
                             }
 
                         if (!match)
-                            OKAPISearchCache.setEmptySearch(gc, uuid);
+                            SearchCache.setEmptySearch(gc, uuid);
                     }
                     catch (Throwable t)
                     {

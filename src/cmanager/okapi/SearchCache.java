@@ -9,7 +9,7 @@ import org.joda.time.DateTime;
 import cmanager.geo.Geocache;
 import cmanager.global.Constants;
 
-public class OKAPISearchCache
+public class SearchCache
 {
 
     private static final String LEGACY_CACHE_FOLDER = Constants.CACHE_FOLDER;

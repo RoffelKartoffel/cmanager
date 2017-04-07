@@ -3,7 +3,7 @@ package cmanager.okapi;
 import com.github.scribejava.core.builder.api.DefaultApi10a;
 import com.github.scribejava.core.model.OAuth1RequestToken;
 
-public class OKAPI_OAUTH extends DefaultApi10a
+public class OAUTH extends DefaultApi10a
 {
     @Override public String getAccessTokenEndpoint()
     {

@@ -14,8 +14,7 @@ import cmanager.global.Constants;
 public class Settings
 {
 
-    private static Preferences prefs =
-        Preferences.userRoot().node(Constants.APP_NAME);
+    private static Preferences prefs = Preferences.userRoot().node(Constants.APP_NAME);
 
     public enum Key {
         HEAP_SIZE,
@@ -82,8 +81,7 @@ public class Settings
         return prefs.get(key(key), defaultS(key));
     }
 
-    public static void setSerialized(Key key, Serializable val)
-        throws IOException
+    public static void setSerialized(Key key, Serializable val) throws IOException
     {
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         FileHelper.serialize(val, bos);
@@ -101,8 +99,7 @@ public class Settings
         if (base64 == null)
             return null;
 
-        ByteArrayInputStream bis =
-            new ByteArrayInputStream(Base64.decodeBase64(base64));
+        ByteArrayInputStream bis = new ByteArrayInputStream(Base64.decodeBase64(base64));
         return FileHelper.deserialize(bis);
     }
 }

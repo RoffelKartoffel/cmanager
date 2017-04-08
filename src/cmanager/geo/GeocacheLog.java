@@ -132,7 +132,7 @@ public class GeocacheLog implements Serializable
 
     public boolean equals(GeocacheLog log)
     {
-        return type == log.type && date.equals(log.date) &&
-            author.equals(log.author) && text.equals(log.text);
+        return type == log.type && date.equals(log.date) && author.equals(log.author) &&
+            text.equals(log.text);
     }
 }

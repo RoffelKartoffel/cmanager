@@ -13,8 +13,7 @@ public abstract class CacheListFilterModel extends CacheListFilterPanel
         super(filterType);
     }
 
-    public ArrayList<Geocache>
-    getFiltered(final ArrayList<Geocache> originalList)
+    public ArrayList<Geocache> getFiltered(final ArrayList<Geocache> originalList)
     {
 
         //		for( Geocache g : originalList )
@@ -35,8 +34,7 @@ public abstract class CacheListFilterModel extends CacheListFilterPanel
             final int start = perProcess * c;
             final int c_final = c;
 
-            int tmp = perProcess * (c + 1) < listSize ? perProcess * (c + 1)
-                                                      : listSize;
+            int tmp = perProcess * (c + 1) < listSize ? perProcess * (c + 1) : listSize;
             if (c == cores - 1)
                 tmp = listSize;
             final int end = tmp;
@@ -50,16 +48,14 @@ public abstract class CacheListFilterModel extends CacheListFilterPanel
                         for (int i = start; i < end; i++)
                         {
                             Geocache g = originalList.get(i);
-                            if ((!inverted && isGood(g)) ||
-                                (inverted && !isGood(g)))
+                            if ((!inverted && isGood(g)) || (inverted && !isGood(g)))
                                 list.add(g);
                         }
                     }
                     catch (Throwable ex)
                     {
                         Thread t = Thread.currentThread();
-                        t.getUncaughtExceptionHandler().uncaughtException(t,
-                                                                          ex);
+                        t.getUncaughtExceptionHandler().uncaughtException(t, ex);
                     }
                 }
             }));

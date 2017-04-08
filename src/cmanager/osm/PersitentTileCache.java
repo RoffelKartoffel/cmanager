@@ -156,7 +156,6 @@ public class PersitentTileCache implements TileCache
 
     private String getFileName(Double lat, Double lon, Integer zoom)
     {
-        return path + lat.toString() + "-" + lon.toString() + "-" +
-            zoom.toString() + ".png";
+        return path + lat.toString() + "-" + lon.toString() + "-" + zoom.toString() + ".png";
     }
 }

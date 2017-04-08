@@ -40,12 +40,11 @@ public class Geocache implements Serializable, Comparable<String>
     private ArrayList<Waypoint> wps = new ArrayList<Waypoint>();
 
 
-    public Geocache(String code, String name, Coordinate coordinate,
-                    Double difficulty, Double terrain, String type)
-        throws NullPointerException
+    public Geocache(String code, String name, Coordinate coordinate, Double difficulty,
+                    Double terrain, String type) throws NullPointerException
     {
-        if (code == null || name == null || coordinate == null ||
-            difficulty == null || terrain == null || type == null)
+        if (code == null || name == null || coordinate == null || difficulty == null ||
+            terrain == null || type == null)
             throw new NullPointerException();
 
         this.code = code;
@@ -58,9 +57,8 @@ public class Geocache implements Serializable, Comparable<String>
 
     public String toString()
     {
-        return difficulty.toString() + "/" + terrain.toString() + " " + code +
-            " (" + type.asNiceType() + ") -- " + coordinate.toString() +
-            " -- " + name;
+        return difficulty.toString() + "/" + terrain.toString() + " " + code + " (" +
+            type.asNiceType() + ") -- " + coordinate.toString() + " -- " + name;
     }
 
     public boolean hasVolatileStart()
@@ -82,16 +80,14 @@ public class Geocache implements Serializable, Comparable<String>
         {
             name = ObjectHelper.getBest(name, g.name);
             coordinate = ObjectHelper.getBest(coordinate, g.coordinate);
-            difficulty =
-                ObjectHelper.getBest(this.getDifficulty(), g.getDifficulty());
+            difficulty = ObjectHelper.getBest(this.getDifficulty(), g.getDifficulty());
             terrain = ObjectHelper.getBest(terrain, g.terrain);
             type = g.type;
             container = ObjectHelper.getBest(container, g.container);
             owner = ObjectHelper.getBest(owner, g.owner);
             code_gc = ObjectHelper.getBest(code_gc, g.code_gc);
             setListing(ObjectHelper.getBest(getListing(), g.getListing()));
-            listing_short =
-                ObjectHelper.getBest(listing_short, g.listing_short);
+            listing_short = ObjectHelper.getBest(listing_short, g.listing_short);
             hint = ObjectHelper.getBest(hint, g.hint);
             archived = ObjectHelper.getBest(archived, g.archived);
             available = ObjectHelper.getBest(available, g.available);

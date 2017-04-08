@@ -22,10 +22,8 @@ import cmanager.network.HTTP;
 
 public class ShadowList
 {
-    private final static String SHADOWLIST_FOLDER =
-        Constants.CACHE_FOLDER + "OC.shadowlist";
-    private final static String SHADOWLIST_PATH =
-        SHADOWLIST_FOLDER + "/gc2oc.gz";
+    private final static String SHADOWLIST_FOLDER = Constants.CACHE_FOLDER + "OC.shadowlist";
+    private final static String SHADOWLIST_PATH = SHADOWLIST_FOLDER + "/gc2oc.gz";
     private final static String SHADOWLIST_POSTED_FOLDER =
         Constants.CACHE_FOLDER + "OC.shadowlist.posted";
 
@@ -60,8 +58,7 @@ public class ShadowList
         FileHelper.processFiles(SHADOWLIST_PATH, new InputAction() {
             @Override public void process(InputStream is) throws Throwable
             {
-                BufferedReader br =
-                    new BufferedReader(new InputStreamReader(is));
+                BufferedReader br = new BufferedReader(new InputStreamReader(is));
                 String line = null;
                 while ((line = br.readLine()) != null)
                 {
@@ -113,8 +110,8 @@ public class ShadowList
 
         String url = "https://www.opencaching.de/api/gc2oc.php"
                      + "?report=1"
-                     + "&ocwp=" + oc.getCode() + "&gcwp=" + gc.getCode() +
-                     "&source=" + Constants.APP_NAME + "+" + Version.VERSION;
+                     + "&ocwp=" + oc.getCode() + "&gcwp=" + gc.getCode() + "&source=" +
+                     Constants.APP_NAME + "+" + Version.VERSION;
 
         // post
         HTTP.get(url);

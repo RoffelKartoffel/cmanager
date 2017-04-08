@@ -75,8 +75,7 @@ public class CacheListView extends JInternalFrame
     /**
      * Create the frame.
      */
-    public CacheListView(final CacheListController clc,
-                         final CacheListView.RunLocationDialogI ldi)
+    public CacheListView(final CacheListController clc, final CacheListView.RunLocationDialogI ldi)
     {
         this.clc = clc;
 
@@ -86,21 +85,19 @@ public class CacheListView extends JInternalFrame
         table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         //		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         ////column autosize
-        table.getSelectionModel().addListSelectionListener(
-            new ListSelectionListener() {
-                public void valueChanged(ListSelectionEvent arg0)
-                {
-                    updateCachePanelToSelection();
-                    updateMapMarkers();
-                }
-            });
+        table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent arg0)
+            {
+                updateCachePanelToSelection();
+                updateMapMarkers();
+            }
+        });
         table.setAutoCreateRowSorter(true);
         //		TableRowSorter<TableModel> sorter = new
         // TableRowSorter<>(table.getModel());
         //		table.setRowSorter(sorter);
 
-        DefaultTableCellRenderer centerRenderer =
-            new DefaultTableCellRenderer();
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
         table.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
         table.getColumnModel().getColumn(4).setCellRenderer(centerRenderer);
@@ -142,22 +139,21 @@ public class CacheListView extends JInternalFrame
         panelMap.setLayout(new BorderLayout(0, 0));
 
 
-        mapViewer = new CustomJMapViewer(
-            new PersitentTileCache(Constants.CACHE_FOLDER + "maps.osm/"));
+        mapViewer =
+            new CustomJMapViewer(new PersitentTileCache(Constants.CACHE_FOLDER + "maps.osm/"));
         mapViewer.setFocusable(true);
         panelMap.add(mapViewer, BorderLayout.CENTER);
 
         JPanel panel_2 = new JPanel();
         panelMap.add(panel_2, BorderLayout.SOUTH);
 
-        JLabel lblNewLabel = new JLabel(
-            "Drag map with right mouse, selection box with left mouse.");
+        JLabel lblNewLabel =
+            new JLabel("Drag map with right mouse, selection box with left mouse.");
         lblNewLabel.setFont(new Font("Dialog", Font.BOLD, 9));
         panel_2.add(lblNewLabel);
 
         // Make map movable with mouse
-        DefaultMapController mapController =
-            new DefaultMapController(mapViewer);
+        DefaultMapController mapController = new DefaultMapController(mapViewer);
         mapController.setMovementMouseButton(MouseEvent.BUTTON2);
 
         mapViewer.addMouseListener(new MouseAdapter() {
@@ -172,8 +168,7 @@ public class CacheListView extends JInternalFrame
                     if (g == null)
                         return;
 
-                    if (e.getClickCount() == 1 &&
-                        ((e.getModifiers() & InputEvent.CTRL_MASK) != 0))
+                    if (e.getClickCount() == 1 && ((e.getModifiers() & InputEvent.CTRL_MASK) != 0))
                         DesktopUtil.openUrl(g.getURL());
                     else if (e.getClickCount() == 1)
                         panelCache.setCache(g);
@@ -206,8 +201,7 @@ public class CacheListView extends JInternalFrame
                 if (end == null || start == null)
                     return;
 
-                ArrayList<Geocache> list =
-                    getMapSelectedCaches(start, e.getPoint());
+                ArrayList<Geocache> list = getMapSelectedCaches(start, e.getPoint());
                 table.clearSelection();
                 addToTableSelection(list);
 
@@ -285,22 +279,21 @@ public class CacheListView extends JInternalFrame
         lblNewLabel_1.setFont(new Font("Dialog", Font.PLAIN, 10));
         panel_4.add(lblNewLabel_1);
 
-        table.getSelectionModel().addListSelectionListener(
-            new ListSelectionListener() {
-                public void valueChanged(ListSelectionEvent e)
+        table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent e)
+            {
+                int selected = table.getSelectedRowCount();
+                if (selected == 0)
                 {
-                    int selected = table.getSelectedRowCount();
-                    if (selected == 0)
-                    {
-                        panelSelected.setVisible(false);
-                    }
-                    else
-                    {
-                        lblSelected.setText(new Integer(selected).toString());
-                        panelSelected.setVisible(true);
-                    }
+                    panelSelected.setVisible(false);
                 }
-            });
+                else
+                {
+                    lblSelected.setText(new Integer(selected).toString());
+                    panelSelected.setVisible(true);
+                }
+            }
+        });
 
 
         JPanel panelButtons = new JPanel();
@@ -360,8 +353,7 @@ public class CacheListView extends JInternalFrame
             public void actionPerformed(ActionEvent e)
             {
                 int row = table.rowAtPoint(popupPoint);
-                CacheListModel.CLMTableModel model =
-                    (CacheListModel.CLMTableModel)table.getModel();
+                CacheListModel.CLMTableModel model = (CacheListModel.CLMTableModel)table.getModel();
                 Geocache g = model.getObject(table.convertRowIndexToModel(row));
                 ldi.openDialog(g);
             }
@@ -370,28 +362,28 @@ public class CacheListView extends JInternalFrame
 
         table.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT)
             .getParent()
-            .remove(KeyStroke.getKeyStroke(
-                'C', Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+            .remove(
+                KeyStroke.getKeyStroke('C', Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
         table.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT)
             .getParent()
-            .remove(KeyStroke.getKeyStroke(
-                'V', Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+            .remove(
+                KeyStroke.getKeyStroke('V', Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
         table.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT)
             .getParent()
-            .remove(KeyStroke.getKeyStroke(
-                'X', Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+            .remove(
+                KeyStroke.getKeyStroke('X', Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
         table.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT)
             .getParent()
-            .remove(KeyStroke.getKeyStroke(
-                'A', Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+            .remove(
+                KeyStroke.getKeyStroke('A', Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
         table.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT)
             .getParent()
-            .remove(KeyStroke.getKeyStroke(
-                'I', Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+            .remove(
+                KeyStroke.getKeyStroke('I', Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
         table.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT)
             .getParent()
-            .remove(KeyStroke.getKeyStroke(
-                'Z', Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+            .remove(
+                KeyStroke.getKeyStroke('Z', Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
 
 
         //		tglbtnCache.doClick();
@@ -400,12 +392,10 @@ public class CacheListView extends JInternalFrame
 
     public void updateCachePanelToSelection()
     {
-        CacheListModel.CLMTableModel model =
-            (CacheListModel.CLMTableModel)table.getModel();
+        CacheListModel.CLMTableModel model = (CacheListModel.CLMTableModel)table.getModel();
         if (table.getSelectedRows().length == 1)
         {
-            Geocache g = model.getObject(
-                table.convertRowIndexToModel(table.getSelectedRow()));
+            Geocache g = model.getObject(table.convertRowIndexToModel(table.getSelectedRow()));
             panelCache.setCache(g);
         }
         if (table.getSelectedRows().length == 0)
@@ -420,13 +410,11 @@ public class CacheListView extends JInternalFrame
 
         mapViewer.removeAllMapMarkers();
 
-        CacheListModel.CLMTableModel tableModel =
-            (CacheListModel.CLMTableModel)table.getModel();
+        CacheListModel.CLMTableModel tableModel = (CacheListModel.CLMTableModel)table.getModel();
         if (table.getSelectedRows().length > 0)
             for (int selection : table.getSelectedRows())
             {
-                Geocache g = tableModel.getObject(
-                    table.convertRowIndexToModel(selection));
+                Geocache g = tableModel.getObject(table.convertRowIndexToModel(selection));
                 addMapMarker(g);
             }
         else
@@ -448,8 +436,8 @@ public class CacheListView extends JInternalFrame
 
         public MapMarkerCache(Geocache g)
         {
-            super(new org.openstreetmap.gui.jmapviewer.Coordinate(
-                g.getCoordinate().getLat(), g.getCoordinate().getLon()));
+            super(new org.openstreetmap.gui.jmapviewer.Coordinate(g.getCoordinate().getLat(),
+                                                                  g.getCoordinate().getLon()));
             this.g = g;
 
             setName("");
@@ -492,8 +480,8 @@ public class CacheListView extends JInternalFrame
             MapMarkerCache mmc = (MapMarkerCache)mm;
             Point makerPos = mapViewer.getMapPosition(mm.getLat(), mm.getLon());
 
-            if (makerPos != null && makerPos.x >= x1 && makerPos.x <= x2 &&
-                makerPos.y >= y1 && makerPos.y <= y2)
+            if (makerPos != null && makerPos.x >= x1 && makerPos.x <= x2 && makerPos.y >= y1 &&
+                makerPos.y <= y2)
             {
                 list.add(mmc.getCache());
             }
@@ -515,12 +503,10 @@ public class CacheListView extends JInternalFrame
         LinkedList<Geocache> list = new LinkedList<>();
         list.addAll(list_in);
 
-        CacheListModel.CLMTableModel tableModel =
-            (CacheListModel.CLMTableModel)table.getModel();
+        CacheListModel.CLMTableModel tableModel = (CacheListModel.CLMTableModel)table.getModel();
         for (int i = 0; !list_in.isEmpty() && i < table.getRowCount(); i++)
         {
-            Geocache gTable =
-                tableModel.getObject(table.convertRowIndexToModel(i));
+            Geocache gTable = tableModel.getObject(table.convertRowIndexToModel(i));
 
             Iterator<Geocache> it = list.iterator();
             while (it.hasNext())
@@ -528,8 +514,7 @@ public class CacheListView extends JInternalFrame
                 Geocache g = it.next();
                 if (gTable == g)
                 {
-                    table.addRowSelectionInterval(
-                        i, i); // slow -> disablUpdateMakers
+                    table.addRowSelectionInterval(i, i); // slow -> disablUpdateMakers
                     it.remove();
                     break;
                 }
@@ -583,8 +568,7 @@ public class CacheListView extends JInternalFrame
 
             MapMarkerCache mapMarker = (MapMarkerCache)i.next();
 
-            Point MarkerPosition = mapViewer.getMapPosition(mapMarker.getLat(),
-                                                            mapMarker.getLon());
+            Point MarkerPosition = mapViewer.getMapPosition(mapMarker.getLat(), mapMarker.getLon());
             if (MarkerPosition != null)
             {
 
@@ -592,8 +576,8 @@ public class CacheListView extends JInternalFrame
                 int centerY = MarkerPosition.y;
 
                 // calculate the radius from the touch to the center of the dot
-                double radCircle = Math.sqrt((((centerX - X) * (centerX - X)) +
-                                              (centerY - Y) * (centerY - Y)));
+                double radCircle =
+                    Math.sqrt((((centerX - X) * (centerX - X)) + (centerY - Y) * (centerY - Y)));
 
 
                 if (radCircle < 10)
@@ -609,8 +593,7 @@ public class CacheListView extends JInternalFrame
 
     public ArrayList<Geocache> getSelectedCaches()
     {
-        CacheListModel.CLMTableModel model =
-            (CacheListModel.CLMTableModel)table.getModel();
+        CacheListModel.CLMTableModel model = (CacheListModel.CLMTableModel)table.getModel();
         ArrayList<Geocache> selected = new ArrayList<>();
         for (int row : table.getSelectedRows())
         {
@@ -650,8 +633,7 @@ public class CacheListView extends JInternalFrame
         boolean retVal;
         pane.setVisible(pane.getLeftComponent().isVisible() ||
                         pane.getRightComponent().isVisible());
-        if (pane.getLeftComponent().isVisible() &&
-            pane.getRightComponent().isVisible())
+        if (pane.getLeftComponent().isVisible() && pane.getRightComponent().isVisible())
         {
             pane.setDividerSize(new JSplitPane().getDividerSize());
             pane.setDividerLocation(dividerLocation);

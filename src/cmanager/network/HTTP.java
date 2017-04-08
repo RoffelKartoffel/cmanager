@@ -14,8 +14,7 @@ import java.net.URL;
 public class HTTP
 {
 
-    private final static String USER_AGENT =
-        Constants.APP_NAME + " " + Version.VERSION;
+    private final static String USER_AGENT = Constants.APP_NAME + " " + Version.VERSION;
 
 
     public static String get(String url) throws Exception
@@ -39,8 +38,7 @@ public class HTTP
     }
 
     // HTTP GET request
-    private static String get_(String url)
-        throws UnexpectedStatusCode, IOException
+    private static String get_(String url) throws UnexpectedStatusCode, IOException
     {
         URL obj = new URL(url);
         HttpURLConnection con = (HttpURLConnection)obj.openConnection();
@@ -54,13 +52,11 @@ public class HTTP
         BufferedReader in;
         try
         {
-            in = new BufferedReader(
-                new InputStreamReader(con.getInputStream(), "UTF8"));
+            in = new BufferedReader(new InputStreamReader(con.getInputStream(), "UTF8"));
         }
         catch (IOException e)
         {
-            in = new BufferedReader(
-                new InputStreamReader(con.getErrorStream(), "UTF8"));
+            in = new BufferedReader(new InputStreamReader(con.getErrorStream(), "UTF8"));
         }
 
         String inputLine;

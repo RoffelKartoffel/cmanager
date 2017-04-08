@@ -35,12 +35,12 @@ public class CacheListController
     private static ArrayList<CacheListController> controllerList =
         new ArrayList<CacheListController>();
 
-    public static CacheListController
-    newCLC(JDesktopPane desktop, JMenu mnWindows, Location relativeLocation,
-           String path, CacheListView.RunLocationDialogI ldi) throws Throwable
+    public static CacheListController newCLC(JDesktopPane desktop, JMenu mnWindows,
+                                             Location relativeLocation, String path,
+                                             CacheListView.RunLocationDialogI ldi) throws Throwable
     {
-        CacheListController clc = new CacheListController(
-            desktop, mnWindows, relativeLocation, path, ldi);
+        CacheListController clc =
+            new CacheListController(desktop, mnWindows, relativeLocation, path, ldi);
         controllerList.add(clc);
         return clc;
     }
@@ -50,8 +50,7 @@ public class CacheListController
         controllerList.remove(clc);
     }
 
-    private static CacheListController
-    getCacheListController(JInternalFrame jif)
+    private static CacheListController getCacheListController(JInternalFrame jif)
     {
         for (CacheListController clc : controllerList)
             if (clc.view == jif)
@@ -59,8 +58,7 @@ public class CacheListController
         return null;
     }
 
-    public static CacheListController
-    getTopViewCacheController(JDesktopPane desktop)
+    public static CacheListController getTopViewCacheController(JDesktopPane desktop)
     {
         if (desktop.getAllFrames().length == 0)
             return null;
@@ -80,8 +78,7 @@ public class CacheListController
             clc.setRelativeLocation(rl);
     }
 
-    public static void storePersistanceInfo(JDesktopPane desktop)
-        throws IOException
+    public static void storePersistanceInfo(JDesktopPane desktop) throws IOException
     {
         CacheListController top = getTopViewCacheController(desktop);
 
@@ -98,8 +95,7 @@ public class CacheListController
         Settings.setSerialized(Settings.Key.CLC_LIST, pi);
     }
 
-    public static void reopenPersitantCLCs(JDesktopPane desktop,
-                                           JMenu mnWindows,
+    public static void reopenPersitantCLCs(JDesktopPane desktop, JMenu mnWindows,
                                            Location relativeLocation,
                                            CacheListView.RunLocationDialogI ldi)
     {
@@ -121,8 +117,7 @@ public class CacheListController
             try
             {
                 if (new File(aPI.getPath()).exists())
-                    newCLC(desktop, mnWindows, relativeLocation, aPI.getPath(),
-                           ldi);
+                    newCLC(desktop, mnWindows, relativeLocation, aPI.getPath(), ldi);
             }
             catch (Throwable t)
             {
@@ -150,11 +145,9 @@ public class CacheListController
     }
 
 
-    public CacheListController(final JDesktopPane desktop,
-                               final JMenu mnWindows, Location relativeLocation,
-                               String path,
-                               CacheListView.RunLocationDialogI ldi)
-        throws Throwable
+    public CacheListController(final JDesktopPane desktop, final JMenu mnWindows,
+                               Location relativeLocation, String path,
+                               CacheListView.RunLocationDialogI ldi) throws Throwable
     {
         if (path != null)
             model.load(path);

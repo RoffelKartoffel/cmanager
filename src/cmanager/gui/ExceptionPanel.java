@@ -47,8 +47,7 @@ public class ExceptionPanel extends JPanel
         panelMessage = new JPanel();
         add(panelMessage, BorderLayout.NORTH);
 
-        JButton btnEnlarge =
-            new JButton("One or more exceptions occured. Click to show/hide.");
+        JButton btnEnlarge = new JButton("One or more exceptions occured. Click to show/hide.");
         btnEnlarge.setForeground(Color.RED);
         btnEnlarge.setOpaque(false);
         btnEnlarge.setContentAreaFilled(false);
@@ -78,9 +77,8 @@ public class ExceptionPanel extends JPanel
 
         textDetails = new JTextPane();
         textDetails.setForeground(Color.RED);
-        scrollPane = new JScrollPane(
-            textDetails, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-            JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        scrollPane = new JScrollPane(textDetails, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+                                     JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         panelDetails.add(scrollPane);
 
         this.addComponentListener(new ComponentAdapter() {
@@ -142,18 +140,15 @@ public class ExceptionPanel extends JPanel
 
     public static void showErrorDialog(String errorMessage, String title)
     {
-        JOptionPane.showMessageDialog(null, errorMessage, title,
-                                      JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, errorMessage, title, JOptionPane.ERROR_MESSAGE);
     }
 
     public static void showErrorDialog(Throwable exceptionError)
     {
         String errorMessage = exceptionError.getMessage();
-        errorMessage = errorMessage != null
-                           ? errorMessage
-                           : exceptionError.getClass().getName();
-        errorMessage = "Message: " + errorMessage + "\n\nStackTrace: " +
-                       toShortString(exceptionError);
+        errorMessage = errorMessage != null ? errorMessage : exceptionError.getClass().getName();
+        errorMessage =
+            "Message: " + errorMessage + "\n\nStackTrace: " + toShortString(exceptionError);
 
         String title = exceptionError.getClass().getName();
 
@@ -163,8 +158,7 @@ public class ExceptionPanel extends JPanel
         {
             String message =
                 "You experienced the previous crash due to insufficient memory.\n"
-                +
-                "You might want to change your memory settings under Menu->Settings->General.";
+                + "You might want to change your memory settings under Menu->Settings->General.";
             JOptionPane.showMessageDialog(null, message, "Memory Settings",
                                           JOptionPane.INFORMATION_MESSAGE);
         }

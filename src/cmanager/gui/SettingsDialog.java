@@ -71,8 +71,7 @@ public class SettingsDialog extends JDialog
                 boolean changesWhichNeedRestart = false;
 
                 final String newHeapSize = txtHeapSize.getText();
-                final String oldHeapSize =
-                    Settings.getS(Settings.Key.HEAP_SIZE);
+                final String oldHeapSize = Settings.getS(Settings.Key.HEAP_SIZE);
                 if ((oldHeapSize != null && !oldHeapSize.equals(newHeapSize)) ||
                     (oldHeapSize == null && newHeapSize.length() > 0))
                     changesWhichNeedRestart = true;
@@ -84,11 +83,9 @@ public class SettingsDialog extends JDialog
                 {
                     String message =
                         "You have made changes which need cmanager to restart in order be applied.\n"
-                        + "Do you want to restart " + Constants.APP_NAME +
-                        " now?";
+                        + "Do you want to restart " + Constants.APP_NAME + " now?";
                     int dialogResult = JOptionPane.showConfirmDialog(
-                        THIS, message,
-                        "Restart " + Constants.APP_NAME + " now?",
+                        THIS, message, "Restart " + Constants.APP_NAME + " now?",
                         JOptionPane.YES_NO_OPTION);
                     if (dialogResult == JOptionPane.YES_OPTION)
                     {
@@ -127,24 +124,20 @@ public class SettingsDialog extends JDialog
         panelOC.setLayout(sl_panelOC);
 
         JLabel label = new JLabel("OKAPI Token:");
-        sl_panelOC.putConstraint(SpringLayout.NORTH, label, 40,
-                                 SpringLayout.NORTH, panelOC);
-        sl_panelOC.putConstraint(SpringLayout.WEST, label, 10,
-                                 SpringLayout.WEST, panelOC);
+        sl_panelOC.putConstraint(SpringLayout.NORTH, label, 40, SpringLayout.NORTH, panelOC);
+        sl_panelOC.putConstraint(SpringLayout.WEST, label, 10, SpringLayout.WEST, panelOC);
         panelOC.add(label);
 
         lblOkapiToken = new JLabel("New label");
-        sl_panelOC.putConstraint(SpringLayout.NORTH, lblOkapiToken, 0,
-                                 SpringLayout.NORTH, label);
-        sl_panelOC.putConstraint(SpringLayout.WEST, lblOkapiToken, 101,
-                                 SpringLayout.EAST, label);
+        sl_panelOC.putConstraint(SpringLayout.NORTH, lblOkapiToken, 0, SpringLayout.NORTH, label);
+        sl_panelOC.putConstraint(SpringLayout.WEST, lblOkapiToken, 101, SpringLayout.EAST, label);
         panelOC.add(lblOkapiToken);
 
         btnRequestNewToken = new JButton("Request new token");
-        sl_panelOC.putConstraint(SpringLayout.SOUTH, btnRequestNewToken, 0,
-                                 SpringLayout.SOUTH, panelOC);
-        sl_panelOC.putConstraint(SpringLayout.EAST, btnRequestNewToken, 0,
-                                 SpringLayout.EAST, panelOC);
+        sl_panelOC.putConstraint(SpringLayout.SOUTH, btnRequestNewToken, 0, SpringLayout.SOUTH,
+                                 panelOC);
+        sl_panelOC.putConstraint(SpringLayout.EAST, btnRequestNewToken, 0, SpringLayout.EAST,
+                                 panelOC);
         btnRequestNewToken.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0)
             {
@@ -163,19 +156,15 @@ public class SettingsDialog extends JDialog
 
 
         JLabel lblNewLabel_3 = new JLabel("OC Username: ");
-        sl_panelOC.putConstraint(SpringLayout.NORTH, lblNewLabel_3, 6,
-                                 SpringLayout.SOUTH, label);
-        sl_panelOC.putConstraint(SpringLayout.WEST, lblNewLabel_3, 0,
-                                 SpringLayout.WEST, label);
+        sl_panelOC.putConstraint(SpringLayout.NORTH, lblNewLabel_3, 6, SpringLayout.SOUTH, label);
+        sl_panelOC.putConstraint(SpringLayout.WEST, lblNewLabel_3, 0, SpringLayout.WEST, label);
         panelOC.add(lblNewLabel_3);
 
         lblOCUsername = new JLabel("");
-        sl_panelOC.putConstraint(SpringLayout.NORTH, lblOCUsername, 6,
-                                 SpringLayout.SOUTH, lblOkapiToken);
-        sl_panelOC.putConstraint(SpringLayout.WEST, lblOCUsername, 204,
-                                 SpringLayout.WEST, panelOC);
-        sl_panelOC.putConstraint(SpringLayout.EAST, lblOCUsername, -31,
-                                 SpringLayout.EAST, panelOC);
+        sl_panelOC.putConstraint(SpringLayout.NORTH, lblOCUsername, 6, SpringLayout.SOUTH,
+                                 lblOkapiToken);
+        sl_panelOC.putConstraint(SpringLayout.WEST, lblOCUsername, 204, SpringLayout.WEST, panelOC);
+        sl_panelOC.putConstraint(SpringLayout.EAST, lblOCUsername, -31, SpringLayout.EAST, panelOC);
         lblOCUsername.setHorizontalAlignment(SwingConstants.LEFT);
         lblOCUsername.setText(Settings.getS(Settings.Key.OC_USERNAME));
         panelOC.add(lblOCUsername);
@@ -236,8 +225,7 @@ public class SettingsDialog extends JDialog
         gbc_lblCurrentHeapSize.gridy = 1;
         panelGeneral.add(lblCurrentHeapSize, gbc_lblCurrentHeapSize);
         lblCurrentHeapSize.setText(
-            new Long(Runtime.getRuntime().maxMemory() / 1024 / 1024)
-                .toString());
+            new Long(Runtime.getRuntime().maxMemory() / 1024 / 1024).toString());
 
         Component verticalStrut = Box.createVerticalStrut(20);
         GridBagConstraints gbc_verticalStrut = new GridBagConstraints();
@@ -302,8 +290,7 @@ public class SettingsDialog extends JDialog
             {
                 lblOkapiToken.setText("okay");
                 f = lblOkapiToken.getFont();
-                lblOkapiToken.setFont(
-                    f.deriveFont(f.getStyle() & ~Font.ITALIC));
+                lblOkapiToken.setFont(f.deriveFont(f.getStyle() & ~Font.ITALIC));
                 btnRequestNewToken.setVisible(false);
 
                 String username = OKAPI.getUsername(user);

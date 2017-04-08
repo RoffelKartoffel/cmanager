@@ -20,8 +20,8 @@ public class Waypoint implements Serializable
     private DateTime date = null;
 
 
-    public Waypoint(Coordinate coords, String code, String description,
-                    String symbol, String type, String parent)
+    public Waypoint(Coordinate coords, String code, String description, String symbol, String type,
+                    String parent)
     {
         if (code == null)
             throw new NullPointerException();

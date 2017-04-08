@@ -29,13 +29,11 @@ import cmanager.xml.Parser.XMLParserCallbackI;
 
 public class GPX
 {
-    public static void loadFromStream(InputStream is,
-                                      final ArrayList<Geocache> gList,
-                                      final ArrayList<Waypoint> wList)
-        throws Throwable
+    public static void loadFromStream(InputStream is, final ArrayList<Geocache> gList,
+                                      final ArrayList<Waypoint> wList) throws Throwable
     {
-        final ExecutorService service = Executors.newFixedThreadPool(
-            Runtime.getRuntime().availableProcessors() * 2);
+        final ExecutorService service =
+            Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 2);
 
         Parser.parse(is, new XMLParserCallbackI() {
             public boolean elementFinished(final Element element)
@@ -74,8 +72,7 @@ public class GPX
                 return true;
             }
 
-            public boolean elementLocatedCorrectly(Element element,
-                                                   Element parent)
+            public boolean elementLocatedCorrectly(Element element, Element parent)
             {
                 if (element.is("gpx"))
                     return parent.getName() == null ? true : false;
@@ -87,9 +84,8 @@ public class GPX
         });
 
         service.shutdown();
-        service.awaitTermination(
-            Long.MAX_VALUE,
-            TimeUnit.DAYS); // incredible high delay but still ugly
+        service.awaitTermination(Long.MAX_VALUE,
+                                 TimeUnit.DAYS); // incredible high delay but still ugly
     }
 
 
@@ -133,8 +129,7 @@ public class GPX
                         parent = ee.getUnescapedBody();
         }
 
-        Waypoint waypoint =
-            new Waypoint(coordinate, code, description, symbol, type, parent);
+        Waypoint waypoint = new Waypoint(coordinate, code, description, symbol, type, parent);
         waypoint.setDate(date);
         return waypoint;
     }
@@ -255,12 +250,10 @@ public class GPX
 
                                 try
                                 {
-                                    GeocacheLog gl = new GeocacheLog(
-                                        ltype, author, text, date);
+                                    GeocacheLog gl = new GeocacheLog(ltype, author, text, date);
                                     logs.add(gl);
                                 }
-                                catch (NullPointerException |
-                                       IllegalArgumentException ex)
+                                catch (NullPointerException | IllegalArgumentException ex)
                                 {
                                     ExceptionPanel.display(ex);
                                 }
@@ -283,12 +276,10 @@ public class GPX
 
                                 try
                                 {
-                                    GeocacheAttribute attr =
-                                        new GeocacheAttribute(ID, inc, desc);
+                                    GeocacheAttribute attr = new GeocacheAttribute(ID, inc, desc);
                                     attributes.add(attr);
                                 }
-                                catch (NullPointerException |
-                                       IllegalArgumentException ex)
+                                catch (NullPointerException | IllegalArgumentException ex)
                                 {
                                     ExceptionPanel.display(ex);
                                 }
@@ -311,8 +302,8 @@ public class GPX
         if (container != null && container.equals("unknown"))
             container = null;
 
-        Geocache g = new Geocache(code, cacheName != null ? cacheName : urlName,
-                                  coordinate, difficulty, terrain, type);
+        Geocache g = new Geocache(code, cacheName != null ? cacheName : urlName, coordinate,
+                                  difficulty, terrain, type);
         g.setOwner(owner);
         g.setContainer(container);
         g.setListing(listing);
@@ -329,8 +320,8 @@ public class GPX
         return g;
     }
 
-    public static void saveToFile(ArrayList<Geocache> list, String listName,
-                                  String pathToGPX) throws Throwable
+    public static void saveToFile(ArrayList<Geocache> list, String listName, String pathToGPX)
+        throws Throwable
     {
         OutputStream os = FileHelper.openFileWrite(pathToGPX);
         ZipOutputStream zos = new ZipOutputStream(os);
@@ -347,16 +338,13 @@ public class GPX
         {
             ArrayList<Geocache> subList = new ArrayList<>();
 
-            for (int index = 0;
-                 index < CACHES_PER_GPX && index + baseIndex < list.size();
-                 index++)
+            for (int index = 0; index < CACHES_PER_GPX && index + baseIndex < list.size(); index++)
                 subList.add(list.get(index + baseIndex));
             baseIndex += CACHES_PER_GPX;
             subListNumber += 1;
 
             String subListFileName =
-                useSingleFile ? listName
-                              : listName + "-" + subListNumber.toString();
+                useSingleFile ? listName : listName + "-" + subListNumber.toString();
             subListFileName += ".gpx";
             zos.putNextEntry(new ZipEntry(subListFileName));
 
@@ -371,8 +359,7 @@ public class GPX
     }
 
 
-    private static Element cachlistToXML(final ArrayList<Geocache> list,
-                                         String name)
+    private static Element cachlistToXML(final ArrayList<Geocache> list, String name)
     {
         Element root = new Element();
 
@@ -383,18 +370,14 @@ public class GPX
             "xsi:schemaLocation",
             "http://www.topografix.com/GPX/1/0 http://www.topografix.com/GPX/1/0/gpx.xsd http://www.groundspeak.com/cache/1/0/1 http://www.groundspeak.com/cache/1/0/1/cache.xsd http://www.gsak.net/xmlv1/6 http://www.gsak.net/xmlv1/6/gsak.xsd"));
         gpx.add(new XMLAttribute("xmlns", "http://www.topografix.com/GPX/1/0"));
-        gpx.add(new XMLAttribute("xmlns:xsi",
-                                 "http://www.w3.org/2001/XMLSchema-instance"));
-        gpx.add(new XMLAttribute("xmlns:groundspeak",
-                                 "http://www.groundspeak.com/cache/1/0/1"));
+        gpx.add(new XMLAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance"));
+        gpx.add(new XMLAttribute("xmlns:groundspeak", "http://www.groundspeak.com/cache/1/0/1"));
         gpx.add(new XMLAttribute("xmlns:gsak", "http://www.gsak.net/xmlv1/6"));
-        gpx.add(
-            new XMLAttribute("xmlns:cgeo", "http://www.cgeo.org/wptext/1/0"));
+        gpx.add(new XMLAttribute("xmlns:cgeo", "http://www.cgeo.org/wptext/1/0"));
         root.add(gpx);
 
         gpx.add(new Element("name", name));
-        gpx.add(new Element("desc", "Geocache file generated by " +
-                                        Constants.APP_NAME + " " +
+        gpx.add(new Element("desc", "Geocache file generated by " + Constants.APP_NAME + " " +
                                         Version.VERSION));
         gpx.add(new Element("author", Constants.APP_NAME));
 
@@ -473,12 +456,9 @@ public class GPX
         gspkCache.add(new Element("groundspeak:terrain", g.getTerrain()));
         gspkCache.add(new Element("groundspeak:type", g.getType().asGCType()));
         gspkCache.add(new Element("groundspeak:owner", g.getOwner()));
-        gspkCache.add(
-            new Element("groundspeak:container", g.getContainer().asGC()));
-        gspkCache.add(
-            new Element("groundspeak:long_description", g.getListing()));
-        gspkCache.add(
-            new Element("groundspeak:short_description", g.getListing_short()));
+        gspkCache.add(new Element("groundspeak:container", g.getContainer().asGC()));
+        gspkCache.add(new Element("groundspeak:long_description", g.getListing()));
+        gspkCache.add(new Element("groundspeak:short_description", g.getListing_short()));
         gspkCache.add(new Element("groundspeak:encoded_hints", g.getHint()));
 
         if (g.getLogs().size() > 0)
@@ -491,8 +471,7 @@ public class GPX
                 Element gspkLog = new Element("groundspeak:log");
                 gspkLogs.add(gspkLog);
 
-                gspkLog.add(
-                    new Element("groundspeak:date", log.getDateStrISO8601()));
+                gspkLog.add(new Element("groundspeak:date", log.getDateStrISO8601()));
                 gspkLog.add(new Element("groundspeak:type", log.getTypeStr()));
                 gspkLog.add(new Element("groundspeak:finder", log.getAuthor()));
                 gspkLog.add(new Element("groundspeak:text", log.getText()));

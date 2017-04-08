@@ -19,14 +19,12 @@ public class SearchCache
 
     private static String searchToFileName(Geocache g, String excludeUUID)
     {
-        String name =
-            g.getCode() + (excludeUUID == null ? "" : " " + excludeUUID);
+        String name = g.getCode() + (excludeUUID == null ? "" : " " + excludeUUID);
         return OKAPI_CACHE_FOLDER + name;
     }
 
 
-    public static synchronized void setEmptySearch(Geocache g,
-                                                   String excludeUUID)
+    public static synchronized void setEmptySearch(Geocache g, String excludeUUID)
         throws IOException
     {
         File f = new File(searchToFileName(g, excludeUUID));
@@ -36,8 +34,7 @@ public class SearchCache
         f.createNewFile();
     }
 
-    public static synchronized boolean isEmptySearch(Geocache g,
-                                                     String excludeUUID)
+    public static synchronized boolean isEmptySearch(Geocache g, String excludeUUID)
         throws ClassNotFoundException, IOException
     {
         if (!initDone)
@@ -56,10 +53,8 @@ public class SearchCache
         File f = new File(searchToFileName(g, excludeUUID));
         if (f.exists())
         {
-            int randomMonthCount =
-                -1 * ThreadLocalRandom.current().nextInt(4, 12 + 1);
-            int randomDayCount =
-                -1 * ThreadLocalRandom.current().nextInt(0, 31 + 1);
+            int randomMonthCount = -1 * ThreadLocalRandom.current().nextInt(4, 12 + 1);
+            int randomDayCount = -1 * ThreadLocalRandom.current().nextInt(0, 31 + 1);
             DateTime now = new DateTime();
             now = now.plusMonths(randomMonthCount);
             now = now.plusDays(randomDayCount);

@@ -8,8 +8,7 @@ abstract class BufferWriteAbstraction
     public abstract BufferWriteAbstraction append(String s) throws IOException;
     public abstract String toString();
 
-    public BufferWriteAbstraction append(BufferWriteAbstraction bwa)
-        throws IOException
+    public BufferWriteAbstraction append(BufferWriteAbstraction bwa) throws IOException
     {
         return append(bwa.toString());
     }
@@ -53,8 +52,7 @@ abstract class BufferWriteAbstraction
             this.bw = bw;
         }
 
-        @Override
-        public BufferWriteAbstraction append(String s) throws IOException
+        @Override public BufferWriteAbstraction append(String s) throws IOException
         {
             bw.write(s);
             return this;

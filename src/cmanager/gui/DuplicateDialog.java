@@ -63,8 +63,7 @@ public class DuplicateDialog extends JFrame
     /**
      * Create the dialog.
      */
-    public DuplicateDialog(final CacheListModel clm, final User user,
-                           final String uuid)
+    public DuplicateDialog(final CacheListModel clm, final User user, final String uuid)
     {
         setResizable(true);
         this.setMinimumSize(new Dimension(600, 300));
@@ -129,31 +128,25 @@ public class DuplicateDialog extends JFrame
 
                 for (int i = 0; i < rootNode.getChildCount(); i++)
                 {
-                    DefaultMutableTreeNode dmtn =
-                        (DefaultMutableTreeNode)rootNode.getChildAt(i);
+                    DefaultMutableTreeNode dmtn = (DefaultMutableTreeNode)rootNode.getChildAt(i);
                     Geocache g = (Geocache)dmtn.getUserObject();
                     sb.append(g.toString()).append(System.lineSeparator());
 
                     for (int j = 0; j < dmtn.getChildCount(); j++)
                     {
-                        DefaultMutableTreeNode child =
-                            (DefaultMutableTreeNode)dmtn.getChildAt(j);
+                        DefaultMutableTreeNode child = (DefaultMutableTreeNode)dmtn.getChildAt(j);
                         Geocache g2 = (Geocache)child.getUserObject();
-                        sb.append("  ")
-                            .append(g2.toString())
-                            .append(System.lineSeparator());
+                        sb.append("  ").append(g2.toString()).append(System.lineSeparator());
                     }
                     sb.append(System.lineSeparator());
                 }
 
-                Clipboard clpbrd =
-                    Toolkit.getDefaultToolkit().getSystemClipboard();
+                Clipboard clpbrd = Toolkit.getDefaultToolkit().getSystemClipboard();
                 clpbrd.setContents(new StringSelection(sb.toString()), null);
             }
         });
         tree = new JTree(rootNode);
-        tree.getSelectionModel().setSelectionMode(
-            TreeSelectionModel.SINGLE_TREE_SELECTION);
+        tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
         tree.addTreeSelectionListener(new TreeSelectionListener() {
             public void valueChanged(TreeSelectionEvent e)
             {
@@ -173,8 +166,7 @@ public class DuplicateDialog extends JFrame
             private void URL2Button(String url)
             {
                 selectedURL = url;
-                btnURL.setText("<HTML><FONT color=\"#000099\"><U>" + url +
-                               "</U></FONT></HTML>");
+                btnURL.setText("<HTML><FONT color=\"#000099\"><U>" + url + "</U></FONT></HTML>");
             }
         });
         tree.addMouseListener(new MouseAdapter() {
@@ -183,8 +175,7 @@ public class DuplicateDialog extends JFrame
                 if (me.getClickCount() >= 2)
                 {
                     DefaultMutableTreeNode node =
-                        (DefaultMutableTreeNode)
-                            tree.getLastSelectedPathComponent();
+                        (DefaultMutableTreeNode)tree.getLastSelectedPathComponent();
                     if (node == null)
                         return;
 
@@ -201,8 +192,8 @@ public class DuplicateDialog extends JFrame
 
                             try
                             {
-                                CopyLogDialog cld = new CopyLogDialog(
-                                    gc, oc, logsCopied, shadowList);
+                                CopyLogDialog cld =
+                                    new CopyLogDialog(gc, oc, logsCopied, shadowList);
                                 cld.setLocationRelativeTo(THIS);
                                 FrameHelper.showModalFrame(cld, THIS);
                             }
@@ -217,9 +208,8 @@ public class DuplicateDialog extends JFrame
         });
 
 
-        scrollPaneTree =
-            new JScrollPane(tree, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-                            JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        scrollPaneTree = new JScrollPane(tree, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+                                         JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         panelTree.add(scrollPaneTree);
 
         JPanel panelCopyMessage = new JPanel();
@@ -228,8 +218,7 @@ public class DuplicateDialog extends JFrame
             panelCopyMessage.setVisible(false);
         panelCopyMessage.setLayout(new BorderLayout(0, 0));
 
-        JLabel lblDoubleClickAn =
-            new JLabel("Double Click an OC cache to open copy dialog.");
+        JLabel lblDoubleClickAn = new JLabel("Double Click an OC cache to open copy dialog.");
         lblDoubleClickAn.setHorizontalAlignment(SwingConstants.CENTER);
         panelCopyMessage.add(lblDoubleClickAn);
 
@@ -275,48 +264,44 @@ public class DuplicateDialog extends JFrame
                     ShadowList.updateShadowList();
                     shadowList = ShadowList.loadShadowList();
 
-                    Util.findOnOc(
-                        stopBackgroundThread, clm, new Util.OutputInterface() {
-                            public void setProgress(Integer count, Integer max)
-                            {
-                                progressBar.setMaximum(max);
-                                progressBar.setValue(count);
-                                progressBar.setString(count.toString() + "/" +
-                                                      max.toString());
-                                progressBar.setStringPainted(true);
-                            }
+                    Util.findOnOc(stopBackgroundThread, clm, new Util.OutputInterface() {
+                        public void setProgress(Integer count, Integer max)
+                        {
+                            progressBar.setMaximum(max);
+                            progressBar.setValue(count);
+                            progressBar.setString(count.toString() + "/" + max.toString());
+                            progressBar.setStringPainted(true);
+                        }
 
-                            private Geocache lastGc = null;
-                            private DefaultMutableTreeNode lastNode = null;
-                            private Integer candidates = 0;
-                            public void match(Geocache gc, Geocache oc)
-                            {
-                                candidates++;
-                                labelCandidates.setText(candidates.toString());
+                        private Geocache lastGc = null;
+                        private DefaultMutableTreeNode lastNode = null;
+                        private Integer candidates = 0;
+                        public void match(Geocache gc, Geocache oc)
+                        {
+                            candidates++;
+                            labelCandidates.setText(candidates.toString());
 
-                                if (gc != lastGc)
-                                {
-                                    lastGc = gc;
-                                    lastNode = new DefaultMutableTreeNode(gc);
-                                    rootNode.add(lastNode);
-                                }
-                                lastNode.add(new DefaultMutableTreeNode(oc));
+                            if (gc != lastGc)
+                            {
+                                lastGc = gc;
+                                lastNode = new DefaultMutableTreeNode(gc);
+                                rootNode.add(lastNode);
                             }
-                        }, user, uuid, shadowList);
+                            lastNode.add(new DefaultMutableTreeNode(oc));
+                        }
+                    }, user, uuid, shadowList);
                     switchCards();
 
                     if (stopBackgroundThread.get())
                         return;
 
                     // sort
-                    ArrayList<DefaultMutableTreeNode> sortedList =
-                        new ArrayList<>();
+                    ArrayList<DefaultMutableTreeNode> sortedList = new ArrayList<>();
                     ArrayList<DefaultMutableTreeNode> list = new ArrayList<>();
 
                     // get all entrys
                     for (int i = 0; i < rootNode.getChildCount(); i++)
-                        list.add(
-                            (DefaultMutableTreeNode)rootNode.getChildAt(i));
+                        list.add((DefaultMutableTreeNode)rootNode.getChildAt(i));
                     rootNode.removeAllChildren();
 
                     // sort
@@ -337,8 +322,7 @@ public class DuplicateDialog extends JFrame
 
                                 GeocacheLog logNext = null;
                                 for (GeocacheLog log : gNext.getLogs())
-                                    if (log.isAuthor(gcUsername) &&
-                                        log.isFoundLog())
+                                    if (log.isAuthor(gcUsername) && log.isFoundLog())
                                     {
                                         logNext = log;
                                         break;
@@ -346,8 +330,7 @@ public class DuplicateDialog extends JFrame
 
                                 GeocacheLog logCurr = null;
                                 for (GeocacheLog log : gCurr.getLogs())
-                                    if (log.isAuthor(gcUsername) &&
-                                        log.isFoundLog())
+                                    if (log.isAuthor(gcUsername) && log.isFoundLog())
                                     {
                                         logCurr = log;
                                         break;
@@ -361,8 +344,7 @@ public class DuplicateDialog extends JFrame
                                     continue;
                                 }
 
-                                if (logCurr.getDate().isAfter(
-                                        logNext.getDate()))
+                                if (logCurr.getDate().isAfter(logNext.getDate()))
                                     next = curr;
                             }
                         }

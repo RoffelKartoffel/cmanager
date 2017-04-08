@@ -33,9 +33,9 @@ public class User
     {
         try
         {
-            okapiAccessToken = new OAuth1AccessToken(
-                Settings.getS(Settings.Key.OKAPI_TOKEN),
-                Settings.getS(Settings.Key.OKAPI_TOKEN_SECRET));
+            okapiAccessToken =
+                new OAuth1AccessToken(Settings.getS(Settings.Key.OKAPI_TOKEN),
+                                      Settings.getS(Settings.Key.OKAPI_TOKEN_SECRET));
         }
         catch (IllegalArgumentException e)
         {
@@ -48,15 +48,13 @@ public class User
         return okapiAccessToken;
     }
 
-    public void requestOkapiToken()
-        throws IOException, InterruptedException, ExecutionException
+    public void requestOkapiToken() throws IOException, InterruptedException, ExecutionException
     {
         okapiAccessToken = OKAPI.requestAuthorization();
         if (okapiAccessToken != null)
         {
             Settings.set(Settings.Key.OKAPI_TOKEN, okapiAccessToken.getToken());
-            Settings.set(Settings.Key.OKAPI_TOKEN_SECRET,
-                         okapiAccessToken.getTokenSecret());
+            Settings.set(Settings.Key.OKAPI_TOKEN_SECRET, okapiAccessToken.getTokenSecret());
         }
     }
 }

@@ -74,12 +74,10 @@ public class LocationDialog extends JDialog
 
         try
         {
-            ArrayList<Location> locations =
-                LocationList.getList().getLocations();
+            ArrayList<Location> locations = LocationList.getList().getLocations();
             for (Location l : locations)
             {
-                String values[] = {l.getName(), l.getLat().toString(),
-                                   l.getLon().toString()};
+                String values[] = {l.getName(), l.getLat().toString(), l.getLon().toString()};
                 dtm.addRow(values);
             }
         }
@@ -112,14 +110,12 @@ public class LocationDialog extends JDialog
                 {
                     ArrayList<Location> locations = new ArrayList<>();
 
-                    DefaultTableModel dtm =
-                        ((DefaultTableModel)table.getModel());
+                    DefaultTableModel dtm = ((DefaultTableModel)table.getModel());
                     for (int i = 0; i < dtm.getRowCount(); i++)
                     {
-                        Location l = new Location(
-                            (String)table.getValueAt(i, 0),
-                            new Double((String)table.getValueAt(i, 1)),
-                            new Double((String)table.getValueAt(i, 2)));
+                        Location l = new Location((String)table.getValueAt(i, 0),
+                                                  new Double((String)table.getValueAt(i, 1)),
+                                                  new Double((String)table.getValueAt(i, 2)));
                         locations.add(l);
                     }
 
@@ -157,8 +153,7 @@ public class LocationDialog extends JDialog
         gbl_panelText.columnWidths = new int[] {215, 215, 0};
         gbl_panelText.rowHeights = new int[] {19, 19, 19, 0};
         gbl_panelText.columnWeights = new double[] {0.0, 0.0, Double.MIN_VALUE};
-        gbl_panelText.rowWeights =
-            new double[] {0.0, 0.0, 0.0, Double.MIN_VALUE};
+        gbl_panelText.rowWeights = new double[] {0.0, 0.0, 0.0, Double.MIN_VALUE};
         panelText.setLayout(gbl_panelText);
 
         JLabel lblNewLabel = new JLabel("Name:");
@@ -236,8 +231,7 @@ public class LocationDialog extends JDialog
 
                 try
                 {
-                    new Location(txtName.getText(),
-                                 new Double(txtLat.getText()),
+                    new Location(txtName.getText(), new Double(txtLat.getText()),
                                  new Double(txtLon.getText()));
                 }
                 catch (Throwable t)
@@ -260,8 +254,7 @@ public class LocationDialog extends JDialog
             {
                 try
                 {
-                    new Location(txtName.getText(),
-                                 new Double(txtLat.getText()),
+                    new Location(txtName.getText(), new Double(txtLat.getText()),
                                  new Double(txtLon.getText()));
                 }
                 catch (Throwable t)
@@ -271,8 +264,7 @@ public class LocationDialog extends JDialog
                 }
 
                 DefaultTableModel dtm = ((DefaultTableModel)table.getModel());
-                String values[] = {txtName.getText(), txtLat.getText(),
-                                   txtLon.getText()};
+                String values[] = {txtName.getText(), txtLat.getText(), txtLon.getText()};
                 dtm.addRow(values);
             }
         });
@@ -308,25 +300,23 @@ public class LocationDialog extends JDialog
         contentPanel.setLayout(new FlowLayout());
         contentPanel.setBorder(null);
         table = new JTable(dtm);
-        table.getSelectionModel().addListSelectionListener(
-            new ListSelectionListener() {
-                public void valueChanged(ListSelectionEvent arg0)
-                {
-                    int row = table.getSelectedRow();
-                    if (row == -1)
-                        return;
+        table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent arg0)
+            {
+                int row = table.getSelectedRow();
+                if (row == -1)
+                    return;
 
-                    txtName.setText((String)table.getValueAt(row, 0));
-                    txtLat.setText((String)table.getValueAt(row, 1));
-                    txtLon.setText((String)table.getValueAt(row, 2));
-                }
-            });
+                txtName.setText((String)table.getValueAt(row, 0));
+                txtLat.setText((String)table.getValueAt(row, 1));
+                txtLon.setText((String)table.getValueAt(row, 2));
+            }
+        });
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         table.setFillsViewportHeight(true);
 
-        JScrollPane scrollPane =
-            new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-                            JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        JScrollPane scrollPane = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+                                                 JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         contentPanel.add(scrollPane);
 
         pack();
@@ -338,8 +328,7 @@ public class LocationDialog extends JDialog
                 User user = User.getOKAPIUser();
                 try
                 {
-                    if (user.getOkapiToken() != null &&
-                        OKAPI.getUUID(user) != null)
+                    if (user.getOkapiToken() != null && OKAPI.getUUID(user) != null)
                     {
                         btnRetrieve.setEnabled(true);
                     }

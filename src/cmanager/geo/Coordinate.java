@@ -81,9 +81,8 @@ public class Coordinate implements Serializable
         final double Δφ = (other.lat - lat) * radianFactor;
         final double Δλ = (other.lon - lon) * radianFactor;
 
-        final double a =
-            Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
-            Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
+        final double a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
+                         Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
         final double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
         final double R = 6371e3; // metres

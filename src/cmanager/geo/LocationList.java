@@ -52,8 +52,7 @@ public class LocationList
         return locations;
     }
 
-    public void setLocations(ArrayList<Location> newLocations)
-        throws IOException
+    public void setLocations(ArrayList<Location> newLocations) throws IOException
     {
         Settings.setSerialized(Settings.Key.LOCATION_LIST, newLocations);
         locations = newLocations;

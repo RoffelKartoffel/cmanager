@@ -1,5 +1,6 @@
-﻿---
+---
 BasedOnStyle: LLVM
+ColumnLimit: 100
 AlignTrailingComments: 'true'
 BreakBeforeBraces: Allman
 BreakConstructorInitializersBeforeComma: 'true'

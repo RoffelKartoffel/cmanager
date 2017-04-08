@@ -35,29 +35,25 @@ import cmanager.xml.Parser;
 public class OKAPI
 {
     private final static String CONSUMER_API_KEY = Keys.get_CONSUMER_API_KEY();
-    private final static String CONSUMER_SECRET_KEY =
-        Keys.get_CONSUMER_SECRET_KEY();
+    private final static String CONSUMER_SECRET_KEY = Keys.get_CONSUMER_SECRET_KEY();
 
     public static String usernameToUUID(String username) throws Exception
     {
-        String url =
-            "https://www.opencaching.de/okapi/services/users/by_username"
-            + "?consumer_key=" + CONSUMER_API_KEY + "&username=" +
-            URLEncoder.encode(username, "UTF-8") + "&fields=uuid";
+        String url = "https://www.opencaching.de/okapi/services/users/by_username"
+                     + "?consumer_key=" + CONSUMER_API_KEY + "&username=" +
+                     URLEncoder.encode(username, "UTF-8") + "&fields=uuid";
         try
         {
             String response = HTTP.get(url);
 
-            UUIDDocument document =
-                new Gson().fromJson(response, UUIDDocument.class);
+            UUIDDocument document = new Gson().fromJson(response, UUIDDocument.class);
             return document.getUuid();
         }
         catch (UnexpectedStatusCode e)
         {
             if (e.is400BadRequest())
             {
-                ErrorDocument okapiError =
-                    new Gson().fromJson(e.getBody(), ErrorDocument.class);
+                ErrorDocument okapiError = new Gson().fromJson(e.getBody(), ErrorDocument.class);
                 if (okapiError.getParameter().equals("username"))
                 {
                     return null;
@@ -69,33 +65,31 @@ public class OKAPI
     }
 
 
-    public static ArrayList<Geocache>
-    getCachesAround(User user, String excludeUUID, Geocache g,
-                    double searchRadius,
-                    ArrayList<Geocache> okapiCacheDetailsCache) throws Exception
+    public static ArrayList<Geocache> getCachesAround(User user, String excludeUUID, Geocache g,
+                                                      double searchRadius,
+                                                      ArrayList<Geocache> okapiCacheDetailsCache)
+        throws Exception
     {
         Coordinate c = g.getCoordinate();
-        return getCachesAround(user, excludeUUID, c.getLat(), c.getLon(),
-                               searchRadius, okapiCacheDetailsCache);
+        return getCachesAround(user, excludeUUID, c.getLat(), c.getLon(), searchRadius,
+                               okapiCacheDetailsCache);
     }
 
-    public static ArrayList<Geocache>
-    getCachesAround(User user, String excludeUUID, Double lat, Double lon,
-                    Double searchRadius,
-                    ArrayList<Geocache> okapiCacheDetailsCache) throws Exception
+    public static ArrayList<Geocache> getCachesAround(User user, String excludeUUID, Double lat,
+                                                      Double lon, Double searchRadius,
+                                                      ArrayList<Geocache> okapiCacheDetailsCache)
+        throws Exception
     {
         ArrayList<Geocache> caches = new ArrayList<Geocache>();
 
         boolean useOAuth = user != null && excludeUUID != null;
-        String url =
-            "https://www.opencaching.de/okapi/services/caches/search/nearest"
-            + "?consumer_key=" + CONSUMER_API_KEY + "&format=xmlmap2"
-            + "&center=" + lat.toString() + "|" + lon.toString() + "&radius=" +
-            searchRadius.toString() +
-            "&status=Available|Temporarily%20unavailable|Archived"
-            + "&limit=500" +
-            (useOAuth ? "&ignored_status=notignored_only" : "") +
-            (useOAuth ? "&not_found_by=" + excludeUUID : "");
+        String url = "https://www.opencaching.de/okapi/services/caches/search/nearest"
+                     + "?consumer_key=" + CONSUMER_API_KEY + "&format=xmlmap2"
+                     + "&center=" + lat.toString() + "|" + lon.toString() + "&radius=" +
+                     searchRadius.toString() +
+                     "&status=Available|Temporarily%20unavailable|Archived"
+                     + "&limit=500" + (useOAuth ? "&ignored_status=notignored_only" : "") +
+                     (useOAuth ? "&not_found_by=" + excludeUUID : "");
 
         String http;
         if (useOAuth)
@@ -125,8 +119,7 @@ public class OKAPI
     }
 
 
-    public static Geocache getCache(String code,
-                                    ArrayList<Geocache> okapiCacheDetailsCache)
+    public static Geocache getCache(String code, ArrayList<Geocache> okapiCacheDetailsCache)
         throws Exception
     {
         synchronized (okapiCacheDetailsCache)
@@ -136,11 +129,10 @@ public class OKAPI
                 return okapiCacheDetailsCache.get(index);
         }
 
-        String http = HTTP.get(
-            "https://www.opencaching.de/okapi/services/caches/geocache"
-            + "?consumer_key=" + CONSUMER_API_KEY + "&format=xmlmap2"
-            + "&cache_code=" + code +
-            "&fields=code|name|location|type|gc_code|difficulty|terrain|status");
+        String http = HTTP.get("https://www.opencaching.de/okapi/services/caches/geocache"
+                               + "?consumer_key=" + CONSUMER_API_KEY + "&format=xmlmap2"
+                               + "&cache_code=" + code +
+                               "&fields=code|name|location|type|gc_code|difficulty|terrain|status");
 
         String name = null;
         Coordinate coordinate = null;
@@ -172,8 +164,7 @@ public class OKAPI
                 status = e.getUnescapedBody();
         }
 
-        Geocache g =
-            new Geocache(code, name, coordinate, difficulty, terrain, type);
+        Geocache g = new Geocache(code, name, coordinate, difficulty, terrain, type);
         g.setCodeGC(code_gc);
         if (status != null)
             if (status.equals("Available"))
@@ -195,21 +186,19 @@ public class OKAPI
         synchronized (okapiCacheDetailsCache)
         {
             okapiCacheDetailsCache.add(g);
-            Collections.sort(
-                okapiCacheDetailsCache, new Comparator<Geocache>() {
-                    public int compare(Geocache o1, Geocache o2)
-                    {
-                        return o1.getCode().compareTo(o2.getCode());
-                    }
-                });
+            Collections.sort(okapiCacheDetailsCache, new Comparator<Geocache>() {
+                public int compare(Geocache o1, Geocache o2)
+                {
+                    return o1.getCode().compareTo(o2.getCode());
+                }
+            });
         }
 
         return g;
     }
 
     public static void updateFoundStatus(User user, Geocache oc)
-        throws MalFormedException, IOException, InterruptedException,
-               ExecutionException
+        throws MalFormedException, IOException, InterruptedException, ExecutionException
     {
         if (user == null)
             return;
@@ -231,12 +220,11 @@ public class OKAPI
 
     public static Geocache completeCacheDetails(Geocache g) throws Exception
     {
-        String http = HTTP.get(
-            "https://www.opencaching.de/okapi/services/caches/geocache"
-            + "?consumer_key=" + CONSUMER_API_KEY + "&format=xmlmap2"
-            + "&cache_code=" + g.getCode() + "&fields=" +
-            URLEncoder.encode("size2|short_description|description|owner|hint2",
-                              "UTF-8"));
+        String http =
+            HTTP.get("https://www.opencaching.de/okapi/services/caches/geocache"
+                     + "?consumer_key=" + CONSUMER_API_KEY + "&format=xmlmap2"
+                     + "&cache_code=" + g.getCode() + "&fields=" +
+                     URLEncoder.encode("size2|short_description|description|owner|hint2", "UTF-8"));
 
         String size = null;
         String shortDescription = null;
@@ -291,14 +279,13 @@ public class OKAPI
         DesktopUtil.openUrl(authUrl);
 
         String pin = JOptionPane.showInputDialog(
-            null,
-            "Please look at your browser and enter the PIN from opencaching.de");
+            null, "Please look at your browser and enter the PIN from opencaching.de");
         if (pin == null)
             return null;
 
         // Step Four: Get the access Token
-        OAuth1AccessToken accessToken = service.getAccessToken(
-            requestToken, pin); // the requestToken you had from step 2
+        OAuth1AccessToken accessToken =
+            service.getAccessToken(requestToken, pin); // the requestToken you had from step 2
 
         return accessToken;
     }
@@ -308,15 +295,13 @@ public class OKAPI
     {
         OAuth10aService service = getOAuthService();
         OAuthRequest request = new OAuthRequest(Verb.GET, url);
-        service.signRequest(user.getOkapiToken(),
-                            request); // the access token from step 4
+        service.signRequest(user.getOkapiToken(), request); // the access token from step 4
         final Response response = service.execute(request);
         return response.getBody();
     }
 
     public static String getUUID(User user)
-        throws MalFormedException, IOException, InterruptedException,
-               ExecutionException
+        throws MalFormedException, IOException, InterruptedException, ExecutionException
     {
         String url = "https://www.opencaching.de/okapi/services/users/user"
                      + "?format=xmlmap2"
@@ -334,8 +319,7 @@ public class OKAPI
     }
 
     public static String getUsername(User user)
-        throws MalFormedException, IOException, InterruptedException,
-               ExecutionException
+        throws MalFormedException, IOException, InterruptedException, ExecutionException
     {
         String url = "https://www.opencaching.de/okapi/services/users/user"
                      + "?format=xmlmap2"
@@ -353,13 +337,11 @@ public class OKAPI
     }
 
     public static void postLog(User user, Geocache cache, GeocacheLog log)
-        throws MalFormedException, InterruptedException, ExecutionException,
-               IOException
+        throws MalFormedException, InterruptedException, ExecutionException, IOException
     {
         String url = "https://www.opencaching.de/okapi/services/logs/submit"
                      + "?format=xmlmap2"
-                     + "&cache_code=" +
-                     URLEncoder.encode(cache.getCode(), "UTF-8") + "&logtype=" +
+                     + "&cache_code=" + URLEncoder.encode(cache.getCode(), "UTF-8") + "&logtype=" +
                      URLEncoder.encode("Found it", "UTF-8") + "&comment=" +
                      URLEncoder.encode(log.getText(), "UTF-8") + "&when=" +
                      URLEncoder.encode(log.getDateStrISO8601NoTime(), "UTF-8");
@@ -374,8 +356,7 @@ public class OKAPI
 
 
     public static Coordinate getHomeCoordinates(User user)
-        throws MalFormedException, IOException, InterruptedException,
-               ExecutionException
+        throws MalFormedException, IOException, InterruptedException, ExecutionException
     {
         String uuid = getUUID(user);
 

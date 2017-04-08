@@ -31,19 +31,16 @@ public class Util
      * this user
      * @throws Throwable
      */
-    public static void findOnOc(final AtomicBoolean stopBackgroundThread,
-                                final CacheListModel clm,
-                                final OutputInterface oi, final User user,
-                                final String uuid, final ShadowList shadowList)
-        throws Throwable
+    public static void findOnOc(final AtomicBoolean stopBackgroundThread, final CacheListModel clm,
+                                final OutputInterface oi, final User user, final String uuid,
+                                final ShadowList shadowList) throws Throwable
     {
         // Number of found duplicates
         final AtomicInteger count = new AtomicInteger(0);
         // Thread pool which establishes 10 concurrent connection at max
         final ExecutorService service = Executors.newFixedThreadPool(10);
         // Variable to hold an exception throwable if one is thrown by a task
-        final AtomicReference<Throwable> throwable =
-            new AtomicReference<Throwable>(null);
+        final AtomicReference<Throwable> throwable = new AtomicReference<Throwable>(null);
 
         // Create a task for each cache and submit it to the thread pool.
         for (final Geocache gc : clm.getList())
@@ -71,12 +68,10 @@ public class Util
                         //
                         // Search shadow list for a duplicate
                         //
-                        String ocCode =
-                            shadowList.getMatchingOCCode(gc.getCode());
+                        String ocCode = shadowList.getMatchingOCCode(gc.getCode());
                         if (ocCode != null)
                         {
-                            Geocache oc =
-                                OKAPI.getCache(ocCode, okapiCacheDetailsCache);
+                            Geocache oc = OKAPI.getCache(ocCode, okapiCacheDetailsCache);
                             OKAPI.completeCacheDetails(oc);
                             OKAPI.updateFoundStatus(user, oc);
                             // Found status can not be retrieved without user
@@ -94,9 +89,8 @@ public class Util
                         // Search for duplicate using the OKAPI
                         //
                         double searchRadius = gc.hasVolatileStart() ? 1 : 0.05;
-                        ArrayList<Geocache> similar =
-                            OKAPI.getCachesAround(user, uuid, gc, searchRadius,
-                                                  okapiCacheDetailsCache);
+                        ArrayList<Geocache> similar = OKAPI.getCachesAround(
+                            user, uuid, gc, searchRadius, okapiCacheDetailsCache);
                         boolean match = false;
                         for (Geocache oc : similar)
                             if (GeocacheComparator.similar(oc, gc))
@@ -121,9 +115,8 @@ public class Util
         }
 
         service.shutdown();
-        service.awaitTermination(
-            Long.MAX_VALUE,
-            TimeUnit.DAYS); // incredible high delay but still ugly
+        service.awaitTermination(Long.MAX_VALUE,
+                                 TimeUnit.DAYS); // incredible high delay but still ugly
 
         if (throwable.get() != null)
             throw throwable.get();

@@ -20,10 +20,7 @@ import javax.swing.BoxLayout;
 
 public abstract class CacheListFilterPanel extends JPanel
 {
-    protected enum FILTER_TYPE {
-        BETWEEN_ONE_AND_FIVE_FILTER_VALUE,
-        SINGLE_FILTER_VALUE
-    }
+    protected enum FILTER_TYPE { BETWEEN_ONE_AND_FIVE_FILTER_VALUE, SINGLE_FILTER_VALUE }
 
     private static final long serialVersionUID = -6181151635761995945L;
 
@@ -133,8 +130,7 @@ public abstract class CacheListFilterPanel extends JPanel
         }
         else if (filterType == FILTER_TYPE.BETWEEN_ONE_AND_FIVE_FILTER_VALUE)
         {
-            final Double[] values = {1.0, 1.5, 2.0, 2.5, 3.0,
-                                     3.5, 4.0, 4.5, 5.0};
+            final Double[] values = {1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0};
             panel_1 = new JPanel();
             panel_4.add(panel_1);
             panel_1.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));

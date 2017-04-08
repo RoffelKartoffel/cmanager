@@ -15,8 +15,7 @@ import cmanager.xml.Element.XMLAttribute;
 
 public class Parser
 {
-    public static Element parse(String element)
-        throws MalFormedException, IOException
+    public static Element parse(String element) throws MalFormedException, IOException
     {
         return parse(new BufferReadAbstraction(element), null);
     }
@@ -28,8 +27,7 @@ public class Parser
     }
 
 
-    private static Element parse(BufferReadAbstraction element,
-                                 XMLParserCallbackI callback)
+    private static Element parse(BufferReadAbstraction element, XMLParserCallbackI callback)
         throws MalFormedException, IOException
     {
         Element root = new Element();
@@ -55,8 +53,7 @@ public class Parser
     }
 
     private static void parse(BufferReadAbstraction element, Element root,
-                              XMLParserCallbackI callback)
-        throws MalFormedException, IOException
+                              XMLParserCallbackI callback) throws MalFormedException, IOException
     {
         removeDelimiter(element);
         if (element.charAt(0) != '<')
@@ -85,8 +82,7 @@ public class Parser
 
                 parse(element, root, callback);
 
-                if (callback != null &&
-                    !callback.elementLocatedCorrectly(ele, root))
+                if (callback != null && !callback.elementLocatedCorrectly(ele, root))
                     throw new MalFormedException();
 
                 if (callback == null || !callback.elementFinished(ele))
@@ -130,8 +126,7 @@ public class Parser
                     throw new MalFormedException();
             }
 
-            StringBuilder body =
-                new StringBuilder(element.substring(0, startOfName));
+            StringBuilder body = new StringBuilder(element.substring(0, startOfName));
             trim(body);
             ele.setBody(body.toString());
 
@@ -142,8 +137,7 @@ public class Parser
                 element.deleteChar();
                 element.deleteChar();
 
-                if (!element.substring(0, elementName.length() + 1)
-                         .equals(elementName + ">"))
+                if (!element.substring(0, elementName.length() + 1).equals(elementName + ">"))
                     throw new MalFormedException();
                 element.deleteUntil(elementName.length() + 1);
 
@@ -201,17 +195,14 @@ public class Parser
     }
 
 
-    public static void xmlToBuffer(Element root, OutputStream os)
-        throws Throwable
+    public static void xmlToBuffer(Element root, OutputStream os) throws Throwable
     {
         shrinkXMLTree(root);
 
-        BufferedWriter bw =
-            new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
         BufferWriteAbstraction bwa = new BufferWriteAbstraction.BW(bw);
 
-        bwa.append(
-            "<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>\n");
+        bwa.append("<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>\n");
         for (Element child : root.getChildren())
             xmlToBuffer(child, bwa, 0);
 
@@ -236,8 +227,7 @@ public class Parser
             {
                 final int start = perProcess * c;
 
-                int tmp = perProcess * (c + 1) < listSize ? perProcess * (c + 1)
-                                                          : listSize;
+                int tmp = perProcess * (c + 1) < listSize ? perProcess * (c + 1) : listSize;
                 if (c == cores - 1)
                     tmp = listSize;
                 final int end = tmp;
@@ -255,8 +245,7 @@ public class Parser
                         catch (Throwable ex)
                         {
                             Thread t = Thread.currentThread();
-                            t.getUncaughtExceptionHandler().uncaughtException(
-                                t, ex);
+                            t.getUncaughtExceptionHandler().uncaughtException(t, ex);
                         }
                     }
                 }));
@@ -269,15 +258,13 @@ public class Parser
         while (it.hasNext())
         {
             Element child = it.next();
-            if (child.getUnescapedBody() == null &&
-                child.getAttributes().size() == 0 &&
+            if (child.getUnescapedBody() == null && child.getAttributes().size() == 0 &&
                 child.getChildren().size() == 0)
                 it.remove();
         }
     }
 
-    private static void xmlToBuffer(final Element e,
-                                    final BufferWriteAbstraction bwa,
+    private static void xmlToBuffer(final Element e, final BufferWriteAbstraction bwa,
                                     final int level) throws Throwable
     {
         String name = e.getName();
@@ -289,8 +276,7 @@ public class Parser
             if (a.getValue() != null)
             {
                 bwa.append(" ").append(a.getName()).append("=\"");
-                bwa.append(StringEscapeUtils.escapeXml11(a.getValue()))
-                    .append("\"");
+                bwa.append(StringEscapeUtils.escapeXml11(a.getValue())).append("\"");
             }
         }
 
@@ -316,9 +302,7 @@ public class Parser
                 {
                     final int start = perProcess * c;
 
-                    int tmp = perProcess * (c + 1) < listSize
-                                  ? perProcess * (c + 1)
-                                  : listSize;
+                    int tmp = perProcess * (c + 1) < listSize ? perProcess * (c + 1) : listSize;
                     if (c == cores - 1)
                         tmp = listSize;
                     final int end = tmp;
@@ -329,8 +313,7 @@ public class Parser
                             try
                             {
                                 BufferWriteAbstraction.SB bwa_thread =
-                                    new BufferWriteAbstraction.SB(
-                                        new StringBuilder());
+                                    new BufferWriteAbstraction.SB(new StringBuilder());
                                 for (int i = start; i < end; i++)
                                 {
                                     Element child = e.getChildren().get(i);
@@ -344,8 +327,7 @@ public class Parser
                                             bwa.append(bwa_thread);
                                         }
                                         bwa_thread =
-                                            new BufferWriteAbstraction.SB(
-                                                new StringBuilder());
+                                            new BufferWriteAbstraction.SB(new StringBuilder());
                                     }
                                 }
 
@@ -357,8 +339,7 @@ public class Parser
                             catch (Throwable ex)
                             {
                                 Thread t = Thread.currentThread();
-                                t.getUncaughtExceptionHandler()
-                                    .uncaughtException(t, ex);
+                                t.getUncaughtExceptionHandler().uncaughtException(t, ex);
                             }
                         }
                     }));
@@ -382,8 +363,7 @@ public class Parser
         }
     }
 
-    private static void appendSpaces(BufferWriteAbstraction bwa, int faktor)
-        throws IOException
+    private static void appendSpaces(BufferWriteAbstraction bwa, int faktor) throws IOException
     {
         for (int i = 0; i < faktor * 2; i++)
             bwa.append(" ");

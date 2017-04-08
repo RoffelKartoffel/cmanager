@@ -33,16 +33,14 @@ public class FileHelper
         return e;
     }
 
-    public static void serialize(Serializable s, OutputStream os)
-        throws IOException
+    public static void serialize(Serializable s, OutputStream os) throws IOException
     {
         ObjectOutputStream out = new ObjectOutputStream(os);
         out.writeObject(s);
         out.close();
     }
 
-    public static void serializeToFile(Serializable s, String path)
-        throws IOException
+    public static void serializeToFile(Serializable s, String path) throws IOException
     {
         FileOutputStream fileOut = new FileOutputStream(path);
         serialize(s, fileOut);
@@ -50,8 +48,7 @@ public class FileHelper
     }
 
 
-    public static void processFiles(String path, FileHelper.InputAction ia)
-        throws Throwable
+    public static void processFiles(String path, FileHelper.InputAction ia) throws Throwable
     {
         String lcPath = path.toLowerCase();
         if (lcPath.endsWith(".zip"))
@@ -62,15 +59,12 @@ public class FileHelper
             processFile(path, ia);
     }
 
-    private static void processGZipFile(String path, FileHelper.InputAction ia)
-        throws Throwable
+    private static void processGZipFile(String path, FileHelper.InputAction ia) throws Throwable
     {
         processGZipFile(new FileInputStream(path), ia);
     }
 
-    private static void processGZipFile(InputStream is,
-                                        FileHelper.InputAction ia)
-        throws Throwable
+    private static void processGZipFile(InputStream is, FileHelper.InputAction ia) throws Throwable
     {
         // get the gzip file content
         GZIPInputStream gzis = new GZIPInputStream(is);
@@ -78,15 +72,12 @@ public class FileHelper
         gzis.close();
     }
 
-    private static void processZipFile(String path, FileHelper.InputAction ia)
-        throws Throwable
+    private static void processZipFile(String path, FileHelper.InputAction ia) throws Throwable
     {
         processZipFile(new FileInputStream(path), ia);
     }
 
-    private static void processZipFile(InputStream is,
-                                       FileHelper.InputAction ia)
-        throws Throwable
+    private static void processZipFile(InputStream is, FileHelper.InputAction ia) throws Throwable
     {
 
         // get the zip file content
@@ -110,8 +101,7 @@ public class FileHelper
         //    	zis.close();	// crashes on recursion
     }
 
-    private static void processFile(String path, FileHelper.InputAction ia)
-        throws Throwable
+    private static void processFile(String path, FileHelper.InputAction ia) throws Throwable
     {
         ia.process(new FileInputStream(path));
     }

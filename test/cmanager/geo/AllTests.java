@@ -5,8 +5,7 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses(
-    {CoordinateTest.class, GeocacheComparatorTest.class, GeocacheTest.class})
+@SuiteClasses({CoordinateTest.class, GeocacheComparatorTest.class, GeocacheTest.class})
 public class AllTests
 {
 }

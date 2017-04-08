@@ -41,8 +41,7 @@ public class Main
             String message = "You are using the outdated Java version 1.7.\n"
                              + "Please update to Java 1.8 or later.";
 
-            JOptionPane.showMessageDialog(null, message, "Java version",
-                                          JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, message, "Java version", JOptionPane.ERROR_MESSAGE);
             System.exit(0);
         }
     }

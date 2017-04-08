@@ -47,8 +47,7 @@ public class CopyLogDialog extends JFrame
      * Create the dialog.
      */
     public CopyLogDialog(final Geocache gc, final Geocache oc,
-                         final ArrayList<GeocacheLog> logsCopied,
-                         final ShadowList shadowList)
+                         final ArrayList<GeocacheLog> logsCopied, final ShadowList shadowList)
     {
         setResizable(true);
 
@@ -110,8 +109,7 @@ public class CopyLogDialog extends JFrame
                 gbc_button.insets = new Insets(0, 10, 10, 0);
                 gbc.gridy++;
 
-                final JButton button =
-                    new JButton("Copy log to opencaching.de");
+                final JButton button = new JButton("Copy log to opencaching.de");
                 if (GeocacheComparator.calculateSimilarity(gc, oc) != 1)
                     button.setBackground(Color.RED);
                 button.addActionListener(new ActionListener() {
@@ -144,8 +142,7 @@ public class CopyLogDialog extends JFrame
 
                     private Geocache oc;
                     private GeocacheLog log;
-                    public ActionListener set(Geocache oc, GeocacheLog log,
-                                              boolean dagerousMatch)
+                    public ActionListener set(Geocache oc, GeocacheLog log, boolean dagerousMatch)
                     {
                         this.oc = oc;
                         this.log = log;

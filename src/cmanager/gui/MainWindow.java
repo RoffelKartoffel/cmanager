@@ -91,8 +91,8 @@ public class MainWindow extends JFrame
         mnWindows = new JMenu("Windows");
 
         JMenuItem mntmOpen = new JMenuItem("Open");
-        mntmOpen.setAccelerator(KeyStroke.getKeyStroke(
-            'O', Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+        mntmOpen.setAccelerator(
+            KeyStroke.getKeyStroke('O', Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
         mntmOpen.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0)
             {
@@ -101,22 +101,21 @@ public class MainWindow extends JFrame
         });
 
         JMenuItem mntmNew = new JMenuItem("New");
-        mntmNew.setAccelerator(KeyStroke.getKeyStroke(
-            'N', Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+        mntmNew.setAccelerator(
+            KeyStroke.getKeyStroke('N', Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
         mntmNew.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e)
             {
                 try
                 {
-                    CacheListController.newCLC(
-                        desktopPane, mnWindows,
-                        (Location)comboBox.getSelectedItem(), null,
-                        new CacheListView.RunLocationDialogI() {
-                            public void openDialog(Geocache g)
-                            {
-                                openLocationDialog(g);
-                            }
-                        });
+                    CacheListController.newCLC(desktopPane, mnWindows,
+                                               (Location)comboBox.getSelectedItem(), null,
+                                               new CacheListView.RunLocationDialogI() {
+                                                   public void openDialog(Geocache g)
+                                                   {
+                                                       openLocationDialog(g);
+                                                   }
+                                               });
                 }
                 catch (Throwable e1)
                 {
@@ -130,8 +129,7 @@ public class MainWindow extends JFrame
         mntmExit.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0)
             {
-                THIS.dispatchEvent(
-                    new WindowEvent(THIS, WindowEvent.WINDOW_CLOSING));
+                THIS.dispatchEvent(new WindowEvent(THIS, WindowEvent.WINDOW_CLOSING));
             }
         });
 
@@ -147,8 +145,8 @@ public class MainWindow extends JFrame
         });
 
         final JMenuItem mntmSave = new JMenuItem("Save");
-        mntmSave.setAccelerator(KeyStroke.getKeyStroke(
-            'S', Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+        mntmSave.setAccelerator(
+            KeyStroke.getKeyStroke('S', Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
         mntmSave.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0)
             {
@@ -208,9 +206,8 @@ public class MainWindow extends JFrame
                     catch (Exception ex)
                     {
                         JOptionPane.showMessageDialog(
-                            null,
-                            "Testing the OKAPI token failed. Check your settings!",
-                            "Error", JOptionPane.ERROR_MESSAGE);
+                            null, "Testing the OKAPI token failed. Check your settings!", "Error",
+                            JOptionPane.ERROR_MESSAGE);
                         return;
                     }
 
@@ -228,19 +225,18 @@ public class MainWindow extends JFrame
         mnList.add(separator_2);
 
         JMenuItem mntmCopy = new JMenuItem("Copy");
-        mntmCopy.setAccelerator(KeyStroke.getKeyStroke(
-            'C', Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+        mntmCopy.setAccelerator(
+            KeyStroke.getKeyStroke('C', Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
         mntmCopy.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0)
             {
-                CacheListController.getTopViewCacheController(desktopPane)
-                    .copySelected();
+                CacheListController.getTopViewCacheController(desktopPane).copySelected();
             }
         });
 
         JMenuItem mntmSelectAll = new JMenuItem("Select All / none");
-        mntmSelectAll.setAccelerator(KeyStroke.getKeyStroke(
-            'A', Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+        mntmSelectAll.setAccelerator(
+            KeyStroke.getKeyStroke('A', Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
         mntmSelectAll.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e)
             {
@@ -252,8 +248,8 @@ public class MainWindow extends JFrame
         mnList.add(mntmSelectAll);
 
         JMenuItem mntInvertSelection = new JMenuItem("Invert Selection");
-        mntInvertSelection.setAccelerator(KeyStroke.getKeyStroke(
-            'I', Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+        mntInvertSelection.setAccelerator(
+            KeyStroke.getKeyStroke('I', Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
         mntInvertSelection.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e)
             {
@@ -269,37 +265,34 @@ public class MainWindow extends JFrame
         mnList.add(mntmCopy);
 
         JMenuItem mntmPaste = new JMenuItem("Paste");
-        mntmPaste.setAccelerator(KeyStroke.getKeyStroke(
-            'V', Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+        mntmPaste.setAccelerator(
+            KeyStroke.getKeyStroke('V', Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
         mntmPaste.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e)
             {
-                CacheListController.getTopViewCacheController(desktopPane)
-                    .pasteSelected();
+                CacheListController.getTopViewCacheController(desktopPane).pasteSelected();
             }
         });
 
         JMenuItem mntmCut = new JMenuItem("Cut");
-        mntmCut.setAccelerator(KeyStroke.getKeyStroke(
-            'X', Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+        mntmCut.setAccelerator(
+            KeyStroke.getKeyStroke('X', Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
         mntmCut.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e)
             {
-                CacheListController.getTopViewCacheController(desktopPane)
-                    .cutSelected();
+                CacheListController.getTopViewCacheController(desktopPane).cutSelected();
             }
         });
         mnList.add(mntmCut);
         mnList.add(mntmPaste);
 
         final JMenuItem mntmDeleteSelectedCaches = new JMenuItem("Delete");
-        mntmDeleteSelectedCaches.setAccelerator(KeyStroke.getKeyStroke(
-            'D', Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+        mntmDeleteSelectedCaches.setAccelerator(
+            KeyStroke.getKeyStroke('D', Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
         mntmDeleteSelectedCaches.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0)
             {
-                CacheListController.getTopViewCacheController(desktopPane)
-                    .removeSelectedCaches();
+                CacheListController.getTopViewCacheController(desktopPane).removeSelectedCaches();
             }
         });
         mnList.add(mntmDeleteSelectedCaches);
@@ -308,13 +301,12 @@ public class MainWindow extends JFrame
         mnList.add(separator_7);
 
         final JMenuItem mntmUndoAction = new JMenuItem("Undo");
-        mntmUndoAction.setAccelerator(KeyStroke.getKeyStroke(
-            'Z', Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+        mntmUndoAction.setAccelerator(
+            KeyStroke.getKeyStroke('Z', Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
         mntmUndoAction.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0)
             {
-                CacheListController.getTopViewCacheController(desktopPane)
-                    .replayLastUndoAction();
+                CacheListController.getTopViewCacheController(desktopPane).replayLastUndoAction();
             }
         });
         mnList.add(mntmUndoAction);
@@ -323,9 +315,8 @@ public class MainWindow extends JFrame
         mnList.addMenuListener(new MenuAdapter() {
             public void menuSelected(MenuEvent e)
             {
-                mntmUndoAction.setEnabled(
-                    CacheListController.getTopViewCacheController(desktopPane)
-                        .getUndoActionCount() > 0);
+                mntmUndoAction.setEnabled(CacheListController.getTopViewCacheController(desktopPane)
+                                              .getUndoActionCount() > 0);
             }
         });
 
@@ -397,8 +388,7 @@ public class MainWindow extends JFrame
         JSeparator separator_5 = new JSeparator();
         mnFilter.add(separator_5);
 
-        JMenuItem mntmDeleteCachesNot =
-            new JMenuItem("Delete Caches NOT in Filter");
+        JMenuItem mntmDeleteCachesNot = new JMenuItem("Delete Caches NOT in Filter");
         mntmDeleteCachesNot.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e)
             {
@@ -413,10 +403,8 @@ public class MainWindow extends JFrame
         mntmDistance.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0)
             {
-                final CacheListFilterDistance filter =
-                    new CacheListFilterDistance();
-                CacheListController.getTopViewCacheController(desktopPane)
-                    .addFilter(filter);
+                final CacheListFilterDistance filter = new CacheListFilterDistance();
+                CacheListController.getTopViewCacheController(desktopPane).addFilter(filter);
 
                 // set current location
                 filter.setLocation((Location)comboBox.getSelectedItem());
@@ -425,8 +413,7 @@ public class MainWindow extends JFrame
                 final ActionListener al = new ActionListener() {
                     public void actionPerformed(ActionEvent e)
                     {
-                        filter.setLocation(
-                            (Location)comboBox.getSelectedItem());
+                        filter.setLocation((Location)comboBox.getSelectedItem());
                     }
                 };
                 comboBox.addActionListener(al);
@@ -494,8 +481,7 @@ public class MainWindow extends JFrame
         btnUpdate.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e)
             {
-                DesktopUtil.openUrl(
-                    "https://github.com/RoffelKartoffel/cmanager/releases");
+                DesktopUtil.openUrl("https://github.com/RoffelKartoffel/cmanager/releases");
             }
         });
         panelUpdate.add(btnUpdate);
@@ -512,8 +498,7 @@ public class MainWindow extends JFrame
                 // Display update message if there is a nother version available
                 if (chunks.get(0))
                 {
-                    setText("Version " + Updates.getNewVersion() + " of " +
-                            Constants.APP_NAME +
+                    setText("Version " + Updates.getNewVersion() + " of " + Constants.APP_NAME +
                             " is available. Click here for updates!");
                     btnUpdate.setVisible(true);
                 }
@@ -588,8 +573,7 @@ public class MainWindow extends JFrame
                     public void run()
                     {
                         CacheListController.reopenPersitantCLCs(
-                            desktopPane, mnWindows,
-                            (Location)comboBox.getSelectedItem(),
+                            desktopPane, mnWindows, (Location)comboBox.getSelectedItem(),
                             new CacheListView.RunLocationDialogI() {
                                 public void openDialog(Geocache g)
                                 {
@@ -629,15 +613,13 @@ public class MainWindow extends JFrame
 
     private void propagateSelectedLocationComboboxEntry()
     {
-        CacheListController.setAllRelativeLocations(
-            (Location)comboBox.getSelectedItem());
+        CacheListController.setAllRelativeLocations((Location)comboBox.getSelectedItem());
         repaint(); // update front most table
     }
 
     private void saveFile(boolean saveAs)
     {
-        final CacheListController clc =
-            CacheListController.getTopViewCacheController(desktopPane);
+        final CacheListController clc = CacheListController.getTopViewCacheController(desktopPane);
 
         String strPath = null;
         try
@@ -654,8 +636,7 @@ public class MainWindow extends JFrame
             if (strPath == null)
                 strPath = Settings.getS(Settings.Key.FILE_CHOOSER_LOAD_GPX);
             final JFileChooser chooser = new JFileChooser(strPath);
-            chooser.setFileFilter(
-                new FileNameExtensionFilter("ZIP Archive", "zip"));
+            chooser.setFileFilter(new FileNameExtensionFilter("ZIP Archive", "zip"));
 
             if (chooser.showSaveDialog(THIS) != JFileChooser.APPROVE_OPTION)
                 return;
@@ -672,8 +653,8 @@ public class MainWindow extends JFrame
             if (f.exists() && !f.isDirectory())
             {
                 int dialogResult = JOptionPane.showConfirmDialog(
-                    THIS, "The choosen file already exists. Overwrite it?",
-                    "Warning", JOptionPane.YES_NO_OPTION);
+                    THIS, "The choosen file already exists. Overwrite it?", "Warning",
+                    JOptionPane.YES_NO_OPTION);
                 if (dialogResult == JOptionPane.NO_OPTION)
                 {
                     return;
@@ -711,8 +692,8 @@ public class MainWindow extends JFrame
         String lastPath = Settings.getS(Settings.Key.FILE_CHOOSER_LOAD_GPX);
         final JFileChooser chooser = new JFileChooser(lastPath);
         chooser.setDialogType(JFileChooser.OPEN_DIALOG);
-        chooser.setFileFilter(new FileNameExtensionFilter(
-            "GPS Exchange Format | ZIP Archive", "gpx", "zip"));
+        chooser.setFileFilter(
+            new FileNameExtensionFilter("GPS Exchange Format | ZIP Archive", "gpx", "zip"));
 
         if (chooser.showOpenDialog(THIS) == JFileChooser.APPROVE_OPTION)
         {
@@ -726,21 +707,18 @@ public class MainWindow extends JFrame
                     try
                     {
                         if (createNewList)
-                            CacheListController.newCLC(
-                                desktopPane, mnWindows,
-                                (Location)comboBox.getSelectedItem(),
-                                chooser.getSelectedFile().getAbsolutePath(),
-                                new CacheListView.RunLocationDialogI() {
-                                    public void openDialog(Geocache g)
-                                    {
-                                        openLocationDialog(g);
-                                    }
-                                });
+                            CacheListController.newCLC(desktopPane, mnWindows,
+                                                       (Location)comboBox.getSelectedItem(),
+                                                       chooser.getSelectedFile().getAbsolutePath(),
+                                                       new CacheListView.RunLocationDialogI() {
+                                                           public void openDialog(Geocache g)
+                                                           {
+                                                               openLocationDialog(g);
+                                                           }
+                                                       });
                         else
-                            CacheListController
-                                .getTopViewCacheController(desktopPane)
-                                .addFromFile(chooser.getSelectedFile()
-                                                 .getAbsolutePath());
+                            CacheListController.getTopViewCacheController(desktopPane)
+                                .addFromFile(chooser.getSelectedFile().getAbsolutePath());
                     }
                     catch (Throwable e)
                     {
@@ -753,8 +731,7 @@ public class MainWindow extends JFrame
     }
 
 
-    public static void actionWithWaitDialog(final Runnable task,
-                                            Component parent)
+    public static void actionWithWaitDialog(final Runnable task, Component parent)
     {
         final WaitDialog wait = new WaitDialog();
         ;
@@ -787,9 +764,7 @@ public class MainWindow extends JFrame
     private void findOnOC(User user, String uuid)
     {
         DuplicateDialog dd = new DuplicateDialog(
-            CacheListController.getTopViewCacheController(desktopPane)
-                .getModel(),
-            user, uuid);
+            CacheListController.getTopViewCacheController(desktopPane).getModel(), user, uuid);
 
         FrameHelper.showModalFrame(dd, THIS);
     }

@@ -150,8 +150,7 @@ public class Element
         public XMLAttribute(String name, Boolean value)
         {
             this.name = name;
-            this.value =
-                value == null ? null : value == true ? "True" : "False";
+            this.value = value == null ? null : value == true ? "True" : "False";
         }
 
         public XMLAttribute(String name, Integer value)

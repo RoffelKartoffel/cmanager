@@ -24,8 +24,7 @@ public class GeocacheTest
 
         try
         {
-            new Geocache("OC1234", null, new Coordinate(0, 0), 0.0, 0.0,
-                         "Tradi");
+            new Geocache("OC1234", null, new Coordinate(0, 0), 0.0, 0.0, "Tradi");
             fail("Exception expected");
         }
         catch (NullPointerException e)
@@ -43,8 +42,7 @@ public class GeocacheTest
 
         try
         {
-            new Geocache("OC1234", "test", new Coordinate(0, 0), null, 0.0,
-                         "Tradi");
+            new Geocache("OC1234", "test", new Coordinate(0, 0), null, 0.0, "Tradi");
             fail("Exception expected");
         }
         catch (NullPointerException e)
@@ -53,8 +51,7 @@ public class GeocacheTest
 
         try
         {
-            new Geocache("OC1234", "test", new Coordinate(0, 0), 0.0, null,
-                         "Tradi");
+            new Geocache("OC1234", "test", new Coordinate(0, 0), 0.0, null, "Tradi");
             fail("Exception expected");
         }
         catch (NullPointerException e)
@@ -63,8 +60,7 @@ public class GeocacheTest
 
         try
         {
-            new Geocache("OC1234", "test", new Coordinate(0, 0), 0.0, 0.0,
-                         null);
+            new Geocache("OC1234", "test", new Coordinate(0, 0), 0.0, 0.0, null);
             fail("Exception expected");
         }
         catch (NullPointerException e)
@@ -75,29 +71,25 @@ public class GeocacheTest
     @Test public void testDataInterpretation()
     {
         Geocache g;
-        g = new Geocache("OC1234", "test", new Coordinate(0, 0), 0.0, 0.0,
-                         "Tradi");
+        g = new Geocache("OC1234", "test", new Coordinate(0, 0), 0.0, 0.0, "Tradi");
         assertTrue(g.isOC());
         assertFalse(g.isGC());
         assertFalse(g.hasVolatileStart());
         assertEquals(g.getURL(), "https://www.opencaching.de/OC1234");
 
-        g = new Geocache("GC1234", "test", new Coordinate(0, 0), 0.0, 0.0,
-                         "Tradi");
+        g = new Geocache("GC1234", "test", new Coordinate(0, 0), 0.0, 0.0, "Tradi");
         assertTrue(g.isGC());
         assertFalse(g.isOC());
         assertFalse(g.hasVolatileStart());
         assertEquals(g.getURL(), "https://www.geocaching.com/geocache/GC1234");
 
-        g = new Geocache("OC1234", "test", new Coordinate(0, 0), 0.0, 0.0,
-                         "Mystery");
+        g = new Geocache("OC1234", "test", new Coordinate(0, 0), 0.0, 0.0, "Mystery");
         assertTrue(g.hasVolatileStart());
     }
 
     @Test public void testSerialize()
     {
-        Geocache g = new Geocache("OC1234", "test", new Coordinate(0, 0), 0.0,
-                                  0.0, "Tradi");
+        Geocache g = new Geocache("OC1234", "test", new Coordinate(0, 0), 0.0, 0.0, "Tradi");
         Geocache g2 = ObjectHelper.copy(g);
         assertTrue(g2 != null);
     }

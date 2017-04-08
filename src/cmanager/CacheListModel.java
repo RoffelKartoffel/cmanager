@@ -359,15 +359,12 @@ public class CacheListModel
                 return owner != null ? owner : "";
             case 8:
                 return relativeLocation != null
-                    ? g.getCoordinate().distanceHaversineRounded(
-                          relativeLocation)
+                    ? g.getCoordinate().distanceHaversineRounded(relativeLocation)
                     : "";
             case 9:
-                DateTime date = g.getMostRecentFoundLog(
-                    Settings.getS(Settings.Key.GC_USERNAME),
-                    Settings.getS(Settings.Key.OC_USERNAME));
-                return date == null ? null
-                                    : GeocacheLog.getDateStrISO8601NoTime(date);
+                DateTime date = g.getMostRecentFoundLog(Settings.getS(Settings.Key.GC_USERNAME),
+                                                        Settings.getS(Settings.Key.OC_USERNAME));
+                return date == null ? null : GeocacheLog.getDateStrISO8601NoTime(date);
 
             default:
                 return null;

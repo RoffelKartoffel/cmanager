@@ -15,14 +15,12 @@ public class Updates
         {
             try
             {
-                String url =
-                    "https://github.com/RoffelKartoffel/cmanager/releases.atom";
+                String url = "https://github.com/RoffelKartoffel/cmanager/releases.atom";
                 String http = HTTP.get(url);
 
                 Element root = Parser.parse(http);
 
-                Element child =
-                    root.getChild("feed").getChild("entry").getChild("title");
+                Element child = root.getChild("feed").getChild("entry").getChild("title");
                 newVersion = child.getUnescapedBody();
 
                 updateAvailable = !newVersion.equals(Version.VERSION);

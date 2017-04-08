@@ -13,16 +13,15 @@ class BufferReadAbstraction
     private char[] cbuf = new char[LIMIT];
     private BufferedReader br;
 
-    public BufferReadAbstraction(InputStream is)
-        throws UnsupportedEncodingException
+    public BufferReadAbstraction(InputStream is) throws UnsupportedEncodingException
     {
         br = new BufferedReader(new InputStreamReader(is, "UTF-8"), LIMIT);
     }
 
     public BufferReadAbstraction(String s) throws UnsupportedEncodingException
     {
-        br = new BufferedReader(new InputStreamReader(
-            new ByteArrayInputStream(s.getBytes("UTF-8")), "UTF-8"));
+        br = new BufferedReader(
+            new InputStreamReader(new ByteArrayInputStream(s.getBytes("UTF-8")), "UTF-8"));
     }
 
 

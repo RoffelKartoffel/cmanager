@@ -44,8 +44,7 @@ public class AboutDialog extends JDialog
         gbl_contentPanel.columnWidths = new int[] {0, 0};
         gbl_contentPanel.rowHeights = new int[] {0, 0, 0, 0, 0, 0, 0};
         gbl_contentPanel.columnWeights = new double[] {1.0, Double.MIN_VALUE};
-        gbl_contentPanel.rowWeights =
-            new double[] {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+        gbl_contentPanel.rowWeights = new double[] {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
         contentPanel.setLayout(gbl_contentPanel);
         {
             JLabel lblAppname = new JLabel(Constants.APP_NAME);
@@ -76,8 +75,8 @@ public class AboutDialog extends JDialog
             contentPanel.add(lblAuthor, gbc_lblAuthor);
         }
         {
-            JLabel lblThanks = new JLabel(
-                "Special thanks to the great people at forum.opencaching.de .");
+            JLabel lblThanks =
+                new JLabel("Special thanks to the great people at forum.opencaching.de .");
             lblThanks.setFont(new Font("Dialog", Font.PLAIN, 12));
             GridBagConstraints gbc_lblThanks = new GridBagConstraints();
             gbc_lblThanks.insets = new Insets(80, 0, 5, 0);

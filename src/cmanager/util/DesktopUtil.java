@@ -24,8 +24,7 @@ public class DesktopUtil
         }
         else
         {
-            Exception e =
-                new UnsupportedOperationException("Desktop unsupported.");
+            Exception e = new UnsupportedOperationException("Desktop unsupported.");
             ExceptionPanel.showErrorDialog(e);
         }
     }

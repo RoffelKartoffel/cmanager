@@ -159,6 +159,46 @@ public class OKAPI
         return g;
     }
 
+    public static Geocache completeCacheDetails(Geocache g) throws Exception
+    {
+        final String url =
+            "https://www.opencaching.de/okapi/services/caches/geocache"
+            + "?consumer_key=" + CONSUMER_API_KEY + "&format=xmlmap2"
+            + "&cache_code=" + g.getCode() + "&fields=" +
+            URLEncoder.encode("size2|short_description|description|owner|hint2", "UTF-8");
+        final String http = HTTP.get(url);
+
+        String size = null;
+        String shortDescription = null;
+        String description = null;
+        String owner = null;
+        String hint = null;
+
+        Element root = Parser.parse(http);
+        for (Element e : root.getChild("object").getChildren())
+        {
+            if (e.attrIs("key", "size2"))
+                size = e.getUnescapedBody();
+            if (e.attrIs("key", "short_description"))
+                shortDescription = e.getUnescapedBody();
+            if (e.attrIs("key", "description"))
+                description = e.getUnescapedBody();
+            if (e.attrIs("key", "hint2"))
+                hint = e.getUnescapedBody();
+            if (e.attrIs("key", "owner"))
+                for (Element ee : e.getChildren())
+                    if (ee.attrIs("key", "username"))
+                        owner = ee.getUnescapedBody();
+        }
+
+        g.setContainer(size);
+        g.setListing_short(shortDescription);
+        g.setListing(description);
+        g.setOwner(owner);
+        g.setHint(hint);
+        return g;
+    }
+
     public static ArrayList<Geocache> getCachesAround(User user, String excludeUUID, Geocache g,
                                                       double searchRadius,
                                                       ArrayList<Geocache> okapiRuntimeCache)
@@ -237,44 +277,6 @@ public class OKAPI
         oc.setIsFound(isFound);
     }
 
-    public static Geocache completeCacheDetails(Geocache g) throws Exception
-    {
-        String http =
-            HTTP.get("https://www.opencaching.de/okapi/services/caches/geocache"
-                     + "?consumer_key=" + CONSUMER_API_KEY + "&format=xmlmap2"
-                     + "&cache_code=" + g.getCode() + "&fields=" +
-                     URLEncoder.encode("size2|short_description|description|owner|hint2", "UTF-8"));
-
-        String size = null;
-        String shortDescription = null;
-        String description = null;
-        String owner = null;
-        String hint = null;
-
-        Element root = Parser.parse(http);
-        for (Element e : root.getChild("object").getChildren())
-        {
-            if (e.attrIs("key", "size2"))
-                size = e.getUnescapedBody();
-            if (e.attrIs("key", "short_description"))
-                shortDescription = e.getUnescapedBody();
-            if (e.attrIs("key", "description"))
-                description = e.getUnescapedBody();
-            if (e.attrIs("key", "hint2"))
-                hint = e.getUnescapedBody();
-            if (e.attrIs("key", "owner"))
-                for (Element ee : e.getChildren())
-                    if (ee.attrIs("key", "username"))
-                        owner = ee.getUnescapedBody();
-        }
-
-        g.setContainer(size);
-        g.setListing_short(shortDescription);
-        g.setListing(description);
-        g.setOwner(owner);
-        g.setHint(hint);
-        return g;
-    }
 
     private static OAuth10aService getOAuthService()
     {

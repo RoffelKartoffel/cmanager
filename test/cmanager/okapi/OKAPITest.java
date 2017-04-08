@@ -26,6 +26,11 @@ public class OKAPITest
     @Test public void testGetCache() throws Exception
     {
         {
+            Geocache g = OKAPI.getCache("This.Cache.Does.Not.Exist");
+            assertTrue(g == null);
+        }
+
+        {
             Geocache g = OKAPI.getCache("OC827D");
             assertTrue(g != null);
             assertEquals(g.getName(), "auftanken");

@@ -71,58 +71,75 @@ public class OKAPI
                            + "?consumer_key=" + CONSUMER_API_KEY + "&format=xmlmap2"
                            + "&cache_code=" + code +
                            "&fields=code|name|location|type|gc_code|difficulty|terrain|status";
-        final String http = HTTP.get(url);
 
-        String name = null;
-        Coordinate coordinate = null;
-        Double difficulty = null;
-        Double terrain = null;
-        String type = null;
-        String code_gc = null;
-        String status = null;
-
-        Element root = Parser.parse(http);
-        for (Element e : root.getChild("object").getChildren())
+        try
         {
-            if (e.attrIs("key", "name"))
-                name = e.getUnescapedBody();
-            if (e.attrIs("key", "location"))
-            {
-                String[] parts = e.getUnescapedBody().split("\\|");
-                coordinate = new Coordinate(parts[0], parts[1]);
-            }
-            if (e.attrIs("key", "type"))
-                type = e.getUnescapedBody();
-            if (e.attrIs("key", "gc_code"))
-                code_gc = e.getUnescapedBody();
-            if (e.attrIs("key", "difficulty"))
-                difficulty = e.getBodyD();
-            if (e.attrIs("key", "terrain"))
-                terrain = e.getBodyD();
-            if (e.attrIs("key", "status"))
-                status = e.getUnescapedBody();
-        }
+            final String http = HTTP.get(url);
 
-        Geocache g = new Geocache(code, name, coordinate, difficulty, terrain, type);
-        g.setCodeGC(code_gc);
-        if (status != null)
-            if (status.equals("Available"))
+            String name = null;
+            Coordinate coordinate = null;
+            Double difficulty = null;
+            Double terrain = null;
+            String type = null;
+            String code_gc = null;
+            String status = null;
+
+            Element root = Parser.parse(http);
+            for (Element e : root.getChild("object").getChildren())
             {
-                g.setAvailable(true);
+                if (e.attrIs("key", "name"))
+                    name = e.getUnescapedBody();
+                if (e.attrIs("key", "location"))
+                {
+                    String[] parts = e.getUnescapedBody().split("\\|");
+                    coordinate = new Coordinate(parts[0], parts[1]);
+                }
+                if (e.attrIs("key", "type"))
+                    type = e.getUnescapedBody();
+                if (e.attrIs("key", "gc_code"))
+                    code_gc = e.getUnescapedBody();
+                if (e.attrIs("key", "difficulty"))
+                    difficulty = e.getBodyD();
+                if (e.attrIs("key", "terrain"))
+                    terrain = e.getBodyD();
+                if (e.attrIs("key", "status"))
+                    status = e.getUnescapedBody();
+            }
+
+            Geocache g = new Geocache(code, name, coordinate, difficulty, terrain, type);
+            g.setCodeGC(code_gc);
+            if (status != null)
+                if (status.equals("Available"))
+                {
+                    g.setAvailable(true);
+                    g.setArchived(false);
+                }
+            if (status.equals("Temporarily unavailable"))
+            {
+                g.setAvailable(false);
                 g.setArchived(false);
             }
-        if (status.equals("Temporarily unavailable"))
-        {
-            g.setAvailable(false);
-            g.setArchived(false);
-        }
-        if (status.equals("Archived"))
-        {
-            g.setAvailable(false);
-            g.setArchived(true);
-        }
+            if (status.equals("Archived"))
+            {
+                g.setAvailable(false);
+                g.setArchived(true);
+            }
 
-        return g;
+            return g;
+        }
+        catch (UnexpectedStatusCode e)
+        {
+            if (e.is400BadRequest())
+            {
+                ErrorDocument okapiError = new Gson().fromJson(e.getBody(), ErrorDocument.class);
+                if (okapiError.getParameter().equals("cache_code"))
+                {
+                    return null;
+                }
+            }
+
+            throw e;
+        }
     }
 
 
@@ -137,18 +154,19 @@ public class OKAPI
         }
 
         Geocache g = getCache(code);
-
-        synchronized (okapiRuntimeCache)
+        if (g != null)
         {
-            okapiRuntimeCache.add(g);
-            Collections.sort(okapiRuntimeCache, new Comparator<Geocache>() {
-                public int compare(Geocache o1, Geocache o2)
-                {
-                    return o1.getCode().compareTo(o2.getCode());
-                }
-            });
+            synchronized (okapiRuntimeCache)
+            {
+                okapiRuntimeCache.add(g);
+                Collections.sort(okapiRuntimeCache, new Comparator<Geocache>() {
+                    public int compare(Geocache o1, Geocache o2)
+                    {
+                        return o1.getCode().compareTo(o2.getCode());
+                    }
+                });
+            }
         }
-
         return g;
     }
 
@@ -195,7 +213,10 @@ public class OKAPI
                         {
                             String code = ee.getUnescapedBody();
                             Geocache g = getCacheBuffered(code, okapiCacheDetailsCache);
-                            caches.add(g);
+                            if (g != null)
+                            {
+                                caches.add(g);
+                            }
                         }
                         catch (MalFormedException ex)
                         {

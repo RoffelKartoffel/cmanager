@@ -27,6 +27,7 @@ import cmanager.gui.ExceptionPanel;
 import cmanager.network.HTTP;
 import cmanager.network.UnexpectedStatusCode;
 import cmanager.okapi.responses.ErrorDocument;
+import cmanager.okapi.responses.UUIDDocument;
 import cmanager.util.DesktopUtil;
 import cmanager.xml.Element;
 import cmanager.xml.Parser;
@@ -41,19 +42,15 @@ public class OKAPI
     {
         String url =
             "https://www.opencaching.de/okapi/services/users/by_username"
-            + "?consumer_key=" + CONSUMER_API_KEY + "&format=xmlmap2"
-            + "&username=" + URLEncoder.encode(username, "UTF-8") +
-            "&fields=uuid";
+            + "?consumer_key=" + CONSUMER_API_KEY + "&username=" +
+            URLEncoder.encode(username, "UTF-8") + "&fields=uuid";
         try
         {
-            String http = HTTP.get(url);
+            String response = HTTP.get(url);
 
-            Element root = Parser.parse(http);
-            for (Element e : root.getChild("object").getChildren())
-                if (e.attrIs("key", "uuid"))
-                    return e.getUnescapedBody();
-
-            return null;
+            UUIDDocument document =
+                new Gson().fromJson(response, UUIDDocument.class);
+            return document.getUuid();
         }
         catch (UnexpectedStatusCode e)
         {

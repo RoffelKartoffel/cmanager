@@ -26,6 +26,7 @@ import cmanager.geo.GeocacheLog;
 import cmanager.gui.ExceptionPanel;
 import cmanager.network.HTTP;
 import cmanager.network.UnexpectedStatusCode;
+import cmanager.okapi.responses.CacheDocument;
 import cmanager.okapi.responses.ErrorDocument;
 import cmanager.okapi.responses.UUIDDocument;
 import cmanager.util.DesktopUtil;
@@ -68,61 +69,49 @@ public class OKAPI
     public static Geocache getCache(String code) throws Exception
     {
         final String url = "https://www.opencaching.de/okapi/services/caches/geocache"
-                           + "?consumer_key=" + CONSUMER_API_KEY + "&format=xmlmap2"
-                           + "&cache_code=" + code +
+                           + "?consumer_key=" + CONSUMER_API_KEY + "&cache_code=" + code +
                            "&fields=code|name|location|type|gc_code|difficulty|terrain|status";
 
         try
         {
             final String http = HTTP.get(url);
 
-            String name = null;
-            Coordinate coordinate = null;
-            Double difficulty = null;
-            Double terrain = null;
-            String type = null;
-            String code_gc = null;
-            String status = null;
-
-            Element root = Parser.parse(http);
-            for (Element e : root.getChild("object").getChildren())
+            CacheDocument document = new Gson().fromJson(http, CacheDocument.class);
+            if (document == null)
             {
-                if (e.attrIs("key", "name"))
-                    name = e.getUnescapedBody();
-                if (e.attrIs("key", "location"))
-                {
-                    String[] parts = e.getUnescapedBody().split("\\|");
-                    coordinate = new Coordinate(parts[0], parts[1]);
-                }
-                if (e.attrIs("key", "type"))
-                    type = e.getUnescapedBody();
-                if (e.attrIs("key", "gc_code"))
-                    code_gc = e.getUnescapedBody();
-                if (e.attrIs("key", "difficulty"))
-                    difficulty = e.getBodyD();
-                if (e.attrIs("key", "terrain"))
-                    terrain = e.getBodyD();
-                if (e.attrIs("key", "status"))
-                    status = e.getUnescapedBody();
+                return null;
             }
 
-            Geocache g = new Geocache(code, name, coordinate, difficulty, terrain, type);
-            g.setCodeGC(code_gc);
+            Coordinate coordinate = null;
+            if (document.getLocation() != null)
+            {
+                String[] parts = document.getLocation().split("\\|");
+                coordinate = new Coordinate(parts[0], parts[1]);
+            }
+
+            Geocache g =
+                new Geocache(code, document.getName(), coordinate, document.getDifficulty(),
+                             document.getTerrain(), document.getType());
+            g.setCodeGC(document.getGc_code());
+
+            String status = document.getStatus();
             if (status != null)
-                if (status.equals("Available"))
+            {
+                if (status.equals("Archived"))
+                {
+                    g.setAvailable(false);
+                    g.setArchived(true);
+                }
+                else if (status.equals("Temporarily unavailable"))
+                {
+                    g.setAvailable(false);
+                    g.setArchived(false);
+                }
+                else if (status.equals("Available"))
                 {
                     g.setAvailable(true);
                     g.setArchived(false);
                 }
-            if (status.equals("Temporarily unavailable"))
-            {
-                g.setAvailable(false);
-                g.setArchived(false);
-            }
-            if (status.equals("Archived"))
-            {
-                g.setAvailable(false);
-                g.setArchived(true);
             }
 
             return g;

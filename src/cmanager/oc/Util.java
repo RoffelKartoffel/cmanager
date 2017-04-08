@@ -18,7 +18,7 @@ import cmanager.okapi.User;
 public class Util
 {
 
-    static final ArrayList<Geocache> okapiCacheDetailsCache = new ArrayList<>();
+    static final ArrayList<Geocache> okapiRuntimeCache = new ArrayList<>();
 
     /**
      *
@@ -71,7 +71,7 @@ public class Util
                         String ocCode = shadowList.getMatchingOCCode(gc.getCode());
                         if (ocCode != null)
                         {
-                            Geocache oc = OKAPI.getCache(ocCode, okapiCacheDetailsCache);
+                            Geocache oc = OKAPI.getCacheBuffered(ocCode, okapiRuntimeCache);
                             OKAPI.completeCacheDetails(oc);
                             OKAPI.updateFoundStatus(user, oc);
                             // Found status can not be retrieved without user
@@ -89,8 +89,8 @@ public class Util
                         // Search for duplicate using the OKAPI
                         //
                         double searchRadius = gc.hasVolatileStart() ? 1 : 0.05;
-                        ArrayList<Geocache> similar = OKAPI.getCachesAround(
-                            user, uuid, gc, searchRadius, okapiCacheDetailsCache);
+                        ArrayList<Geocache> similar =
+                            OKAPI.getCachesAround(user, uuid, gc, searchRadius, okapiRuntimeCache);
                         boolean match = false;
                         for (Geocache oc : similar)
                             if (GeocacheComparator.similar(oc, gc))

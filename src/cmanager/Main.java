@@ -12,9 +12,6 @@ import cmanager.util.ForkUtil;
 
 public class Main
 {
-    //	private static final String OC_TEST_CACHE = "OC827D";
-
-
     public static void main(String[] args)
     {
         nagToUpdateFromJava7();

@@ -36,8 +36,8 @@ import cmanager.xml.Parser;
 
 public class OKAPI
 {
-    private final static String CONSUMER_API_KEY = Keys.get_CONSUMER_API_KEY();
-    private final static String CONSUMER_SECRET_KEY = Keys.get_CONSUMER_SECRET_KEY();
+    private final static String CONSUMER_API_KEY = ConsumerKeys.get_CONSUMER_API_KEY();
+    private final static String CONSUMER_SECRET_KEY = ConsumerKeys.get_CONSUMER_SECRET_KEY();
 
     public static String usernameToUUID(String username) throws Exception
     {

@@ -1,7 +1,7 @@
 .gradle
 build
 bin
-src/cmanager/okapi/Keys.java
+src/cmanager/okapi/ConsumerKeys.java
 src/cmanager/global/Version.java
 /oc_okapi.properties
 .settings

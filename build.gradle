@@ -23,7 +23,7 @@ sourceSets {
 
 task OcOkapiKeys(type: Copy) {
     assert file(project.ocOkapiPropertiesFile).exists() : project.ocOkapiPropertiesFile + ' file missing. Please follow the instructions in README.md'
-    outputs.files 'src/cmanager/okapi/Keys.java'
+    outputs.files 'src/cmanager/okapi/ConsumerKeys.java'
     Properties properties = new Properties()
     File propertiesFile = new File(project.ocOkapiPropertiesFile)
     properties.load(propertiesFile.newDataInputStream())
@@ -40,7 +40,7 @@ task OcOkapiKeys(type: Copy) {
 task Version(type: Copy) {
     outputs.files 'src/cmanager/global/Version.java'
     from('templates') {
-        exclude '**/*.properties', 'Keys.java'
+        exclude '**/*.properties', 'ConsumerKeys.java'
     }
     expand(
         version: version
@@ -51,7 +51,7 @@ task Version(type: Copy) {
 compileJava.dependsOn OcOkapiKeys, Version
 
 clean.doFirst {
-    delete 'src/cmanager/okapi/Keys.java'
+    delete 'src/cmanager/okapi/ConsumerKeys.java'
     delete 'src/cmanager/global/Version.java'
 }
 

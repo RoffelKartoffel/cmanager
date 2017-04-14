@@ -26,6 +26,7 @@ import cmanager.geo.GeocacheLog;
 import cmanager.gui.ExceptionPanel;
 import cmanager.network.HTTP;
 import cmanager.network.UnexpectedStatusCode;
+import cmanager.okapi.responses.CacheDetailsDocument;
 import cmanager.okapi.responses.CacheDocument;
 import cmanager.okapi.responses.ErrorDocument;
 import cmanager.okapi.responses.UUIDDocument;
@@ -45,9 +46,9 @@ public class OKAPI
                      URLEncoder.encode(username, "UTF-8") + "&fields=uuid";
         try
         {
-            String response = HTTP.get(url);
+            final String http = HTTP.get(url);
 
-            UUIDDocument document = new Gson().fromJson(response, UUIDDocument.class);
+            UUIDDocument document = new Gson().fromJson(http, UUIDDocument.class);
             return document.getUuid();
         }
         catch (UnexpectedStatusCode e)
@@ -163,39 +164,17 @@ public class OKAPI
     {
         final String url =
             "https://www.opencaching.de/okapi/services/caches/geocache"
-            + "?consumer_key=" + CONSUMER_API_KEY + "&format=xmlmap2"
-            + "&cache_code=" + g.getCode() + "&fields=" +
+            + "?consumer_key=" + CONSUMER_API_KEY + "&cache_code=" + g.getCode() + "&fields=" +
             URLEncoder.encode("size2|short_description|description|owner|hint2", "UTF-8");
         final String http = HTTP.get(url);
 
-        String size = null;
-        String shortDescription = null;
-        String description = null;
-        String owner = null;
-        String hint = null;
+        CacheDetailsDocument document = new Gson().fromJson(http, CacheDetailsDocument.class);
 
-        Element root = Parser.parse(http);
-        for (Element e : root.getChild("object").getChildren())
-        {
-            if (e.attrIs("key", "size2"))
-                size = e.getUnescapedBody();
-            if (e.attrIs("key", "short_description"))
-                shortDescription = e.getUnescapedBody();
-            if (e.attrIs("key", "description"))
-                description = e.getUnescapedBody();
-            if (e.attrIs("key", "hint2"))
-                hint = e.getUnescapedBody();
-            if (e.attrIs("key", "owner"))
-                for (Element ee : e.getChildren())
-                    if (ee.attrIs("key", "username"))
-                        owner = ee.getUnescapedBody();
-        }
-
-        g.setContainer(size);
-        g.setListing_short(shortDescription);
-        g.setListing(description);
-        g.setOwner(owner);
-        g.setHint(hint);
+        g.setContainer(document.getSize2());
+        g.setListing_short(document.getShort_description());
+        g.setListing(document.getDescription());
+        g.setOwner(document.getOwnerUsername());
+        g.setHint(document.getHint2());
         return g;
     }
 

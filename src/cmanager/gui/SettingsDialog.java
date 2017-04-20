@@ -9,6 +9,7 @@ import cmanager.global.Constants;
 import cmanager.okapi.User;
 import cmanager.okapi.OKAPI;
 import cmanager.settings.Settings;
+import cmanager.util.DesktopUtil;
 import cmanager.util.ForkUtil;
 
 import java.awt.FlowLayout;
@@ -143,7 +144,20 @@ public class SettingsDialog extends JDialog
             {
                 try
                 {
-                    User.getOKAPIUser().requestOkapiToken();
+                    User.getOKAPIUser().requestOkapiToken(new OKAPI.RequestAuthorizationCallbackI() {
+                        @Override public String getPin()
+                        {
+                            String pin = JOptionPane.showInputDialog(
+                                null,
+                                "Please look at your browser and enter the PIN from opencaching.de");
+                            return pin;
+                        }
+
+                        @Override public void redirectUrlToUser(String authUrl)
+                        {
+                            DesktopUtil.openUrl(authUrl);
+                        }
+                    });
                     displayOkapiTokenStatus();
                 }
                 catch (Throwable e)

@@ -5,6 +5,7 @@ import java.util.concurrent.ExecutionException;
 
 import com.github.scribejava.core.model.OAuth1AccessToken;
 
+import cmanager.okapi.OKAPI.RequestAuthorizationCallbackI;
 import cmanager.settings.Settings;
 
 public class User
@@ -48,9 +49,10 @@ public class User
         return okapiAccessToken;
     }
 
-    public void requestOkapiToken() throws IOException, InterruptedException, ExecutionException
+    public void requestOkapiToken(RequestAuthorizationCallbackI callback)
+        throws IOException, InterruptedException, ExecutionException
     {
-        okapiAccessToken = OKAPI.requestAuthorization();
+        okapiAccessToken = OKAPI.requestAuthorization(callback);
         if (okapiAccessToken != null)
         {
             Settings.set(Settings.Key.OKAPI_TOKEN, okapiAccessToken.getToken());

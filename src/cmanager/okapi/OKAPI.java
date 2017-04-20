@@ -7,8 +7,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.concurrent.ExecutionException;
 
-import javax.swing.JOptionPane;
-
 import com.google.gson.Gson;
 
 import com.github.scribejava.core.builder.ServiceBuilder;
@@ -30,7 +28,6 @@ import cmanager.okapi.responses.CacheDetailsDocument;
 import cmanager.okapi.responses.CacheDocument;
 import cmanager.okapi.responses.ErrorDocument;
 import cmanager.okapi.responses.UUIDDocument;
-import cmanager.util.DesktopUtil;
 import cmanager.xml.Element;
 import cmanager.xml.Parser;
 
@@ -265,7 +262,12 @@ public class OKAPI
             .build(new OAUTH());
     }
 
-    public static OAuth1AccessToken requestAuthorization()
+    public interface RequestAuthorizationCallbackI {
+        public void redirectUrlToUser(String authUrl);
+        public String getPin();
+    }
+
+    public static OAuth1AccessToken requestAuthorization(RequestAuthorizationCallbackI callback)
         throws IOException, InterruptedException, ExecutionException
     {
         // Step One: Create the OAuthService object
@@ -276,10 +278,9 @@ public class OKAPI
 
         // Step Three: Making the user validate your request token
         String authUrl = service.getAuthorizationUrl(requestToken);
-        DesktopUtil.openUrl(authUrl);
+        callback.redirectUrlToUser(authUrl);
 
-        String pin = JOptionPane.showInputDialog(
-            null, "Please look at your browser and enter the PIN from opencaching.de");
+        String pin = callback.getPin();
         if (pin == null)
             return null;
 

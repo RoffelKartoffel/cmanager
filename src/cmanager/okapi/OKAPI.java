@@ -39,8 +39,8 @@ public class OKAPI
     public static String usernameToUUID(String username) throws Exception
     {
         String url = "https://www.opencaching.de/okapi/services/users/by_username"
-                     + "?consumer_key=" + CONSUMER_API_KEY + "&username=" +
-                     URLEncoder.encode(username, "UTF-8") + "&fields=uuid";
+                     + "?consumer_key=" + CONSUMER_API_KEY +
+                     "&username=" + URLEncoder.encode(username, "UTF-8") + "&fields=uuid";
         try
         {
             final String http = HTTP.get(url);
@@ -175,28 +175,79 @@ public class OKAPI
         return g;
     }
 
-    public static ArrayList<Geocache> getCachesAround(User user, String excludeUUID, Geocache g,
-                                                      double searchRadius,
+    public interface RequestAuthorizationCallbackI {
+        public void redirectUrlToUser(String authUrl);
+        public String getPin();
+    }
+
+    private static OAuth10aService getOAuthService()
+    {
+        return new ServiceBuilder()
+            .apiKey(CONSUMER_API_KEY)
+            .apiSecret(CONSUMER_SECRET_KEY)
+            .build(new OAUTH());
+    }
+
+    public static OAuth1AccessToken requestAuthorization(RequestAuthorizationCallbackI callback)
+        throws IOException, InterruptedException, ExecutionException
+    {
+        // Step One: Create the OAuthService object
+        OAuth10aService service = getOAuthService();
+
+        // Step Two: Get the request token
+        OAuth1RequestToken requestToken = service.getRequestToken();
+
+        // Step Three: Making the user validate your request token
+        String authUrl = service.getAuthorizationUrl(requestToken);
+        callback.redirectUrlToUser(authUrl);
+
+        String pin = callback.getPin();
+        if (pin == null)
+            return null;
+
+        // Step Four: Get the access Token
+        OAuth1AccessToken accessToken =
+            service.getAccessToken(requestToken, pin); // the requestToken you had from step 2
+
+        return accessToken;
+    }
+
+    public interface TokenProviderI {
+        public OAuth1AccessToken getOkapiToken();
+    }
+
+    private static String authedHttpGet(final TokenProviderI tp, final String url)
+        throws InterruptedException, ExecutionException, IOException
+    {
+        OAuth10aService service = getOAuthService();
+        OAuthRequest request = new OAuthRequest(Verb.GET, url);
+        service.signRequest(tp.getOkapiToken(), request); // the access token from step 4
+        final Response response = service.execute(request);
+        return response.getBody();
+    }
+
+    public static ArrayList<Geocache> getCachesAround(TokenProviderI tp, String excludeUUID,
+                                                      Geocache g, double searchRadius,
                                                       ArrayList<Geocache> okapiRuntimeCache)
         throws Exception
     {
         Coordinate c = g.getCoordinate();
-        return getCachesAround(user, excludeUUID, c.getLat(), c.getLon(), searchRadius,
+        return getCachesAround(tp, excludeUUID, c.getLat(), c.getLon(), searchRadius,
                                okapiRuntimeCache);
     }
 
-    public static ArrayList<Geocache> getCachesAround(User user, String excludeUUID, Double lat,
-                                                      Double lon, Double searchRadius,
+    public static ArrayList<Geocache> getCachesAround(TokenProviderI tp, String excludeUUID,
+                                                      Double lat, Double lon, Double searchRadius,
                                                       ArrayList<Geocache> okapiCacheDetailsCache)
         throws Exception
     {
         ArrayList<Geocache> caches = new ArrayList<Geocache>();
 
-        boolean useOAuth = user != null && excludeUUID != null;
+        boolean useOAuth = tp != null && excludeUUID != null;
         String url = "https://www.opencaching.de/okapi/services/caches/search/nearest"
                      + "?consumer_key=" + CONSUMER_API_KEY + "&format=xmlmap2"
-                     + "&center=" + lat.toString() + "|" + lon.toString() + "&radius=" +
-                     searchRadius.toString() +
+                     + "&center=" + lat.toString() + "|" + lon.toString() +
+                     "&radius=" + searchRadius.toString() +
                      "&status=Available|Temporarily%20unavailable|Archived"
                      + "&limit=500" + (useOAuth ? "&ignored_status=notignored_only" : "") +
                      (useOAuth ? "&not_found_by=" + excludeUUID : "");
@@ -204,7 +255,7 @@ public class OKAPI
         String http;
         if (useOAuth)
         {
-            http = authedHttpGet(user, url);
+            http = authedHttpGet(tp, url);
         }
         else
             http = HTTP.get(url);
@@ -232,16 +283,16 @@ public class OKAPI
     }
 
 
-    public static void updateFoundStatus(User user, Geocache oc)
+    public static void updateFoundStatus(TokenProviderI tp, Geocache oc)
         throws MalFormedException, IOException, InterruptedException, ExecutionException
     {
-        if (user == null)
+        if (tp == null)
             return;
 
         String url = "https://www.opencaching.de/okapi/services/caches/geocache"
                      + "?consumer_key=" + CONSUMER_API_KEY + "&format=xmlmap2"
                      + "&cache_code=" + oc.getCode() + "&fields=is_found";
-        String http = authedHttpGet(user, url);
+        String http = authedHttpGet(tp, url);
 
         Boolean isFound = null;
         Element root = Parser.parse(http);
@@ -253,61 +304,13 @@ public class OKAPI
         oc.setIsFound(isFound);
     }
 
-
-    private static OAuth10aService getOAuthService()
-    {
-        return new ServiceBuilder()
-            .apiKey(CONSUMER_API_KEY)
-            .apiSecret(CONSUMER_SECRET_KEY)
-            .build(new OAUTH());
-    }
-
-    public interface RequestAuthorizationCallbackI {
-        public void redirectUrlToUser(String authUrl);
-        public String getPin();
-    }
-
-    public static OAuth1AccessToken requestAuthorization(RequestAuthorizationCallbackI callback)
-        throws IOException, InterruptedException, ExecutionException
-    {
-        // Step One: Create the OAuthService object
-        OAuth10aService service = getOAuthService();
-
-        // Step Two: Get the request token
-        OAuth1RequestToken requestToken = service.getRequestToken();
-
-        // Step Three: Making the user validate your request token
-        String authUrl = service.getAuthorizationUrl(requestToken);
-        callback.redirectUrlToUser(authUrl);
-
-        String pin = callback.getPin();
-        if (pin == null)
-            return null;
-
-        // Step Four: Get the access Token
-        OAuth1AccessToken accessToken =
-            service.getAccessToken(requestToken, pin); // the requestToken you had from step 2
-
-        return accessToken;
-    }
-
-    private static String authedHttpGet(final User user, final String url)
-        throws InterruptedException, ExecutionException, IOException
-    {
-        OAuth10aService service = getOAuthService();
-        OAuthRequest request = new OAuthRequest(Verb.GET, url);
-        service.signRequest(user.getOkapiToken(), request); // the access token from step 4
-        final Response response = service.execute(request);
-        return response.getBody();
-    }
-
-    public static String getUUID(User user)
+    public static String getUUID(TokenProviderI tp)
         throws MalFormedException, IOException, InterruptedException, ExecutionException
     {
         String url = "https://www.opencaching.de/okapi/services/users/user"
                      + "?format=xmlmap2"
                      + "&fields=uuid";
-        String http = authedHttpGet(user, url);
+        String http = authedHttpGet(tp, url);
 
         // <object><string
         // key="uuid">0b34f954-ee48-11e4-89ed-525400e33611</string></object>
@@ -319,13 +322,13 @@ public class OKAPI
         return null;
     }
 
-    public static String getUsername(User user)
+    public static String getUsername(TokenProviderI tp)
         throws MalFormedException, IOException, InterruptedException, ExecutionException
     {
         String url = "https://www.opencaching.de/okapi/services/users/user"
                      + "?format=xmlmap2"
                      + "&fields=username";
-        String http = authedHttpGet(user, url);
+        String http = authedHttpGet(tp, url);
 
         // <object><string
         // key="uuid">0b34f954-ee48-11e4-89ed-525400e33611</string></object>
@@ -337,16 +340,16 @@ public class OKAPI
         return null;
     }
 
-    public static void postLog(User user, Geocache cache, GeocacheLog log)
+    public static void postLog(TokenProviderI tp, Geocache cache, GeocacheLog log)
         throws MalFormedException, InterruptedException, ExecutionException, IOException
     {
         String url = "https://www.opencaching.de/okapi/services/logs/submit"
                      + "?format=xmlmap2"
-                     + "&cache_code=" + URLEncoder.encode(cache.getCode(), "UTF-8") + "&logtype=" +
-                     URLEncoder.encode("Found it", "UTF-8") + "&comment=" +
-                     URLEncoder.encode(log.getText(), "UTF-8") + "&when=" +
-                     URLEncoder.encode(log.getDateStrISO8601NoTime(), "UTF-8");
-        authedHttpGet(user, url);
+                     + "&cache_code=" + URLEncoder.encode(cache.getCode(), "UTF-8") +
+                     "&logtype=" + URLEncoder.encode("Found it", "UTF-8") +
+                     "&comment=" + URLEncoder.encode(log.getText(), "UTF-8") +
+                     "&when=" + URLEncoder.encode(log.getDateStrISO8601NoTime(), "UTF-8");
+        authedHttpGet(tp, url);
 
         //		String http = authedHttpGet(user, url);
         //		object><boolean key="success">true</boolean><string
@@ -356,16 +359,16 @@ public class OKAPI
     }
 
 
-    public static Coordinate getHomeCoordinates(User user)
+    public static Coordinate getHomeCoordinates(TokenProviderI tp)
         throws MalFormedException, IOException, InterruptedException, ExecutionException
     {
-        String uuid = getUUID(user);
+        String uuid = getUUID(tp);
 
         String url = "https://www.opencaching.de/okapi/services/users/user"
                      + "?format=xmlmap2"
                      + "&fields=home_location"
                      + "&user_uuid=" + uuid;
-        String http = authedHttpGet(user, url);
+        String http = authedHttpGet(tp, url);
 
         // <object><string key="home_location">53.047117|9.608</string></object>
         Element root = Parser.parse(http);

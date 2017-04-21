@@ -6,9 +6,10 @@ import java.util.concurrent.ExecutionException;
 import com.github.scribejava.core.model.OAuth1AccessToken;
 
 import cmanager.okapi.OKAPI.RequestAuthorizationCallbackI;
+import cmanager.okapi.OKAPI.TokenProviderI;
 import cmanager.settings.Settings;
 
-public class User
+public class User implements TokenProviderI
 {
     private static User user = null;
 

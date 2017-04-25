@@ -110,8 +110,8 @@ public class ShadowList
 
         String url = "https://www.opencaching.de/api/gc2oc.php"
                      + "?report=1"
-                     + "&ocwp=" + oc.getCode() + "&gcwp=" + gc.getCode() + "&source=" +
-                     Constants.APP_NAME + "+" + Version.VERSION;
+                     + "&ocwp=" + oc.getCode() + "&gcwp=" + gc.getCode() +
+                     "&source=" + Constants.APP_NAME + "+" + Version.VERSION;
 
         // post
         HTTP.get(url);

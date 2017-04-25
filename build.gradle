@@ -28,7 +28,7 @@ task OcOkapiKeys(type: Copy) {
     File propertiesFile = new File(project.ocOkapiPropertiesFile)
     properties.load(propertiesFile.newDataInputStream())
     from('templates') {
-        exclude '**/*.properties', 'Version.java'
+        exclude '**/*.properties', 'TestClientCredentials.java', 'Version.java'
     }
     expand(
         oc_okapi_de_consumer_key: properties.getProperty('oc_okapi_de_consumer_key'),
@@ -37,10 +37,26 @@ task OcOkapiKeys(type: Copy) {
     into 'src/cmanager/okapi'
 }
 
+task OcTestClientLogin(type: Copy) {
+    assert file(project.ocOkapiPropertiesFile).exists() : project.ocOkapiPropertiesFile + ' file missing. Please follow the instructions in README.md'
+    outputs.files 'test/cmanager/okapi/helper/TestClientCredentials.java'
+    Properties properties = new Properties()
+    File propertiesFile = new File(project.ocOkapiPropertiesFile)
+    properties.load(propertiesFile.newDataInputStream())
+    from('templates') {
+        exclude '**/*.properties', 'ConsumerKeys.java', 'Version.java'
+    }
+    expand(
+        oc_test_client_username: properties.getProperty('oc_test_client_username'),
+        oc_test_client_password: properties.getProperty('oc_test_client_password')
+    )
+    into 'test/cmanager/okapi/helper'
+}
+
 task Version(type: Copy) {
     outputs.files 'src/cmanager/global/Version.java'
     from('templates') {
-        exclude '**/*.properties', 'ConsumerKeys.java'
+        exclude '**/*.properties', 'ConsumerKeys.java', 'TestClientCredentials.java'
     }
     expand(
         version: version
@@ -49,10 +65,12 @@ task Version(type: Copy) {
 }
 
 compileJava.dependsOn OcOkapiKeys, Version
+compileTestJava.dependsOn OcTestClientLogin
 
 clean.doFirst {
     delete 'src/cmanager/okapi/ConsumerKeys.java'
     delete 'src/cmanager/global/Version.java'
+    delete 'test/cmanager/okapi/helper/TestClientCredentials.java'
 }
 
 repositories {

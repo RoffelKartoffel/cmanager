@@ -3,6 +3,7 @@ build
 bin
 src/cmanager/okapi/ConsumerKeys.java
 src/cmanager/global/Version.java
+test/cmanager/okapi/helper/TestClientCredentials.java
 /oc_okapi.properties
 .settings
 .classpath

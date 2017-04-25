@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import cmanager.geo.Coordinate;
 import cmanager.geo.Geocache;
+import cmanager.okapi.helper.TestClient;
 
 public class OKAPITest
 {
@@ -90,5 +91,26 @@ public class OKAPITest
             }
             assertEquals(g.getHint(), "");
         }
+    }
+
+    private TestClient tc = null;
+
+    @Test public void testTestClientIsOkay() throws Exception
+    {
+        tc = new TestClient();
+        boolean loggedIn = tc.login();
+        assertTrue(loggedIn);
+    }
+
+
+    @Test public void testTestClientRequestToken() throws Exception
+    {
+        if (tc == null)
+        {
+            System.out.println("TestClient is unintialized. Initializing...");
+            testTestClientIsOkay();
+        }
+
+        assertTrue(tc.requestToken() != null);
     }
 }

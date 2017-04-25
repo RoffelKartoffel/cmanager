@@ -7,6 +7,7 @@ import org.junit.Test;
 import cmanager.geo.Coordinate;
 import cmanager.geo.Geocache;
 import cmanager.okapi.helper.TestClient;
+import cmanager.okapi.helper.TestClientCredentials;
 
 public class OKAPITest
 {
@@ -112,5 +113,27 @@ public class OKAPITest
         }
 
         assertTrue(tc.requestToken() != null);
+    }
+
+    @Test public void testGetUUID() throws Exception
+    {
+        if (tc == null || tc.getOkapiToken() == null)
+        {
+            System.out.println("OKAPI token is unintialized. Fetching...");
+            testTestClientRequestToken();
+        }
+
+        assertEquals("a912cccd-1c60-11e7-8e90-86c6a7325f31", OKAPI.getUUID(tc));
+    }
+
+    @Test public void testGetUsername() throws Exception
+    {
+        if (tc == null || tc.getOkapiToken() == null)
+        {
+            System.out.println("OKAPI token is unintialized. Fetching...");
+            testTestClientRequestToken();
+        }
+
+        assertEquals(TestClientCredentials.USERNAME, OKAPI.getUsername(tc));
     }
 }

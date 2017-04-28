@@ -16,12 +16,12 @@ public class OKAPITest
     {
         {
             String uuid = OKAPI.usernameToUUID("This.User.Does.Not.Exist");
-            assertEquals(uuid, null);
+            assertEquals(null, uuid);
         }
 
         {
-            String uuid = OKAPI.usernameToUUID("cmanagerTestAccount");
-            assertEquals(uuid, "a912cccd-1c60-11e7-8e90-86c6a7325f31");
+            String uuid = OKAPI.usernameToUUID("cmanagerTestÄccount");
+            assertEquals("a912cccd-1c60-11e7-8e90-86c6a7325f31", uuid);
         }
     }
 

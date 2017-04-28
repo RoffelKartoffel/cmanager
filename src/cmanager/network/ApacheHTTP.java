@@ -50,7 +50,7 @@ public class ApacheHTTP
         throws UnexpectedStatusCode, IOException
     {
         HttpPost httpPost = new HttpPost(url);
-        httpPost.setEntity(new UrlEncodedFormEntity(nvps));
+        httpPost.setEntity(new UrlEncodedFormEntity(nvps, "UTF-8"));
         CloseableHttpResponse response = httpClient.execute(httpPost);
 
         StringBuffer http = new StringBuffer();

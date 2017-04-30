@@ -8,7 +8,8 @@ import cmanager.geo.Coordinate.UnparsableException;
 public class CoordinateTest
 {
 
-    @Test public void test()
+    @Test
+    public void test()
     {
         Coordinate c1 = new Coordinate("1.23", "4.56");
         assertEquals(c1.getLat(), 1.23, 0.0);
@@ -29,7 +30,8 @@ public class CoordinateTest
     }
 
 
-    @Test public void testDistance()
+    @Test
+    public void testDistance()
     {
         Coordinate c1 = new Coordinate(53.09780, 8.74908);
         Coordinate c2 = new Coordinate(53.05735, 8.59148);
@@ -56,7 +58,8 @@ public class CoordinateTest
         parse(string, 53.1073, 8.12945);
     }
 
-    @Test public void testParsing()
+    @Test
+    public void testParsing()
     {
         parse(" N 53° 06.438' E 008° 07.767' (WGS84)");
         parse("  N53° 06.438' E 008° 07.767' (WGS84)");

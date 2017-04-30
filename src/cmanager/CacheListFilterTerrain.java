@@ -15,7 +15,8 @@ public class CacheListFilterTerrain extends CacheListFilterModel
         getLblRechts().setText("max Terrain:");
 
         runDoModelUpdateNow = new Runnable() {
-            @Override public void run()
+            @Override
+            public void run()
             {
                 minTerrain = getValueLeft();
                 maxTerrain = getValueRight();
@@ -23,7 +24,8 @@ public class CacheListFilterTerrain extends CacheListFilterModel
         };
     }
 
-    @Override protected boolean isGood(Geocache g)
+    @Override
+    protected boolean isGood(Geocache g)
     {
         return g.getTerrain() >= minTerrain && g.getTerrain() <= maxTerrain;
     }

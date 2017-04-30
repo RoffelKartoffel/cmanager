@@ -91,7 +91,8 @@ public class GeocacheComparatorTest
     }
 
 
-    @Test public void testMatching()
+    @Test
+    public void testMatching()
     {
         // Real life samples
 
@@ -232,7 +233,8 @@ public class GeocacheComparatorTest
         }
     }
 
-    @Test public void testNotMatching()
+    @Test
+    public void testNotMatching()
     {
         // Real life samples
 

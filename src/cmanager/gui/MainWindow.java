@@ -487,13 +487,15 @@ public class MainWindow extends JFrame
         panelUpdate.add(btnUpdate);
 
         new SwingWorker<Void, Boolean>() {
-            @Override protected Void doInBackground() throws Exception
+            @Override
+            protected Void doInBackground() throws Exception
             {
                 publish(Updates.updateAvailable_block());
                 return null;
             }
 
-            @Override protected void process(List<Boolean> chunks)
+            @Override
+            protected void process(List<Boolean> chunks)
             {
                 // Display update message if there is a nother version available
                 if (chunks.get(0))

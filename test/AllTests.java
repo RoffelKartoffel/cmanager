@@ -5,6 +5,8 @@ import org.junit.runners.Suite.SuiteClasses;
 import cmanager.geo.AllTestsGeo;
 import cmanager.okapi.AllTestsOKAPI;
 
-@RunWith(Suite.class) @SuiteClasses({AllTestsGeo.class, AllTestsOKAPI.class}) public class AllTests
+@RunWith(Suite.class)
+@SuiteClasses({AllTestsGeo.class, AllTestsOKAPI.class})
+public class AllTests
 {
 }

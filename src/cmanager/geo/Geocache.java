@@ -350,7 +350,8 @@ public class Geocache implements Serializable, Comparable<String>
         this.isFound = isFound;
     }
 
-    @Override public int compareTo(String s)
+    @Override
+    public int compareTo(String s)
     {
         return code.compareTo(s);
     }

@@ -140,7 +140,8 @@ public class CacheListController
     private JMenuItem mnWindow = null;
 
 
-    @SuppressWarnings("unused") private CacheListController()
+    @SuppressWarnings("unused")
+    private CacheListController()
     {
     }
 
@@ -172,7 +173,8 @@ public class CacheListController
         }
 
         view.addInternalFrameListener(new InternalFrameAdapter() {
-            @Override public void internalFrameClosing(InternalFrameEvent e)
+            @Override
+            public void internalFrameClosing(InternalFrameEvent e)
             {
                 CacheListController.remove(THIS);
                 mnWindows.remove(mnWindow);

@@ -30,7 +30,8 @@ public class ThreadStore implements UncaughtExceptionHandler
             throw exception;
     }
 
-    @Override public void uncaughtException(Thread t, Throwable e)
+    @Override
+    public void uncaughtException(Thread t, Throwable e)
     {
         exception = e;
     }

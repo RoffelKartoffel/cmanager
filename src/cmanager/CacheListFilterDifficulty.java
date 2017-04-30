@@ -15,7 +15,8 @@ public class CacheListFilterDifficulty extends CacheListFilterModel
         getLblRechts().setText("max Difficulty:");
 
         runDoModelUpdateNow = new Runnable() {
-            @Override public void run()
+            @Override
+            public void run()
             {
                 minD = getValueLeft();
                 maxD = getValueRight();
@@ -23,7 +24,8 @@ public class CacheListFilterDifficulty extends CacheListFilterModel
         };
     }
 
-    @Override protected boolean isGood(Geocache g)
+    @Override
+    protected boolean isGood(Geocache g)
     {
         return g.getDifficulty() >= minD && g.getDifficulty() <= maxD;
     }

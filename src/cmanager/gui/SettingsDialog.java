@@ -145,7 +145,8 @@ public class SettingsDialog extends JDialog
                 try
                 {
                     User.getOKAPIUser().requestOkapiToken(new OKAPI.RequestAuthorizationCallbackI() {
-                        @Override public String getPin()
+                        @Override
+                        public String getPin()
                         {
                             String pin = JOptionPane.showInputDialog(
                                 null,
@@ -153,7 +154,8 @@ public class SettingsDialog extends JDialog
                             return pin;
                         }
 
-                        @Override public void redirectUrlToUser(String authUrl)
+                        @Override
+                        public void redirectUrlToUser(String authUrl)
                         {
                             DesktopUtil.openUrl(authUrl);
                         }

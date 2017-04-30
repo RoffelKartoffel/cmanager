@@ -10,5 +10,6 @@ SpaceInEmptyParentheses: 'false'
 AllowShortFunctionsOnASingleLine: None
 MaxEmptyLinesToKeep: 2
 IndentWidth: 4
+BreakAfterJavaFieldAnnotations: 'true'
 
 ...

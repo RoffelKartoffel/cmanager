@@ -32,7 +32,8 @@ public class CustomJMapViewer extends JMapViewer
     }
 
 
-    @Override public void paint(Graphics g)
+    @Override
+    public void paint(Graphics g)
     {
         super.paint(g);
 

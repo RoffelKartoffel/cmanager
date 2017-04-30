@@ -319,12 +319,14 @@ public class CacheListModel
             return null;
         }
 
-        @Override public int getColumnCount()
+        @Override
+        public int getColumnCount()
         {
             return 10;
         }
 
-        @Override public int getRowCount()
+        @Override
+        public int getRowCount()
         {
             return THIS.size();
         }
@@ -334,7 +336,8 @@ public class CacheListModel
             return THIS.get(row);
         }
 
-        @Override public Object getValueAt(int arg0, int arg1)
+        @Override
+        public Object getValueAt(int arg0, int arg1)
         {
             Geocache g = getObject(arg0);
 

@@ -18,7 +18,8 @@ abstract class BufferWriteAbstraction
     {
         private StringBuilder sb = null;
 
-        @SuppressWarnings("unused") private SB()
+        @SuppressWarnings("unused")
+        private SB()
         {
         }
 
@@ -27,7 +28,8 @@ abstract class BufferWriteAbstraction
             this.sb = sb;
         }
 
-        @Override public BufferWriteAbstraction append(String s)
+        @Override
+        public BufferWriteAbstraction append(String s)
         {
             sb.append(s);
             return this;
@@ -43,7 +45,8 @@ abstract class BufferWriteAbstraction
     {
         private BufferedWriter bw = null;
 
-        @SuppressWarnings("unused") private BW()
+        @SuppressWarnings("unused")
+        private BW()
         {
         }
 
@@ -52,13 +55,15 @@ abstract class BufferWriteAbstraction
             this.bw = bw;
         }
 
-        @Override public BufferWriteAbstraction append(String s) throws IOException
+        @Override
+        public BufferWriteAbstraction append(String s) throws IOException
         {
             bw.write(s);
             return this;
         }
 
-        @Override public String toString()
+        @Override
+        public String toString()
         {
             throw new IllegalAccessError();
         }

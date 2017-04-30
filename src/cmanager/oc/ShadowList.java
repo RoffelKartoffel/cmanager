@@ -56,7 +56,8 @@ public class ShadowList
     {
         final HashMap<String, String> shadowList = new HashMap<>();
         FileHelper.processFiles(SHADOWLIST_PATH, new InputAction() {
-            @Override public void process(InputStream is) throws Throwable
+            @Override
+            public void process(InputStream is) throws Throwable
             {
                 BufferedReader br = new BufferedReader(new InputStreamReader(is));
                 String line = null;

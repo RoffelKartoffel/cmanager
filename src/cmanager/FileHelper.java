@@ -19,7 +19,8 @@ public class FileHelper
         throws IOException, ClassNotFoundException
     {
         ObjectInputStream in = new ObjectInputStream(is);
-        @SuppressWarnings("unchecked") T e = (T)in.readObject();
+        @SuppressWarnings("unchecked")
+        T e = (T)in.readObject();
         in.close();
         return e;
     }

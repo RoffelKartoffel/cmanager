@@ -5,6 +5,8 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 
-@RunWith(Suite.class) @SuiteClasses({OKAPITest.class}) public class AllTestsOKAPI
+@RunWith(Suite.class)
+@SuiteClasses({OKAPITest.class})
+public class AllTestsOKAPI
 {
 }

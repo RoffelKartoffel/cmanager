@@ -8,7 +8,8 @@ import static org.junit.Assert.*;
 
 public class GeocacheTest
 {
-    @Test public void testConstructor()
+    @Test
+    public void testConstructor()
     {
 
         new Geocache("OC1234", "test", new Coordinate(0, 0), 0.0, 0.0, "Tradi");
@@ -68,7 +69,8 @@ public class GeocacheTest
         }
     }
 
-    @Test public void testDataInterpretation()
+    @Test
+    public void testDataInterpretation()
     {
         Geocache g;
         g = new Geocache("OC1234", "test", new Coordinate(0, 0), 0.0, 0.0, "Tradi");
@@ -87,7 +89,8 @@ public class GeocacheTest
         assertTrue(g.hasVolatileStart());
     }
 
-    @Test public void testSerialize()
+    @Test
+    public void testSerialize()
     {
         Geocache g = new Geocache("OC1234", "test", new Coordinate(0, 0), 0.0, 0.0, "Tradi");
         Geocache g2 = ObjectHelper.copy(g);

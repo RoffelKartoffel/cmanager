@@ -157,7 +157,8 @@ public class CacheListView extends JInternalFrame
         mapController.setMovementMouseButton(MouseEvent.BUTTON2);
 
         mapViewer.addMouseListener(new MouseAdapter() {
-            @Override public void mouseClicked(MouseEvent e)
+            @Override
+            public void mouseClicked(MouseEvent e)
             {
                 super.mouseClicked(e);
 
@@ -176,7 +177,8 @@ public class CacheListView extends JInternalFrame
             }
         });
         mapViewer.addMouseMotionListener(new MouseAdapter() {
-            @Override public void mouseMoved(MouseEvent e)
+            @Override
+            public void mouseMoved(MouseEvent e)
             {
 
                 Point p = e.getPoint();

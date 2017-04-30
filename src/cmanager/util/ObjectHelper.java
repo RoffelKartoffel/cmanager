@@ -8,7 +8,8 @@ import java.io.ObjectOutputStream;
 
 public class ObjectHelper
 {
-    @SuppressWarnings("unchecked") public static <T> T copy(T o)
+    @SuppressWarnings("unchecked")
+    public static <T> T copy(T o)
     {
         T result = null;
 

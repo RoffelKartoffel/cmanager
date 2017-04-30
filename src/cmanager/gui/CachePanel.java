@@ -157,14 +157,16 @@ public class CachePanel extends javax.swing.JPanel
         initComponents();
 
         this.addComponentListener(new ComponentAdapter() {
-            @Override public void componentResized(ComponentEvent ce)
+            @Override
+            public void componentResized(ComponentEvent ce)
             {
                 adjustToOptimalWidth();
             }
         });
 
         panelListingText.addComponentListener(new ComponentAdapter() {
-            @Override public void componentResized(ComponentEvent ce)
+            @Override
+            public void componentResized(ComponentEvent ce)
             {
                 jScrollPane.getVerticalScrollBar().setValue(0);
                 jScrollPane.getHorizontalScrollBar().setValue(0);

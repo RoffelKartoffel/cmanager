@@ -51,7 +51,8 @@ public abstract class CacheListFilterPanel extends JPanel
     {
 
         KeyAdapter keyEnterUpdate = new KeyAdapter() {
-            @Override public void keyPressed(KeyEvent arg0)
+            @Override
+            public void keyPressed(KeyEvent arg0)
             {
                 if (arg0.getKeyCode() == KeyEvent.VK_ENTER)
                 {
@@ -145,7 +146,8 @@ public abstract class CacheListFilterPanel extends JPanel
             leftComboBox = new JComboBox<Double>(values);
             leftComboBox.setMaximumRowCount(values.length);
             leftComboBox.addActionListener(new ActionListener() {
-                @Override public void actionPerformed(ActionEvent e)
+                @Override
+                public void actionPerformed(ActionEvent e)
                 {
                     runDoModelUpdateNow.run();
                     for (Runnable action : runOnFilterUpdate)
@@ -165,7 +167,8 @@ public abstract class CacheListFilterPanel extends JPanel
             rightComboBox.setMaximumRowCount(values.length);
             rightComboBox.setSelectedIndex(values.length - 1);
             rightComboBox.addActionListener(new ActionListener() {
-                @Override public void actionPerformed(ActionEvent e)
+                @Override
+                public void actionPerformed(ActionEvent e)
                 {
                     runDoModelUpdateNow.run();
                     for (Runnable action : runOnFilterUpdate)

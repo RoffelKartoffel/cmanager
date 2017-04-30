@@ -32,7 +32,8 @@ public class PersitentTileCache implements TileCache
     }
 
 
-    @Override public void addTile(final Tile tile)
+    @Override
+    public void addTile(final Tile tile)
     {
         // a tile has been downloaded thus we are online
         if (!online)
@@ -78,17 +79,20 @@ public class PersitentTileCache implements TileCache
         mtc.addTile(tile);
     }
 
-    @Override public void clear()
+    @Override
+    public void clear()
     {
         mtc.clear();
     }
 
-    @Override public int getCacheSize()
+    @Override
+    public int getCacheSize()
     {
         return mtc.getCacheSize();
     }
 
-    @Override public Tile getTile(TileSource source, int x, int y, int z)
+    @Override
+    public Tile getTile(TileSource source, int x, int y, int z)
     {
         // Deny serving very first tile in order to trigger download for this
         // tile
@@ -136,7 +140,8 @@ public class PersitentTileCache implements TileCache
         return tile;
     }
 
-    @Override public int getTileCount()
+    @Override
+    public int getTileCount()
     {
         return mtc.getTileCount();
     }

@@ -16,7 +16,8 @@ public class CacheListFilterNotFoundBy extends CacheListFilterModel
         super(FILTER_TYPE.SINGLE_FILTER_VALUE);
         lblLinks2.setText("Not Found by: ");
         runDoModelUpdateNow = new Runnable() {
-            @Override public void run()
+            @Override
+            public void run()
             {
                 String input = textField.getText();
                 String[] parts = input.split(",");
@@ -27,7 +28,8 @@ public class CacheListFilterNotFoundBy extends CacheListFilterModel
         };
     }
 
-    @Override protected boolean isGood(Geocache g)
+    @Override
+    protected boolean isGood(Geocache g)
     {
         for (GeocacheLog log : g.getLogs())
             for (String username : usernames)

@@ -57,7 +57,8 @@ public class TestClient implements TokenProviderI
         OAuth1AccessToken token = OKAPI.requestAuthorization(new RequestAuthorizationCallbackI() {
             private String pin = null;
 
-            @Override public void redirectUrlToUser(String authUrl)
+            @Override
+            public void redirectUrlToUser(String authUrl)
             {
                 final String oauth_token = extractParameter(authUrl, "oauth_token");
                 final String url =
@@ -79,7 +80,8 @@ public class TestClient implements TokenProviderI
                 pin = matcher.group(1);
             }
 
-            @Override public String getPin()
+            @Override
+            public String getPin()
             {
                 return pin;
             }
@@ -90,7 +92,8 @@ public class TestClient implements TokenProviderI
     }
 
 
-    @Override public OAuth1AccessToken getOkapiToken()
+    @Override
+    public OAuth1AccessToken getOkapiToken()
     {
         return token;
     }

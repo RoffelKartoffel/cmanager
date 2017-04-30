@@ -12,7 +12,8 @@ import cmanager.okapi.helper.TestClientCredentials;
 public class OKAPITest
 {
 
-    @Test public void testUsernameToUUID() throws Exception
+    @Test
+    public void testUsernameToUUID() throws Exception
     {
         {
             String uuid = OKAPI.usernameToUUID("This.User.Does.Not.Exist");
@@ -25,7 +26,8 @@ public class OKAPITest
         }
     }
 
-    @Test public void testGetCache() throws Exception
+    @Test
+    public void testGetCache() throws Exception
     {
         {
             Geocache g = OKAPI.getCache("This.Cache.Does.Not.Exist");
@@ -57,7 +59,8 @@ public class OKAPITest
         }
     }
 
-    @Test public void testCompleteCacheDetails() throws Exception
+    @Test
+    public void testCompleteCacheDetails() throws Exception
     {
         {
             Geocache g = OKAPI.getCache("OC827D");
@@ -96,7 +99,8 @@ public class OKAPITest
 
     private TestClient tc = null;
 
-    @Test public void testTestClientIsOkay() throws Exception
+    @Test
+    public void testTestClientIsOkay() throws Exception
     {
         tc = new TestClient();
         boolean loggedIn = tc.login();
@@ -104,7 +108,8 @@ public class OKAPITest
     }
 
 
-    @Test public void testTestClientRequestToken() throws Exception
+    @Test
+    public void testTestClientRequestToken() throws Exception
     {
         if (tc == null)
         {
@@ -115,7 +120,8 @@ public class OKAPITest
         assertTrue(tc.requestToken() != null);
     }
 
-    @Test public void testGetUUID() throws Exception
+    @Test
+    public void testGetUUID() throws Exception
     {
         if (tc == null || tc.getOkapiToken() == null)
         {
@@ -126,7 +132,8 @@ public class OKAPITest
         assertEquals("a912cccd-1c60-11e7-8e90-86c6a7325f31", OKAPI.getUUID(tc));
     }
 
-    @Test public void testGetUsername() throws Exception
+    @Test
+    public void testGetUsername() throws Exception
     {
         if (tc == null || tc.getOkapiToken() == null)
         {

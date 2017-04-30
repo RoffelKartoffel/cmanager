@@ -256,7 +256,8 @@ public class DuplicateDialog extends JFrame
 
         backgroundThread = new Thread(new Runnable() {
 
-            @Override public void run()
+            @Override
+            public void run()
             {
                 try
                 {

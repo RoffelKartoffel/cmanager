@@ -36,22 +36,26 @@ public class LogPanel extends javax.swing.JPanel
 
         editorLog.addComponentListener(new ComponentListener() {
 
-            @Override public void componentResized(ComponentEvent ce)
+            @Override
+            public void componentResized(ComponentEvent ce)
             {
                 //                Dimension d = editorLog.getPreferredSize();
                 //                editorLog.setMinimumSize(d);
                 //                editorLog.setSize(d);
             }
 
-            @Override public void componentMoved(ComponentEvent ce)
+            @Override
+            public void componentMoved(ComponentEvent ce)
             {
             }
 
-            @Override public void componentShown(ComponentEvent ce)
+            @Override
+            public void componentShown(ComponentEvent ce)
             {
             }
 
-            @Override public void componentHidden(ComponentEvent ce)
+            @Override
+            public void componentHidden(ComponentEvent ce)
             {
             }
         });

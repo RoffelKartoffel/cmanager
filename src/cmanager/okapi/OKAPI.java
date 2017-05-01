@@ -22,6 +22,8 @@ import cmanager.geo.Coordinate;
 import cmanager.geo.Geocache;
 import cmanager.geo.GeocacheLog;
 import cmanager.gui.ExceptionPanel;
+import cmanager.network.ApacheHTTP;
+import cmanager.network.ApacheHTTP.HttpResponse;
 import cmanager.network.HTTP;
 import cmanager.network.UnexpectedStatusCode;
 import cmanager.okapi.responses.CacheDetailsDocument;
@@ -36,31 +38,30 @@ public class OKAPI
     private final static String CONSUMER_API_KEY = ConsumerKeys.get_CONSUMER_API_KEY();
     private final static String CONSUMER_SECRET_KEY = ConsumerKeys.get_CONSUMER_SECRET_KEY();
 
+    private static ApacheHTTP httpClient = new ApacheHTTP();
+
     public static String usernameToUUID(String username) throws Exception
     {
-        String url = "https://www.opencaching.de/okapi/services/users/by_username"
-                     + "?consumer_key=" + CONSUMER_API_KEY +
-                     "&username=" + URLEncoder.encode(username, "UTF-8") + "&fields=uuid";
-        try
-        {
-            final String http = HTTP.get(url);
+        final String url = "https://www.opencaching.de/okapi/services/users/by_username"
+                           + "?consumer_key=" + CONSUMER_API_KEY +
+                           "&username=" + URLEncoder.encode(username, "UTF-8") + "&fields=uuid";
 
-            UUIDDocument document = new Gson().fromJson(http, UUIDDocument.class);
-            return document.getUuid();
-        }
-        catch (UnexpectedStatusCode e)
+        final HttpResponse response = httpClient.get(url);
+        final String http = response.getBody();
+
+        if (response.getStatusCode() != 200)
         {
-            if (e.is400BadRequest())
+            final ErrorDocument okapiError = new Gson().fromJson(http, ErrorDocument.class);
+            if (okapiError.getParameter().equals("username"))
             {
-                ErrorDocument okapiError = new Gson().fromJson(e.getBody(), ErrorDocument.class);
-                if (okapiError.getParameter().equals("username"))
-                {
-                    return null;
-                }
+                return null;
             }
-
-            throw e;
+            else
+                throw new UnexpectedStatusCode(response.getStatusCode(), http);
         }
+
+        final UUIDDocument document = new Gson().fromJson(http, UUIDDocument.class);
+        return document.getUuid();
     }
 
 

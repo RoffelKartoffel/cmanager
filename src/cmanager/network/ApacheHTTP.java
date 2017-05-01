@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
 
+import org.apache.http.HttpHeaders;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -13,16 +14,18 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 
+import cmanager.global.Constants;
+
 
 public class ApacheHTTP
 {
-    //	private final static String USER_AGENT = Constants.APP_NAME + " " + Version.VERSION;
     private CloseableHttpClient httpClient = HttpClients.createDefault();
 
     // HTTP GET request
     public String get(String url) throws UnexpectedStatusCode, IOException
     {
         HttpGet httpGet = new HttpGet(url);
+        httpGet.setHeader(HttpHeaders.USER_AGENT, Constants.HTTP_USER_AGENT);
         CloseableHttpResponse response = httpClient.execute(httpGet);
 
         StringBuffer http = new StringBuffer();
@@ -50,6 +53,7 @@ public class ApacheHTTP
         throws UnexpectedStatusCode, IOException
     {
         HttpPost httpPost = new HttpPost(url);
+        httpPost.setHeader(HttpHeaders.USER_AGENT, Constants.HTTP_USER_AGENT);
         httpPost.setEntity(new UrlEncodedFormEntity(nvps, "UTF-8"));
         CloseableHttpResponse response = httpClient.execute(httpPost);
 

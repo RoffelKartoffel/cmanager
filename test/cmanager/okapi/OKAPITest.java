@@ -109,7 +109,6 @@ public class OKAPITest
         assertTrue(loggedIn);
     }
 
-
     @Test
     public void testTestClientRequestToken() throws Exception
     {
@@ -122,14 +121,19 @@ public class OKAPITest
         assertTrue(tc.requestToken() != null);
     }
 
-    @Test
-    public void testGetCachesAround() throws Exception
+    private void assureTestClientIsLoggedIn() throws Exception
     {
         if (tc == null || tc.getOkapiToken() == null)
         {
             System.out.println("OKAPI token is unintialized. Fetching...");
             testTestClientRequestToken();
         }
+    }
+
+    @Test
+    public void testGetCachesAround() throws Exception
+    {
+        assureTestClientIsLoggedIn();
 
         {
             ArrayList<Geocache> caches = OKAPI.getCachesAround(null, null, 53.01952, 008.53440, 1.0,
@@ -176,11 +180,7 @@ public class OKAPITest
     @Test
     public void testUpdateFoundStatus() throws Exception
     {
-        if (tc == null || tc.getOkapiToken() == null)
-        {
-            System.out.println("OKAPI token is unintialized. Fetching...");
-            testTestClientRequestToken();
-        }
+        assureTestClientIsLoggedIn();
 
         {
             Geocache g = new Geocache("OC13A45", "test", new Coordinate(0, 0), 0.0, 0.0, "Tradi");
@@ -202,24 +202,14 @@ public class OKAPITest
     @Test
     public void testGetUUID() throws Exception
     {
-        if (tc == null || tc.getOkapiToken() == null)
-        {
-            System.out.println("OKAPI token is unintialized. Fetching...");
-            testTestClientRequestToken();
-        }
-
+        assureTestClientIsLoggedIn();
         assertEquals("a912cccd-1c60-11e7-8e90-86c6a7325f31", OKAPI.getUUID(tc));
     }
 
     @Test
     public void testGetUsername() throws Exception
     {
-        if (tc == null || tc.getOkapiToken() == null)
-        {
-            System.out.println("OKAPI token is unintialized. Fetching...");
-            testTestClientRequestToken();
-        }
-
+        assureTestClientIsLoggedIn();
         assertEquals(TestClientCredentials.USERNAME, OKAPI.getUsername(tc));
     }
 }

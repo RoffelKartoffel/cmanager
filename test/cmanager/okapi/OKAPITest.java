@@ -174,6 +174,32 @@ public class OKAPITest
     }
 
     @Test
+    public void testUpdateFoundStatus() throws Exception
+    {
+        if (tc == null || tc.getOkapiToken() == null)
+        {
+            System.out.println("OKAPI token is unintialized. Fetching...");
+            testTestClientRequestToken();
+        }
+
+        {
+            Geocache g = new Geocache("OC13A45", "test", new Coordinate(0, 0), 0.0, 0.0, "Tradi");
+            assertEquals(null, g.getIsFound());
+
+            OKAPI.updateFoundStatus(tc, g);
+            assertEquals(true, g.getIsFound());
+        }
+
+        {
+            Geocache g = new Geocache("OC0BEF", "test", new Coordinate(0, 0), 0.0, 0.0, "Tradi");
+            assertEquals(null, g.getIsFound());
+
+            OKAPI.updateFoundStatus(tc, g);
+            assertEquals(false, g.getIsFound());
+        }
+    }
+
+    @Test
     public void testGetUUID() throws Exception
     {
         if (tc == null || tc.getOkapiToken() == null)

@@ -2,6 +2,8 @@ package cmanager.okapi;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+
 import org.junit.Test;
 
 import cmanager.geo.Coordinate;
@@ -118,6 +120,57 @@ public class OKAPITest
         }
 
         assertTrue(tc.requestToken() != null);
+    }
+
+    @Test
+    public void testGetCachesAround() throws Exception
+    {
+        if (tc == null || tc.getOkapiToken() == null)
+        {
+            System.out.println("OKAPI token is unintialized. Fetching...");
+            testTestClientRequestToken();
+        }
+
+        {
+            ArrayList<Geocache> caches = OKAPI.getCachesAround(null, null, 53.01952, 008.53440, 1.0,
+                                                               new ArrayList<Geocache>());
+            assertTrue(caches.size() >= 3);
+        }
+
+        {
+            ArrayList<Geocache> caches = OKAPI.getCachesAround(null, null, 00.21667, 000.61667, 1.0,
+                                                               new ArrayList<Geocache>());
+            assertTrue(caches.size() >= 1);
+
+            boolean containsCache = false;
+            for (Geocache g : caches)
+            {
+                if (g.toString().equals(
+                        "1.0/5.0 OC13A45 (Tradi) -- 0.216667, 0.616667 -- cmanager TEST cache"))
+                {
+                    containsCache = true;
+                    break;
+                }
+            }
+            assertTrue(containsCache);
+        }
+
+        {
+            ArrayList<Geocache> caches = OKAPI.getCachesAround(
+                tc, OKAPI.getUUID(tc), 00.21667, 000.61667, 1.0, new ArrayList<Geocache>());
+
+            boolean containsCache = false;
+            for (Geocache g : caches)
+            {
+                if (g.toString().equals(
+                        "1.0/5.0 OC13A45 (Tradi) -- 0.216667, 0.616667 -- cmanager TEST cache"))
+                {
+                    containsCache = true;
+                    break;
+                }
+            }
+            assertFalse(containsCache);
+        }
     }
 
     @Test

@@ -160,9 +160,22 @@ public class OKAPI
             "https://www.opencaching.de/okapi/services/caches/geocache"
             + "?consumer_key=" + CONSUMER_API_KEY + "&cache_code=" + g.getCode() + "&fields=" +
             URLEncoder.encode("size2|short_description|description|owner|hint2", "UTF-8");
-        final String http = HTTP.get(url);
 
-        CacheDetailsDocument document = new Gson().fromJson(http, CacheDetailsDocument.class);
+        final HttpResponse response = httpClient.get(url);
+        final String http = response.getBody();
+
+        if (response.getStatusCode() != 200)
+        {
+            final ErrorDocument okapiError = new Gson().fromJson(http, ErrorDocument.class);
+            if (okapiError.getParameter().equals("cache_code"))
+            {
+                return null;
+            }
+            else
+                throw new UnexpectedStatusCode(response.getStatusCode(), http);
+        }
+
+        final CacheDetailsDocument document = new Gson().fromJson(http, CacheDetailsDocument.class);
 
         g.setContainer(document.getSize2());
         g.setListing_short(document.getShort_description());

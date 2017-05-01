@@ -24,7 +24,6 @@ import cmanager.geo.GeocacheLog;
 import cmanager.gui.ExceptionPanel;
 import cmanager.network.ApacheHTTP;
 import cmanager.network.ApacheHTTP.HttpResponse;
-import cmanager.network.HTTP;
 import cmanager.network.UnexpectedStatusCode;
 import cmanager.okapi.responses.CacheDetailsDocument;
 import cmanager.okapi.responses.CacheDocument;
@@ -253,14 +252,15 @@ public class OKAPI
     {
         ArrayList<Geocache> caches = new ArrayList<Geocache>();
 
-        boolean useOAuth = tp != null && excludeUUID != null;
-        String url = "https://www.opencaching.de/okapi/services/caches/search/nearest"
-                     + "?consumer_key=" + CONSUMER_API_KEY + "&format=xmlmap2"
-                     + "&center=" + lat.toString() + "|" + lon.toString() +
-                     "&radius=" + searchRadius.toString() +
-                     "&status=Available|Temporarily%20unavailable|Archived"
-                     + "&limit=500" + (useOAuth ? "&ignored_status=notignored_only" : "") +
-                     (useOAuth ? "&not_found_by=" + excludeUUID : "");
+        final boolean useOAuth = tp != null && excludeUUID != null;
+        final String url =
+            "https://www.opencaching.de/okapi/services/caches/search/nearest"
+            + "?consumer_key=" + CONSUMER_API_KEY + "&format=xmlmap2"
+            + "&center=" + URLEncoder.encode(lat.toString() + "|" + lon.toString(), "UTF-8") +
+            "&radius=" + searchRadius.toString() +
+            "&status=" + URLEncoder.encode("Available|Temporarily unavailable|Archived", "UTF-8") +
+            "&limit=500" + (useOAuth ? "&ignored_status=notignored_only" : "") +
+            (useOAuth ? "&not_found_by=" + excludeUUID : "");
 
         String http;
         if (useOAuth)
@@ -268,7 +268,15 @@ public class OKAPI
             http = authedHttpGet(tp, url);
         }
         else
-            http = HTTP.get(url);
+        {
+            final HttpResponse response = httpClient.get(url);
+            http = response.getBody();
+
+            if (response.getStatusCode() != 200)
+            {
+                throw new UnexpectedStatusCode(response.getStatusCode(), http);
+            }
+        }
 
         Element root = Parser.parse(http);
         for (Element e : root.getChild("object").getChildren())

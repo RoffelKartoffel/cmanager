@@ -21,16 +21,41 @@ public class ApacheHTTP
 {
     private CloseableHttpClient httpClient = HttpClients.createDefault();
 
+    public class HttpResponse
+    {
+        private final Integer statusCode;
+        private final String body;
+
+        public HttpResponse(final Integer statusCode, final String body)
+        {
+            this.body = body;
+            this.statusCode = statusCode;
+        }
+
+        public String getBody()
+        {
+            return body;
+        }
+
+        public Integer getStatusCode()
+        {
+            return statusCode;
+        }
+    }
+
     // HTTP GET request
-    public String get(String url) throws UnexpectedStatusCode, IOException
+    public HttpResponse get(String url) throws IOException
     {
         HttpGet httpGet = new HttpGet(url);
         httpGet.setHeader(HttpHeaders.USER_AGENT, Constants.HTTP_USER_AGENT);
         CloseableHttpResponse response = httpClient.execute(httpGet);
 
+        Integer statusCode = null;
         StringBuffer http = new StringBuffer();
         try
         {
+            statusCode = response.getStatusLine().getStatusCode();
+
             BufferedReader in = new BufferedReader(
                 new InputStreamReader(response.getEntity().getContent(), "UTF8"));
 
@@ -45,11 +70,11 @@ public class ApacheHTTP
         {
             response.close();
         }
-        return http.toString();
+        return new HttpResponse(statusCode, http.toString());
     }
 
     // HTTP POST request
-    public String post(String url, List<NameValuePair> nvps)
+    public HttpResponse post(String url, List<NameValuePair> nvps)
         throws UnexpectedStatusCode, IOException
     {
         HttpPost httpPost = new HttpPost(url);
@@ -57,9 +82,12 @@ public class ApacheHTTP
         httpPost.setEntity(new UrlEncodedFormEntity(nvps, "UTF-8"));
         CloseableHttpResponse response = httpClient.execute(httpPost);
 
+        Integer statusCode = null;
         StringBuffer http = new StringBuffer();
         try
         {
+            statusCode = response.getStatusLine().getStatusCode();
+
             BufferedReader in = new BufferedReader(
                 new InputStreamReader(response.getEntity().getContent(), "UTF8"));
 
@@ -74,6 +102,6 @@ public class ApacheHTTP
         {
             response.close();
         }
-        return http.toString();
+        return new HttpResponse(statusCode, http.toString());
     }
 }

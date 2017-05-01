@@ -31,7 +31,7 @@ public class TestClient implements TokenProviderI
         nvps.add(new BasicNameValuePair("action", "login"));
         http.post("https://www.opencaching.de/login.php", nvps);
 
-        String response = http.get("https://www.opencaching.de/index.php");
+        String response = http.get("https://www.opencaching.de/index.php").getBody();
         return response.contains(TestClientCredentials.USERNAME);
     }
 
@@ -68,9 +68,9 @@ public class TestClient implements TokenProviderI
                 String response = null;
                 try
                 {
-                    response = http.get(url);
+                    response = http.get(url).getBody();
                 }
-                catch (UnexpectedStatusCode | IOException e)
+                catch (IOException e)
                 {
                 }
 

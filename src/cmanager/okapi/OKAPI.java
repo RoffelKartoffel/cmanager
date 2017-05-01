@@ -67,67 +67,63 @@ public class OKAPI
 
     public static Geocache getCache(String code) throws Exception
     {
-        final String url = "https://www.opencaching.de/okapi/services/caches/geocache"
-                           + "?consumer_key=" + CONSUMER_API_KEY + "&cache_code=" + code +
-                           "&fields=code|name|location|type|gc_code|difficulty|terrain|status";
+        final String url =
+            "https://www.opencaching.de/okapi/services/caches/geocache"
+            + "?consumer_key=" + CONSUMER_API_KEY + "&cache_code=" + code + "&fields=" +
+            URLEncoder.encode("code|name|location|type|gc_code|difficulty|terrain|status", "UTF-8");
 
-        try
+        final HttpResponse response = httpClient.get(url);
+        final String http = response.getBody();
+
+        if (response.getStatusCode() != 200)
         {
-            final String http = HTTP.get(url);
-
-            CacheDocument document = new Gson().fromJson(http, CacheDocument.class);
-            if (document == null)
+            final ErrorDocument okapiError = new Gson().fromJson(http, ErrorDocument.class);
+            if (okapiError.getParameter().equals("cache_code"))
             {
                 return null;
             }
-
-            Coordinate coordinate = null;
-            if (document.getLocation() != null)
-            {
-                String[] parts = document.getLocation().split("\\|");
-                coordinate = new Coordinate(parts[0], parts[1]);
-            }
-
-            Geocache g =
-                new Geocache(code, document.getName(), coordinate, document.getDifficulty(),
-                             document.getTerrain(), document.getType());
-            g.setCodeGC(document.getGc_code());
-
-            String status = document.getStatus();
-            if (status != null)
-            {
-                if (status.equals("Archived"))
-                {
-                    g.setAvailable(false);
-                    g.setArchived(true);
-                }
-                else if (status.equals("Temporarily unavailable"))
-                {
-                    g.setAvailable(false);
-                    g.setArchived(false);
-                }
-                else if (status.equals("Available"))
-                {
-                    g.setAvailable(true);
-                    g.setArchived(false);
-                }
-            }
-
-            return g;
+            else
+                throw new UnexpectedStatusCode(response.getStatusCode(), http);
         }
-        catch (UnexpectedStatusCode e)
+
+        final CacheDocument document = new Gson().fromJson(http, CacheDocument.class);
+        if (document == null)
         {
-            if (e.is400BadRequest())
-            {
-                ErrorDocument okapiError = new Gson().fromJson(e.getBody(), ErrorDocument.class);
-                if (okapiError.getParameter().equals("cache_code"))
-                {
-                    return null;
-                }
-            }
-
-            throw e;
+            return null;
         }
+
+        Coordinate coordinate = null;
+        if (document.getLocation() != null)
+        {
+            String[] parts = document.getLocation().split("\\|");
+            coordinate = new Coordinate(parts[0], parts[1]);
+        }
+
+        Geocache g = new Geocache(code, document.getName(), coordinate, document.getDifficulty(),
+                                  document.getTerrain(), document.getType());
+        g.setCodeGC(document.getGc_code());
+
+        String status = document.getStatus();
+        if (status != null)
+        {
+            if (status.equals("Archived"))
+            {
+                g.setAvailable(false);
+                g.setArchived(true);
+            }
+            else if (status.equals("Temporarily unavailable"))
+            {
+                g.setAvailable(false);
+                g.setArchived(false);
+            }
+            else if (status.equals("Available"))
+            {
+                g.setAvailable(true);
+                g.setArchived(false);
+            }
+        }
+
+        return g;
     }
 
 

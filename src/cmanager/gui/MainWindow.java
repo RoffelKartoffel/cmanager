@@ -202,6 +202,10 @@ public class MainWindow extends JFrame
                     {
                         user = User.getOKAPIUser();
                         uuid = OKAPI.getUUID(user);
+                        if (uuid == null)
+                        {
+                            throw new NullPointerException();
+                        }
                     }
                     catch (Exception ex)
                     {

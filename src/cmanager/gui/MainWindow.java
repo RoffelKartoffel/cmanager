@@ -190,7 +190,7 @@ public class MainWindow extends JFrame
         });
         mnList.add(mntmFindSimilarOc);
 
-        JMenuItem mntmFind = new JMenuItem("Find on OC (exclude found)");
+        JMenuItem mntmFind = new JMenuItem("Sync with OC");
         mntmFind.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e)
             {

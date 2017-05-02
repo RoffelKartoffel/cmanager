@@ -81,6 +81,7 @@ public class MainWindow extends JFrame
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(new Dimension(1050, 550));
         setLocationRelativeTo(null);
+        Logo.setLogo(this);
 
         JMenuBar menuBar = new JMenuBar();
         setJMenuBar(menuBar);
@@ -137,7 +138,7 @@ public class MainWindow extends JFrame
         mntmSettings.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e)
             {
-                SettingsDialog sw = new SettingsDialog();
+                SettingsDialog sw = new SettingsDialog(THIS);
                 sw.setModalityType(ModalityType.APPLICATION_MODAL);
                 sw.setLocationRelativeTo(THIS);
                 sw.setVisible(true);
@@ -210,7 +211,7 @@ public class MainWindow extends JFrame
                     catch (Exception ex)
                     {
                         JOptionPane.showMessageDialog(
-                            null, "Testing the OKAPI token failed. Check your settings!", "Error",
+                            THIS, "Testing the OKAPI token failed. Check your settings!", "Error",
                             JOptionPane.ERROR_MESSAGE);
                         return;
                     }
@@ -219,7 +220,7 @@ public class MainWindow extends JFrame
                 }
                 catch (Throwable ex)
                 {
-                    ExceptionPanel.showErrorDialog(ex);
+                    ExceptionPanel.showErrorDialog(THIS, ex);
                 }
             }
         });
@@ -567,7 +568,7 @@ public class MainWindow extends JFrame
                 }
                 catch (IOException e1)
                 {
-                    ExceptionPanel.showErrorDialog(e1);
+                    ExceptionPanel.showErrorDialog(THIS, e1);
                 }
             }
         });
@@ -603,7 +604,7 @@ public class MainWindow extends JFrame
 
     private void openLocationDialog(Geocache g)
     {
-        LocationDialog ld = new LocationDialog();
+        LocationDialog ld = new LocationDialog(this);
         if (g != null)
             ld.setGeocache(g);
         ld.setLocationRelativeTo(THIS);
@@ -687,7 +688,7 @@ public class MainWindow extends JFrame
                 }
                 catch (Throwable e)
                 {
-                    ExceptionPanel.showErrorDialog(e);
+                    ExceptionPanel.showErrorDialog(THIS, e);
                 }
             }
         }.setPath(Paths.get(strPath)), THIS);
@@ -729,7 +730,7 @@ public class MainWindow extends JFrame
                     catch (Throwable e)
                     {
                         //						Main.gc();
-                        ExceptionPanel.showErrorDialog(e);
+                        ExceptionPanel.showErrorDialog(THIS, e);
                     }
                 }
             }, THIS);

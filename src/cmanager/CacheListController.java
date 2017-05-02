@@ -108,7 +108,7 @@ public class CacheListController
         }
         catch (Throwable t)
         {
-            ExceptionPanel.showErrorDialog(t);
+            ExceptionPanel.showErrorDialog(desktop, t);
             return;
         }
 
@@ -121,7 +121,7 @@ public class CacheListController
             }
             catch (Throwable t)
             {
-                ExceptionPanel.showErrorDialog(t);
+                ExceptionPanel.showErrorDialog(desktop, t);
             }
         }
     }

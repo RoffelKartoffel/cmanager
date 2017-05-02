@@ -50,6 +50,7 @@ public class CopyLogDialog extends JFrame
                          final ArrayList<GeocacheLog> logsCopied, final ShadowList shadowList)
     {
         setResizable(true);
+        Logo.setLogo(this);
 
         setTitle("Copy Logs");
         setBounds(100, 100, 850, 500);
@@ -134,7 +135,7 @@ public class CopyLogDialog extends JFrame
                                 }
                                 catch (Throwable t)
                                 {
-                                    ExceptionPanel.showErrorDialog(t);
+                                    ExceptionPanel.showErrorDialog(THIS, t);
                                 }
                             }
                         }, THIS);

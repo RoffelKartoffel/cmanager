@@ -17,6 +17,7 @@ import java.awt.Font;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -52,8 +53,10 @@ public class SettingsDialog extends JDialog
     /**
      * Create the frame.
      */
-    public SettingsDialog()
+    public SettingsDialog(JFrame owner)
     {
+        super(owner);
+
         setTitle("Settings");
         setBounds(100, 100, 450, 300);
         contentPane = new JPanel();
@@ -96,7 +99,7 @@ public class SettingsDialog extends JDialog
                         }
                         catch (Throwable t)
                         {
-                            ExceptionPanel.showErrorDialog(t);
+                            ExceptionPanel.showErrorDialog(THIS, t);
                         }
                     }
                 }
@@ -164,7 +167,7 @@ public class SettingsDialog extends JDialog
                 }
                 catch (Throwable e)
                 {
-                    ExceptionPanel.showErrorDialog(e);
+                    ExceptionPanel.showErrorDialog(THIS, e);
                 }
             }
         });

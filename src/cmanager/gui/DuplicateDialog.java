@@ -67,7 +67,7 @@ public class DuplicateDialog extends JFrame
     {
         setResizable(true);
         this.setMinimumSize(new Dimension(600, 300));
-
+        Logo.setLogo(this);
 
         setTitle("Duplicate Finder");
         getContentPane().setLayout(new BorderLayout());
@@ -199,7 +199,7 @@ public class DuplicateDialog extends JFrame
                             }
                             catch (Throwable e)
                             {
-                                ExceptionPanel.showErrorDialog(e);
+                                ExceptionPanel.showErrorDialog(THIS, e);
                             }
                         }
                     }
@@ -373,7 +373,7 @@ public class DuplicateDialog extends JFrame
                     // complain in weird ways. We do not care about these
                     // exceptions.
                     if (!stopBackgroundThread.get())
-                        ExceptionPanel.showErrorDialog(e1);
+                        ExceptionPanel.showErrorDialog(THIS, e1);
                     THIS.setVisible(false);
                 }
             }

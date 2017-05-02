@@ -96,6 +96,10 @@ jar {
     baseName = 'cm'
     manifest { attributes 'Main-Class': mainClassName }
 
+    from('.') {
+        include 'ressources/images/*.jpg'
+    }
+
     from {
         configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
     }

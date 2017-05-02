@@ -5,6 +5,7 @@ import java.awt.FlowLayout;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
@@ -60,11 +61,15 @@ public class LocationDialog extends JDialog
     //		}
     //	}
 
+    private final LocationDialog THIS = this;
+
     /**
      * Create the dialog.
      */
-    public LocationDialog()
+    public LocationDialog(JFrame owner)
     {
+        super(owner);
+
         setTitle("Locations");
         getContentPane().setLayout(new BorderLayout());
 
@@ -84,7 +89,7 @@ public class LocationDialog extends JDialog
         catch (Exception e)
         {
             //			e.printStackTrace();
-            ExceptionPanel.showErrorDialog(e);
+            ExceptionPanel.showErrorDialog(this, e);
         }
 
         JPanel panelMaster = new JPanel();
@@ -123,7 +128,7 @@ public class LocationDialog extends JDialog
                 }
                 catch (Throwable t)
                 {
-                    ExceptionPanel.showErrorDialog(t);
+                    ExceptionPanel.showErrorDialog(THIS, t);
                     return;
                 }
 
@@ -236,7 +241,7 @@ public class LocationDialog extends JDialog
                 }
                 catch (Throwable t)
                 {
-                    ExceptionPanel.showErrorDialog(t);
+                    ExceptionPanel.showErrorDialog(THIS, t);
                     return;
                 }
 
@@ -259,7 +264,7 @@ public class LocationDialog extends JDialog
                 }
                 catch (Throwable t)
                 {
-                    ExceptionPanel.showErrorDialog(t);
+                    ExceptionPanel.showErrorDialog(THIS, t);
                     return;
                 }
 
@@ -289,7 +294,7 @@ public class LocationDialog extends JDialog
                 }
                 catch (Exception ex)
                 {
-                    ExceptionPanel.showErrorDialog(ex);
+                    ExceptionPanel.showErrorDialog(THIS, ex);
                 }
             }
         });

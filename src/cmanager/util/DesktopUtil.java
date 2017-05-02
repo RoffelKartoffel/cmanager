@@ -19,13 +19,13 @@ public class DesktopUtil
             }
             catch (URISyntaxException | IOException e)
             {
-                ExceptionPanel.showErrorDialog(e);
+                ExceptionPanel.showErrorDialog(null, e);
             }
         }
         else
         {
             Exception e = new UnsupportedOperationException("Desktop unsupported.");
-            ExceptionPanel.showErrorDialog(e);
+            ExceptionPanel.showErrorDialog(null, e);
         }
     }
 }

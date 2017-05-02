@@ -71,7 +71,7 @@ public class PersitentTileCache implements TileCache
                 }
                 catch (Exception e)
                 {
-                    ExceptionPanel.showErrorDialog(e);
+                    ExceptionPanel.showErrorDialog(null, e);
                 }
             }
         });

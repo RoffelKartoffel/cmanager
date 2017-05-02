@@ -4,6 +4,7 @@ import javax.swing.JPanel;
 import javax.swing.JOptionPane;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -138,12 +139,12 @@ public class ExceptionPanel extends JPanel
     /////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static void showErrorDialog(String errorMessage, String title)
+    public static void showErrorDialog(Component parent, String errorMessage, String title)
     {
-        JOptionPane.showMessageDialog(null, errorMessage, title, JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(parent, errorMessage, title, JOptionPane.ERROR_MESSAGE);
     }
 
-    public static void showErrorDialog(Throwable exceptionError)
+    public static void showErrorDialog(Component parent, Throwable exceptionError)
     {
         String errorMessage = exceptionError.getMessage();
         errorMessage = errorMessage != null ? errorMessage : exceptionError.getClass().getName();
@@ -152,14 +153,14 @@ public class ExceptionPanel extends JPanel
 
         String title = exceptionError.getClass().getName();
 
-        showErrorDialog(errorMessage, title);
+        showErrorDialog(parent, errorMessage, title);
 
         if (exceptionError instanceof OutOfMemoryError)
         {
             String message =
                 "You experienced the previous crash due to insufficient memory.\n"
                 + "You might want to change your memory settings under Menu->Settings->General.";
-            JOptionPane.showMessageDialog(null, message, "Memory Settings",
+            JOptionPane.showMessageDialog(parent, message, "Memory Settings",
                                           JOptionPane.INFORMATION_MESSAGE);
         }
     }

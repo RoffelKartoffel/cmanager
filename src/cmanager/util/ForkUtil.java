@@ -12,10 +12,12 @@ public class ForkUtil
 {
     private static final String PARAM_HEAP_RESIZED = "--memory-already-resized";
 
-    private static String getJarPath()
+
+    public static String getCodeSource()
     {
         //
-        // Determinate name of our jar. Will only work when run as .jar.
+        // Returns the folder containing the .class file.
+        // This is the jar path if run from a jar.
         //
         File jarFile = new java.io.File(
             Main.class.getProtectionDomain().getCodeSource().getLocation().getPath());
@@ -33,7 +35,7 @@ public class ForkUtil
 
     public static void runCopyAndExit() throws IOException
     {
-        String jarPath = getJarPath();
+        String jarPath = getCodeSource();
         if (!new File(jarPath).exists())
         {
             showInvalidJarPathMessage(jarPath);
@@ -78,7 +80,7 @@ public class ForkUtil
         //
         // Query path
         //
-        String jarPath = getJarPath();
+        String jarPath = getCodeSource();
         if (!new File(jarPath).exists())
         {
             showInvalidJarPathMessage(jarPath);

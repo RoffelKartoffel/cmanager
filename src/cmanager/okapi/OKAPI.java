@@ -27,6 +27,7 @@ import cmanager.network.ApacheHTTP.HttpResponse;
 import cmanager.network.UnexpectedStatusCode;
 import cmanager.okapi.responses.CacheDetailsDocument;
 import cmanager.okapi.responses.CacheDocument;
+import cmanager.okapi.responses.CachesAroundDocument;
 import cmanager.okapi.responses.ErrorDocument;
 import cmanager.okapi.responses.UUIDDocument;
 import cmanager.xml.Element;
@@ -250,13 +251,11 @@ public class OKAPI
                                                       ArrayList<Geocache> okapiCacheDetailsCache)
         throws Exception
     {
-        ArrayList<Geocache> caches = new ArrayList<Geocache>();
-
         final boolean useOAuth = tp != null && excludeUUID != null;
         final String url =
             "https://www.opencaching.de/okapi/services/caches/search/nearest"
-            + "?consumer_key=" + CONSUMER_API_KEY + "&format=xmlmap2"
-            + "&center=" + URLEncoder.encode(lat.toString() + "|" + lon.toString(), "UTF-8") +
+            + "?consumer_key=" + CONSUMER_API_KEY +
+            "&center=" + URLEncoder.encode(lat.toString() + "|" + lon.toString(), "UTF-8") +
             "&radius=" + searchRadius.toString() +
             "&status=" + URLEncoder.encode("Available|Temporarily unavailable|Archived", "UTF-8") +
             "&limit=500" + (useOAuth ? "&ignored_status=notignored_only" : "") +
@@ -278,25 +277,28 @@ public class OKAPI
             }
         }
 
-        Element root = Parser.parse(http);
-        for (Element e : root.getChild("object").getChildren())
-            if (e.attrIs("key", "results"))
-                for (Element ee : e.getChildren())
-                    if (ee.is("string"))
-                        try
-                        {
-                            String code = ee.getUnescapedBody();
-                            Geocache g = getCacheBuffered(code, okapiCacheDetailsCache);
-                            if (g != null)
-                            {
-                                caches.add(g);
-                            }
-                        }
-                        catch (MalFormedException ex)
-                        {
-                            ExceptionPanel.display(ex);
-                        }
+        final CachesAroundDocument document = new Gson().fromJson(http, CachesAroundDocument.class);
+        if (document == null)
+        {
+            return null;
+        }
 
+        ArrayList<Geocache> caches = new ArrayList<Geocache>();
+        for (String code : document.getResults())
+        {
+            try
+            {
+                Geocache g = getCacheBuffered(code, okapiCacheDetailsCache);
+                if (g != null)
+                {
+                    caches.add(g);
+                }
+            }
+            catch (MalFormedException ex)
+            {
+                ExceptionPanel.display(ex);
+            }
+        }
         return caches;
     }
 

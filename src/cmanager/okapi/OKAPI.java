@@ -29,6 +29,7 @@ import cmanager.okapi.responses.CacheDetailsDocument;
 import cmanager.okapi.responses.CacheDocument;
 import cmanager.okapi.responses.CachesAroundDocument;
 import cmanager.okapi.responses.ErrorDocument;
+import cmanager.okapi.responses.FoundStatusDocument;
 import cmanager.okapi.responses.UUIDDocument;
 import cmanager.xml.Element;
 import cmanager.xml.Parser;
@@ -309,19 +310,13 @@ public class OKAPI
         if (tp == null)
             return;
 
-        String url = "https://www.opencaching.de/okapi/services/caches/geocache"
-                     + "?consumer_key=" + CONSUMER_API_KEY + "&format=xmlmap2"
-                     + "&cache_code=" + oc.getCode() + "&fields=is_found";
-        String http = authedHttpGet(tp, url);
+        final String url = "https://www.opencaching.de/okapi/services/caches/geocache"
+                           + "?consumer_key=" + CONSUMER_API_KEY + "&cache_code=" + oc.getCode() +
+                           "&fields=is_found";
+        final String http = authedHttpGet(tp, url);
 
-        Boolean isFound = null;
-        Element root = Parser.parse(http);
-        for (Element e : root.getChild("object").getChildren())
-        {
-            if (e.attrIs("key", "is_found"))
-                isFound = e.getBodyB();
-        }
-        oc.setIsFound(isFound);
+        final FoundStatusDocument document = new Gson().fromJson(http, FoundStatusDocument.class);
+        oc.setIsFound(document.isIs_found());
     }
 
     public static String getUUID(TokenProviderI tp)

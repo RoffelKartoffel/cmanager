@@ -322,19 +322,16 @@ public class OKAPI
     public static String getUUID(TokenProviderI tp)
         throws MalFormedException, IOException, InterruptedException, ExecutionException
     {
-        String url = "https://www.opencaching.de/okapi/services/users/user"
-                     + "?format=xmlmap2"
-                     + "&fields=uuid";
-        String http = authedHttpGet(tp, url);
+        final String url = "https://www.opencaching.de/okapi/services/users/user"
+                           + "?fields=uuid";
+        final String http = authedHttpGet(tp, url);
 
-        // <object><string
-        // key="uuid">0b34f954-ee48-11e4-89ed-525400e33611</string></object>
-        Element root = Parser.parse(http);
-        for (Element e : root.getChild("object").getChildren())
-            if (e.attrIs("key", "uuid"))
-                return e.getUnescapedBody();
-
-        return null;
+        final UUIDDocument document = new Gson().fromJson(http, UUIDDocument.class);
+        if (document == null)
+        {
+            return null;
+        }
+        return document.getUuid();
     }
 
     public static String getUsername(TokenProviderI tp)

@@ -31,6 +31,7 @@ import cmanager.okapi.responses.CachesAroundDocument;
 import cmanager.okapi.responses.ErrorDocument;
 import cmanager.okapi.responses.FoundStatusDocument;
 import cmanager.okapi.responses.UUIDDocument;
+import cmanager.okapi.responses.UsernameDocument;
 import cmanager.xml.Element;
 import cmanager.xml.Parser;
 
@@ -337,19 +338,16 @@ public class OKAPI
     public static String getUsername(TokenProviderI tp)
         throws MalFormedException, IOException, InterruptedException, ExecutionException
     {
-        String url = "https://www.opencaching.de/okapi/services/users/user"
-                     + "?format=xmlmap2"
-                     + "&fields=username";
-        String http = authedHttpGet(tp, url);
+        final String url = "https://www.opencaching.de/okapi/services/users/user"
+                           + "?fields=username";
+        final String http = authedHttpGet(tp, url);
 
-        // <object><string
-        // key="uuid">0b34f954-ee48-11e4-89ed-525400e33611</string></object>
-        Element root = Parser.parse(http);
-        for (Element e : root.getChild("object").getChildren())
-            if (e.attrIs("key", "username"))
-                return e.getUnescapedBody();
-
-        return null;
+        final UsernameDocument document = new Gson().fromJson(http, UsernameDocument.class);
+        if (document == null)
+        {
+            return null;
+        }
+        return document.getUsername();
     }
 
     public static void postLog(TokenProviderI tp, Geocache cache, GeocacheLog log)

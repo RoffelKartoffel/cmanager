@@ -1,5 +1,11 @@
+plugins {
+    id 'com.github.ben-manes.versions' version '0.14.0'
+}
+
 apply plugin: 'application'
 apply plugin: 'java'
+apply plugin: 'com.github.ben-manes.versions'
+
 
 mainClassName = 'cmanager.Main'
 project.ext.ocOkapiPropertiesFile = projectDir.getPath() + "${File.separator}oc_okapi.properties"
@@ -14,7 +20,7 @@ sourceSets {
         }
     }
 
-	test {
+    test {
         java {
             srcDirs = ["test"]
         }

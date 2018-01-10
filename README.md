@@ -1,10 +1,10 @@
 # cmanager
 
-The cache manager (cmanager) is a Java based program which is able to manage gpx files and synchronize geocache logs from [Geocaching.com](https://geocaching.com) to [Opencaching.de](https://opencaching.de). It therefore loads a gpx file with the users cache founds (e.g. myfounds.gpx). After configuring an OKAPI token in the settings, the user is able to match his/her founds against caches listed on Opencaching.de.
+The cache manager (cmanager) is a Java based program which is able to manage gpx geocahing files. One can view the caches on a map, copy or delete them from/to gpx files. Initial gpx files can be generated on [Geocaching.com](https://geocaching.com) or with [geotoad](https://https://github.com/steve8x8/geotoad) .
 
-Further information in german: 
-* http://wiki.opencaching.de/index.php/Cmanager
-* http://forum.opencaching.de/
+Since I strongly dislike Opencaching.de s usage of Google Analytics without letting the user choose, if he or she is willing to share their browsing statistics, cmanager does no longer support found log synchronization to Opencaching.de . Version  0.2.45 of cmanager disables the auto update, so that OC users who do not want to update to future versions are not forced to update. It will be enabled again in the next release.
+
+
 
 
 ## License & Source Code

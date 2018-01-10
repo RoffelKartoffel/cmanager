@@ -25,8 +25,6 @@ import cmanager.geo.Location;
 import cmanager.geo.LocationList;
 import cmanager.global.Constants;
 import cmanager.network.Updates;
-import cmanager.okapi.User;
-import cmanager.okapi.OKAPI;
 import cmanager.settings.Settings;
 import cmanager.util.DesktopUtil;
 
@@ -719,13 +717,5 @@ public class MainWindow extends JFrame
 
         wait.setVisible(true);
         wait.repaint();
-    }
-
-    private void findOnOC(User user, String uuid)
-    {
-        DuplicateDialog dd = new DuplicateDialog(
-            CacheListController.getTopViewCacheController(desktopPane).getModel(), user, uuid);
-
-        FrameHelper.showModalFrame(dd, THIS);
     }
 }

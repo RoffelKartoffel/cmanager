@@ -18,13 +18,9 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
-import cmanager.ThreadStore;
-import cmanager.geo.Coordinate;
 import cmanager.geo.Geocache;
 import cmanager.geo.Location;
 import cmanager.geo.LocationList;
-import cmanager.okapi.User;
-import cmanager.okapi.OKAPI;
 
 import java.awt.Color;
 import java.awt.GridBagLayout;
@@ -34,7 +30,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.JSeparator;
-import java.awt.Font;
+
 
 public class LocationDialog extends JDialog
 {
@@ -278,29 +274,6 @@ public class LocationDialog extends JDialog
         JSeparator separator = new JSeparator();
         panelButton.add(separator);
 
-        final JButton btnRetrieve = new JButton("OKAPI Coordinates");
-        btnRetrieve.setEnabled(false);
-        btnRetrieve.setFont(new Font("Dialog", Font.BOLD, 9));
-        btnRetrieve.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e)
-            {
-                User user = User.getOKAPIUser();
-                try
-                {
-                    Coordinate c = OKAPI.getHomeCoordinates(user);
-                    txtName.setText("OKAPI Home Coordinate");
-                    txtLat.setText(c.getLat().toString());
-                    txtLon.setText(c.getLon().toString());
-                }
-                catch (Exception ex)
-                {
-                    ExceptionPanel.showErrorDialog(THIS, ex);
-                }
-            }
-        });
-        panelButton.add(btnRetrieve);
-
-
         panelMaster.add(contentPanel);
         contentPanel.setLayout(new FlowLayout());
         contentPanel.setBorder(null);
@@ -325,24 +298,6 @@ public class LocationDialog extends JDialog
         contentPanel.add(scrollPane);
 
         pack();
-
-        ThreadStore ts = new ThreadStore();
-        ts.addAndRun(new Thread(new Runnable() {
-            public void run()
-            {
-                User user = User.getOKAPIUser();
-                try
-                {
-                    if (user.getOkapiToken() != null && OKAPI.getUUID(user) != null)
-                    {
-                        btnRetrieve.setEnabled(true);
-                    }
-                }
-                catch (Exception e)
-                {
-                }
-            }
-        }));
     }
 
     public void setGeocache(Geocache g)

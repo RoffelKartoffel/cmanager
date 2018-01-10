@@ -8,7 +8,6 @@ apply plugin: 'com.github.ben-manes.versions'
 
 
 mainClassName = 'cmanager.Main'
-project.ext.ocOkapiPropertiesFile = projectDir.getPath() + "${File.separator}oc_okapi.properties"
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
 version = '0.2.45'
@@ -27,42 +26,11 @@ sourceSets {
     }
 }
 
-task OcOkapiKeys(type: Copy) {
-    assert file(project.ocOkapiPropertiesFile).exists() : project.ocOkapiPropertiesFile + ' file missing. Please follow the instructions in README.md'
-    outputs.files 'src/cmanager/okapi/ConsumerKeys.java'
-    Properties properties = new Properties()
-    File propertiesFile = new File(project.ocOkapiPropertiesFile)
-    properties.load(propertiesFile.newDataInputStream())
-    from('templates') {
-        exclude '**/*.properties', 'TestClientCredentials.java', 'Version.java'
-    }
-    expand(
-        oc_okapi_de_consumer_key: properties.getProperty('oc_okapi_de_consumer_key'),
-        oc_okapi_de_consumer_secret: properties.getProperty('oc_okapi_de_consumer_secret')
-    )
-    into 'src/cmanager/okapi'
-}
-
-task OcTestClientLogin(type: Copy) {
-    assert file(project.ocOkapiPropertiesFile).exists() : project.ocOkapiPropertiesFile + ' file missing. Please follow the instructions in README.md'
-    outputs.files 'test/cmanager/okapi/helper/TestClientCredentials.java'
-    Properties properties = new Properties()
-    File propertiesFile = new File(project.ocOkapiPropertiesFile)
-    properties.load(propertiesFile.newDataInputStream())
-    from('templates') {
-        exclude '**/*.properties', 'ConsumerKeys.java', 'Version.java'
-    }
-    expand(
-        oc_test_client_username: properties.getProperty('oc_test_client_username'),
-        oc_test_client_password: properties.getProperty('oc_test_client_password')
-    )
-    into 'test/cmanager/okapi/helper'
-}
 
 task Version(type: Copy) {
     outputs.files 'src/cmanager/global/Version.java'
     from('templates') {
-        exclude '**/*.properties', 'ConsumerKeys.java', 'TestClientCredentials.java'
+        exclude '**/*.properties'
     }
     expand(
         version: version
@@ -70,13 +38,10 @@ task Version(type: Copy) {
     into 'src/cmanager/global'
 }
 
-compileJava.dependsOn OcOkapiKeys, Version
-compileTestJava.dependsOn OcTestClientLogin
+compileJava.dependsOn Version
 
 clean.doFirst {
-    delete 'src/cmanager/okapi/ConsumerKeys.java'
     delete 'src/cmanager/global/Version.java'
-    delete 'test/cmanager/okapi/helper/TestClientCredentials.java'
 }
 
 repositories {

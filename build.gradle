@@ -52,10 +52,10 @@ repositories {
 }
 
 dependencies {
-    compile group: 'commons-codec', name: 'commons-codec', version: '1.10'
-    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.5'
+    compile group: 'commons-codec', name: 'commons-codec', version: '1.5'
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.7'
     compile group: 'joda-time', name: 'joda-time', version: '2.9.9'
-    compile group: 'org.openstreetmap.jmapviewer', name: 'jmapviewer', version: '2.0'
+    compile group: 'org.openstreetmap.jmapviewer', name: 'jmapviewer', version: '2.4'
 
     testCompile 'junit:junit:4.12'
 }

@@ -6,10 +6,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import cmanager.global.Constants;
-import cmanager.okapi.User;
-import cmanager.okapi.OKAPI;
 import cmanager.settings.Settings;
-import cmanager.util.DesktopUtil;
 import cmanager.util.ForkUtil;
 
 import java.awt.FlowLayout;
@@ -32,7 +29,7 @@ import java.awt.Insets;
 import javax.swing.SwingConstants;
 import java.awt.Component;
 import javax.swing.Box;
-import javax.swing.SpringLayout;
+
 
 public class SettingsDialog extends JDialog
 {
@@ -43,9 +40,6 @@ public class SettingsDialog extends JDialog
     private static final long serialVersionUID = -6008083400079798934L;
     private JDialog THIS = this;
     private JPanel contentPane;
-    private JLabel lblOkapiToken;
-    private JLabel lblOCUsername;
-    private JButton btnRequestNewToken;
     private JTextField txtNameGC;
     private JTextField txtHeapSize;
 
@@ -121,73 +115,6 @@ public class SettingsDialog extends JDialog
         JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
         contentPane.add(tabbedPane, BorderLayout.CENTER);
 
-        JPanel panelOC = new JPanel();
-        panelOC.setBorder(new EmptyBorder(10, 10, 10, 10));
-        tabbedPane.addTab("opencaching.de", null, panelOC, null);
-        SpringLayout sl_panelOC = new SpringLayout();
-        panelOC.setLayout(sl_panelOC);
-
-        JLabel label = new JLabel("OKAPI Token:");
-        sl_panelOC.putConstraint(SpringLayout.NORTH, label, 40, SpringLayout.NORTH, panelOC);
-        sl_panelOC.putConstraint(SpringLayout.WEST, label, 10, SpringLayout.WEST, panelOC);
-        panelOC.add(label);
-
-        lblOkapiToken = new JLabel("New label");
-        sl_panelOC.putConstraint(SpringLayout.NORTH, lblOkapiToken, 0, SpringLayout.NORTH, label);
-        sl_panelOC.putConstraint(SpringLayout.WEST, lblOkapiToken, 101, SpringLayout.EAST, label);
-        panelOC.add(lblOkapiToken);
-
-        btnRequestNewToken = new JButton("Request new token");
-        sl_panelOC.putConstraint(SpringLayout.SOUTH, btnRequestNewToken, 0, SpringLayout.SOUTH,
-                                 panelOC);
-        sl_panelOC.putConstraint(SpringLayout.EAST, btnRequestNewToken, 0, SpringLayout.EAST,
-                                 panelOC);
-        btnRequestNewToken.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0)
-            {
-                try
-                {
-                    User.getOKAPIUser().requestOkapiToken(new OKAPI.RequestAuthorizationCallbackI() {
-                        @Override
-                        public String getPin()
-                        {
-                            String pin = JOptionPane.showInputDialog(
-                                null,
-                                "Please look at your browser and enter the PIN from opencaching.de");
-                            return pin;
-                        }
-
-                        @Override
-                        public void redirectUrlToUser(String authUrl)
-                        {
-                            DesktopUtil.openUrl(authUrl);
-                        }
-                    });
-                    displayOkapiTokenStatus();
-                }
-                catch (Throwable e)
-                {
-                    ExceptionPanel.showErrorDialog(THIS, e);
-                }
-            }
-        });
-        panelOC.add(btnRequestNewToken);
-
-
-        JLabel lblNewLabel_3 = new JLabel("OC Username: ");
-        sl_panelOC.putConstraint(SpringLayout.NORTH, lblNewLabel_3, 6, SpringLayout.SOUTH, label);
-        sl_panelOC.putConstraint(SpringLayout.WEST, lblNewLabel_3, 0, SpringLayout.WEST, label);
-        panelOC.add(lblNewLabel_3);
-
-        lblOCUsername = new JLabel("");
-        sl_panelOC.putConstraint(SpringLayout.NORTH, lblOCUsername, 6, SpringLayout.SOUTH,
-                                 lblOkapiToken);
-        sl_panelOC.putConstraint(SpringLayout.WEST, lblOCUsername, 204, SpringLayout.WEST, panelOC);
-        sl_panelOC.putConstraint(SpringLayout.EAST, lblOCUsername, -31, SpringLayout.EAST, panelOC);
-        lblOCUsername.setHorizontalAlignment(SwingConstants.LEFT);
-        lblOCUsername.setText(Settings.getS(Settings.Key.OC_USERNAME));
-        panelOC.add(lblOCUsername);
-
         JPanel panelGC = new JPanel();
         tabbedPane.addTab("geocaching.com", null, panelGC, null);
         GridBagLayout gbl_panelGC = new GridBagLayout();
@@ -217,8 +144,6 @@ public class SettingsDialog extends JDialog
         panelGC.add(txtNameGC, gbc_txtNameGC);
         txtNameGC.setColumns(10);
 
-
-        displayOkapiTokenStatus();
         txtNameGC.setText(Settings.getS(Settings.Key.GC_USERNAME));
 
         JPanel panelGeneral = new JPanel();
@@ -293,32 +218,5 @@ public class SettingsDialog extends JDialog
         gbc_lblNewLabel_1.gridx = 0;
         gbc_lblNewLabel_1.gridy = 1;
         panelGeneral.add(lblNewLabel_1, gbc_lblNewLabel_1);
-    }
-
-    private void displayOkapiTokenStatus()
-    {
-        lblOkapiToken.setText("missing or offline");
-        Font f = lblOkapiToken.getFont();
-        lblOkapiToken.setFont(f.deriveFont(f.getStyle() | Font.ITALIC));
-        btnRequestNewToken.setVisible(true);
-
-        User user = User.getOKAPIUser();
-        try
-        {
-            if (user.getOkapiToken() != null && OKAPI.getUUID(user) != null)
-            {
-                lblOkapiToken.setText("okay");
-                f = lblOkapiToken.getFont();
-                lblOkapiToken.setFont(f.deriveFont(f.getStyle() & ~Font.ITALIC));
-                btnRequestNewToken.setVisible(false);
-
-                String username = OKAPI.getUsername(user);
-                Settings.set(Settings.Key.OC_USERNAME, username);
-                lblOCUsername.setText(username);
-            }
-        }
-        catch (Exception e)
-        {
-        }
     }
 }

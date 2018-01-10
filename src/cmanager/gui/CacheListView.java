@@ -444,11 +444,11 @@ public class CacheListView extends JInternalFrame
 
             setName("");
 
-            if (g.getType() == GeocacheType.getTradiType())
+            if (g.getType().equals(GeocacheType.getTradiType()))
                 setColor(new Color(0x009900));
-            else if (g.getType() == GeocacheType.getMultiType())
+            else if (g.getType().equals(GeocacheType.getMultiType()))
                 setColor(new Color(0xFFCC00));
-            else if (g.getType() == GeocacheType.getMysteryType())
+            else if (g.getType().equals(GeocacheType.getMysteryType()))
                 setColor(new Color(0x0066FF));
             else
                 setColor(Color.GRAY);

@@ -491,32 +491,32 @@ public class MainWindow extends JFrame
         });
         panelUpdate.add(btnUpdate);
 
-        new SwingWorker<Void, Boolean>() {
-            @Override
-            protected Void doInBackground() throws Exception
-            {
-                publish(Updates.updateAvailable_block());
-                return null;
-            }
-
-            @Override
-            protected void process(List<Boolean> chunks)
-            {
-                // Display update message if there is a nother version available
-                if (chunks.get(0))
-                {
-                    setText("Version " + Updates.getNewVersion() + " of " + Constants.APP_NAME +
-                            " is available. Click here for updates!");
-                    btnUpdate.setVisible(true);
-                }
-            }
-
-            private void setText(String text)
-            {
-                btnUpdate.setText("<HTML><FONT color=\"#008000\"><U>" + text +
-                                  "</U></FONT></HTML>");
-            }
-        }.execute();
+//        new SwingWorker<Void, Boolean>() {
+//            @Override
+//            protected Void doInBackground() throws Exception
+//            {
+//                publish(Updates.updateAvailable_block());
+//                return null;
+//            }
+//
+//            @Override
+//            protected void process(List<Boolean> chunks)
+//            {
+//                // Display update message if there is a nother version available
+//                if (chunks.get(0))
+//                {
+//                    setText("Version " + Updates.getNewVersion() + " of " + Constants.APP_NAME +
+//                            " is available. Click here for updates!");
+//                    btnUpdate.setVisible(true);
+//                }
+//            }
+//
+//            private void setText(String text)
+//            {
+//                btnUpdate.setText("<HTML><FONT color=\"#008000\"><U>" + text +
+//                                  "</U></FONT></HTML>");
+//            }
+//        }.execute();
 
 
         JPanel panelNorth = new JPanel();

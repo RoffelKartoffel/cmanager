@@ -154,7 +154,7 @@ public class CacheListView extends JInternalFrame
 
         // Make map movable with mouse
         DefaultMapController mapController = new DefaultMapController(mapViewer);
-        mapController.setMovementMouseButton(MouseEvent.BUTTON2);
+        mapController.setMovementMouseButton(MouseEvent.BUTTON3);
 
         mapViewer.addMouseListener(new MouseAdapter() {
             @Override

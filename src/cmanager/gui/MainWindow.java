@@ -182,53 +182,6 @@ public class MainWindow extends JFrame
         mnList.setEnabled(false);
         menuBar.add(mnList);
 
-        JMenuItem mntmFindSimilarOc = new JMenuItem("Find on OC");
-        mntmFindSimilarOc.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e)
-            {
-                findOnOC(null, null);
-            }
-        });
-        mnList.add(mntmFindSimilarOc);
-
-        JMenuItem mntmFind = new JMenuItem("Sync with OC");
-        mntmFind.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e)
-            {
-                try
-                {
-                    User user = null;
-                    String uuid = null;
-                    try
-                    {
-                        user = User.getOKAPIUser();
-                        uuid = OKAPI.getUUID(user);
-                        if (uuid == null)
-                        {
-                            throw new NullPointerException();
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        JOptionPane.showMessageDialog(
-                            THIS, "Testing the OKAPI token failed. Check your settings!", "Error",
-                            JOptionPane.ERROR_MESSAGE);
-                        return;
-                    }
-
-                    findOnOC(user, uuid);
-                }
-                catch (Throwable ex)
-                {
-                    ExceptionPanel.showErrorDialog(THIS, ex);
-                }
-            }
-        });
-        mnList.add(mntmFind);
-
-        JSeparator separator_2 = new JSeparator();
-        mnList.add(separator_2);
-
         JMenuItem mntmCopy = new JMenuItem("Copy");
         mntmCopy.setAccelerator(
             KeyStroke.getKeyStroke('C', Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));

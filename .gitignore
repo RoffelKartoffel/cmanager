@@ -8,3 +8,4 @@ test/cmanager/okapi/helper/TestClientCredentials.java
 .settings
 .classpath
 .project
+.idea/

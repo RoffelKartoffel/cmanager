@@ -1,6 +1,6 @@
 # cmanager
 
-The cache manager (cmanager) is a Java based program which is able to manage gpx geocahing files. One can view the caches on a map, copy or delete them from/to gpx files. Initial gpx files can be generated on [Geocaching.com](https://geocaching.com) or with [geotoad](https://https://github.com/steve8x8/geotoad) .
+The cache manager (cmanager) is a Java based program which is able to manage gpx geocahing files. One can view the caches on a map, copy or delete them from/to gpx files. Initial gpx files can be generated on [Geocaching.com](https://geocaching.com) or with [geotoad](https://github.com/steve8x8/geotoad) .
 
 Since I strongly dislike Opencaching.de s usage of Google Analytics without letting the user choose, if he or she is willing to share their browsing statistics, cmanager does no longer support found log synchronization to Opencaching.de . Version  0.2.45 of cmanager disables the auto update, so that OC users who do not want to update to future versions are not forced to update. It will be enabled again in the next release.
 
